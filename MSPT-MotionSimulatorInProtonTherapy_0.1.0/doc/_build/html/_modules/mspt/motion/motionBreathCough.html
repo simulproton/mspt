@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.motion.motionBreathCough &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.motion.motionBreathCough</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.motion.motionBreathCough</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># motionBreathCough.py</span>
+<span class="c"># Proton Therapy Simulator Project</span>
+<span class="c"># Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee</span>
+<span class="c"># 19 February 2014</span>
+<span class="c"># </span>
+<span class="c">#</span>
+<span class="c">########################################################################</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">motionNoisyCos</span>
+<span class="kn">from</span> <span class="nn">motionNoisyCos</span> <span class="kn">import</span> <span class="n">MotionNoisyCos</span>
+
+
+<div class="viewcode-block" id="MotionBreathCough"><a class="viewcode-back" href="../../../mspt.motion.html#mspt.motion.motionBreathCough.MotionBreathCough">[docs]</a><span class="k">class</span> <span class="nc">MotionBreathCough</span><span class="p">(</span><span class="n">MotionNoisyCos</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    The class MotionBreathCough, inherit from MotionNoisyCos. In addition to noise added to the motion, this class add a cough to the motion.\</span>
+<span class="sd">    The cough is modeled as a single event happening at a random date. The amplitude of a cough is the initial amplitude (wihtout cough)\</span>
+<span class="sd">    minus a random value defined by a normal distribution (mean = &#39;magnitude&#39;/2 and stdev = &#39;variationsMag&#39;/2). The reason why we are using a &quot;minus&quot; instead of\</span>
+<span class="sd">    a &quot;plus&quot; is that usually when someone coughs his rib cage is compressed.</span>
+<span class="sd">    </span>
+<span class="sd">    :param argsDict: Dictionary configuring the motion. Keys that must be in this dictionary are:</span>
+<span class="sd">        </span>
+<span class="sd">        * *&#39;breathingPeriod&#39;*: numpy array of 3 elements: [ x_period, y_period, z_period]</span>
+<span class="sd">        * *&#39;magnitude&#39;*: numpy array of 3 elements: [ x_magnitude, y_magnitude, z_magnitude]</span>
+<span class="sd">        * *&#39;initialPhase&#39;*: numpy array of 3 elements: [ x_phase, y_phase, z_phase]</span>
+<span class="sd">        * *&#39;variationsMag&#39;*: numpy array of 3 elements representing the standard deviation of the normal distribution applied to\</span>
+<span class="sd">        the motion amplitude of each coordinate. We consider that the mean of the distribution is the value defined in &#39;magnitude&#39;.\</span>
+<span class="sd">        This represents the noise applied to the motion magnitudes.</span>
+<span class="sd">        * *&#39;variationsPeriod&#39;*: numpy array of 3 elements representing the standard deviation of the normal distribution applied to\</span>
+<span class="sd">        the length of the period for each coordinate. We consider that the mean of the distribution is the value defined in &#39;breathingPeriod&#39;.\</span>
+<span class="sd">        This represents the noise applied to the length of the periods.</span>
+<span class="sd">    </span>
+<span class="sd">    :param typeFloat: type of numpy float to use: &#39;float32&#39; or &#39;float64&#39;. </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">        </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">argsDict</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">):</span>
+    
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">MotionNoisyCos</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">argsDict</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_coughTime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span><span class="o">*</span><span class="mi">30</span> <span class="c"># Time when happens the coughing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_coughOccured</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_CoughFunc</span> <span class="o">=</span> <span class="p">[</span><span class="n">motionNoisyCos</span><span class="o">.</span><span class="n">buildNormDistrFunction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_magnitude</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mf">2.0</span> <span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stdevMag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mf">2.0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+        
+     
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">strValue</span> <span class="o">=</span> <span class="s">&quot;Motion: p0 + ampl. x cos( 2*PI*t / tau  - phi ):</span><span class="se">\n\t</span><span class="s">directions:[X, Y, Z]</span><span class="se">\n\t</span><span class="s">-Breathing period: </span><span class="si">%s</span><span class="s"> sec</span><span class="se">\n\t</span><span class="s">-Amplitude: </span><span class="si">%s</span><span class="s"> cm</span><span class="se">\n\t</span><span class="s">-Initial Phase: </span><span class="si">%s</span><span class="s"> rad</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_breathingPeriod</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_magnitude</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_phase</span><span class="p">))</span>
+        <span class="n">strVariations</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">Magnitude PDF type:</span><span class="si">%s</span><span class="s"> , stdev = </span><span class="si">%s</span><span class="se">\n\t</span><span class="s">Period PDF type:</span><span class="si">%s</span><span class="s"> , stdev = </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_distrTypMag</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stdevMag</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">_distrTypPeriod</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stdevPeriod</span><span class="p">))</span>
+        <span class="n">strCough</span> <span class="o">=</span> <span class="s">&quot;Coughing should happen after around </span><span class="si">%f</span><span class="s"> sec</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_coughTime</span>
+        <span class="k">return</span> <span class="n">strValue</span><span class="o">+</span><span class="n">strVariations</span> <span class="o">+</span> <span class="n">strCough</span>
+   
+    
+<div class="viewcode-block" id="MotionBreathCough.getDisplacementVectorAtTime"><a class="viewcode-back" href="../../../mspt.motion.html#mspt.motion.motionBreathCough.MotionBreathCough.getDisplacementVectorAtTime">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplacementVectorAtTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">timer</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Computes the displacement vector. It uses the getDisplacementVectorAtTime() function of MotionNoisyCos.</span>
+<span class="sd">        </span>
+<span class="sd">        We add a &quot;Cough&quot; when the random date has just occured. The random amplitude is then subtracted from the initial motion amplitude. \</span>
+<span class="sd">        The amplitude of the cough is random using a Gaussian pdf whose mean amplitude is half the amplitude used for the noise\</span>
+<span class="sd">        and the stdev is half the stdev used for noise in the motion for each coordinate.</span>
+
+<span class="sd">        :param  timer: Time in sec. </span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Displacement vector : numpy array with 3 elements. </span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">vec</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span>  <span class="n">MotionBreathCough</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">getDisplacementVectorAtTime</span><span class="p">(</span><span class="n">timer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">timer</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coughTime</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coughOccured</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_coughOccured</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">print</span> <span class="s">&quot;Cough at </span><span class="si">%f</span><span class="s"> sec.&quot;</span><span class="o">%</span><span class="n">timer</span>
+            <span class="k">return</span> <span class="n">updateVecDispl</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_CoughFunc</span><span class="p">,</span><span class="n">vec</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> 
+             <span class="k">return</span> <span class="n">vec</span>
+        
+    
+</div></div>
+<div class="viewcode-block" id="updateVecDispl"><a class="viewcode-back" href="../../../mspt.motion.html#mspt.motion.motionBreathCough.updateVecDispl">[docs]</a><span class="k">def</span> <span class="nf">updateVecDispl</span><span class="p">(</span><span class="n">CoughFunc</span><span class="p">,</span><span class="n">vec</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Update a displacement vector, by subtraction the cough amplitude to each coordinate.\</span>
+<span class="sd">    We consider the cough as reducing the amplitude.</span>
+<span class="sd">    </span>
+<span class="sd">    :param CoughFunc: list of normal distribution functions</span>
+<span class="sd">    :param vec: Initial displacement vector</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: Displacement vector : numpy array with 3 elements. </span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">CoughFunc</span><span class="p">[</span><span class="n">i</span><span class="p">]()</span>
+    <span class="k">return</span> <span class="n">vec</span>
+    
+        </div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

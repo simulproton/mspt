@@ -1,0 +1,22 @@
+mspt.mathTools package
+======================
+
+Submodules
+----------
+
+mspt.mathTools.tools module
+---------------------------
+
+.. automodule:: mspt.mathTools.tools
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: mspt.mathTools
+    :members:
+    :undoc-members:
+    :show-inheritance:

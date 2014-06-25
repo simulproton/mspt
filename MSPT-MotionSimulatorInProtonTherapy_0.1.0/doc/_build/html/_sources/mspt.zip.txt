@@ -1,0 +1,22 @@
+mspt.zip package
+================
+
+Submodules
+----------
+
+mspt.zip.zipFiles module
+------------------------
+
+.. automodule:: mspt.zip.zipFiles
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: mspt.zip
+    :members:
+    :undoc-members:
+    :show-inheritance:

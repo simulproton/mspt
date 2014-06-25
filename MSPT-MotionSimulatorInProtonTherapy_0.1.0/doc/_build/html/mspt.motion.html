@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.motion package &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="index.html"/>
+        <link rel="up" title="mspt package" href="mspt.html"/>
+        <link rel="next" title="mspt.patient package" href="mspt.patient.html"/>
+        <link rel="prev" title="mspt.mathTools package" href="mspt.mathTools.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="mspt.html">mspt package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="mspt.html">mspt package</a> &raquo;</li>
+      
+    <li>mspt.motion package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/mspt.motion.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="mspt-motion-package">
+<h1>mspt.motion package<a class="headerlink" href="#mspt-motion-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-mspt.motion.motionBreathCough">
+<span id="mspt-motion-motionbreathcough-module"></span><h2>mspt.motion.motionBreathCough module<a class="headerlink" href="#module-mspt.motion.motionBreathCough" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.motion.motionBreathCough.MotionBreathCough">
+<em class="property">class </em><tt class="descclassname">mspt.motion.motionBreathCough.</tt><tt class="descname">MotionBreathCough</tt><big>(</big><em>argsDict</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionBreathCough.html#MotionBreathCough"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionBreathCough.MotionBreathCough" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mspt.motion.motionNoisyCos.MotionNoisyCos" title="mspt.motion.motionNoisyCos.MotionNoisyCos"><tt class="xref py py-class docutils literal"><span class="pre">mspt.motion.motionNoisyCos.MotionNoisyCos</span></tt></a></p>
+<p>The class MotionBreathCough, inherit from MotionNoisyCos. In addition to noise added to the motion, this class add a cough to the motion.    The cough is modeled as a single event happening at a random date. The amplitude of a cough is the initial amplitude (wihtout cough)    minus a random value defined by a normal distribution (mean = &#8216;magnitude&#8217;/2 and stdev = &#8216;variationsMag&#8217;/2). The reason why we are using a &#8220;minus&#8221; instead of    a &#8220;plus&#8221; is that usually when someone coughs his rib cage is compressed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>argsDict</strong> &#8211; <p>Dictionary configuring the motion. Keys that must be in this dictionary are:</p>
+<ul>
+<li><em>&#8216;breathingPeriod&#8217;</em>: numpy array of 3 elements: [ x_period, y_period, z_period]</li>
+<li><em>&#8216;magnitude&#8217;</em>: numpy array of 3 elements: [ x_magnitude, y_magnitude, z_magnitude]</li>
+<li><em>&#8216;initialPhase&#8217;</em>: numpy array of 3 elements: [ x_phase, y_phase, z_phase]</li>
+<li><em>&#8216;variationsMag&#8217;</em>: numpy array of 3 elements representing the standard deviation of the normal distribution applied to        the motion amplitude of each coordinate. We consider that the mean of the distribution is the value defined in &#8216;magnitude&#8217;.        This represents the noise applied to the motion magnitudes.</li>
+<li><em>&#8216;variationsPeriod&#8217;</em>: numpy array of 3 elements representing the standard deviation of the normal distribution applied to        the length of the period for each coordinate. We consider that the mean of the distribution is the value defined in &#8216;breathingPeriod&#8217;.        This represents the noise applied to the length of the periods.</li>
+</ul>
+</li>
+<li><strong>typeFloat</strong> &#8211; type of numpy float to use: &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.motion.motionBreathCough.MotionBreathCough.getDisplacementVectorAtTime">
+<tt class="descname">getDisplacementVectorAtTime</tt><big>(</big><em>timer</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionBreathCough.html#MotionBreathCough.getDisplacementVectorAtTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionBreathCough.MotionBreathCough.getDisplacementVectorAtTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the displacement vector. It uses the getDisplacementVectorAtTime() function of MotionNoisyCos.</p>
+<p>We add a &#8220;Cough&#8221; when the random date has just occured. The random amplitude is then subtracted from the initial motion amplitude.         The amplitude of the cough is random using a Gaussian pdf whose mean amplitude is half the amplitude used for the noise        and the stdev is half the stdev used for noise in the motion for each coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timer</strong> &#8211; Time in sec.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Displacement vector : numpy array with 3 elements.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.motion.motionBreathCough.updateVecDispl">
+<tt class="descclassname">mspt.motion.motionBreathCough.</tt><tt class="descname">updateVecDispl</tt><big>(</big><em>CoughFunc</em>, <em>vec</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionBreathCough.html#updateVecDispl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionBreathCough.updateVecDispl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a displacement vector, by subtraction the cough amplitude to each coordinate.    We consider the cough as reducing the amplitude.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>CoughFunc</strong> &#8211; list of normal distribution functions</li>
+<li><strong>vec</strong> &#8211; Initial displacement vector</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Displacement vector : numpy array with 3 elements.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.motion.motionBreathHiccup">
+<span id="mspt-motion-motionbreathhiccup-module"></span><h2>mspt.motion.motionBreathHiccup module<a class="headerlink" href="#module-mspt.motion.motionBreathHiccup" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.motion.motionBreathHiccup.MotionBreathHiccup">
+<em class="property">class </em><tt class="descclassname">mspt.motion.motionBreathHiccup.</tt><tt class="descname">MotionBreathHiccup</tt><big>(</big><em>argsDict</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionBreathHiccup.html#MotionBreathHiccup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionBreathHiccup.MotionBreathHiccup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mspt.motion.motionNoisyCos.MotionNoisyCos" title="mspt.motion.motionNoisyCos.MotionNoisyCos"><tt class="xref py py-class docutils literal"><span class="pre">mspt.motion.motionNoisyCos.MotionNoisyCos</span></tt></a></p>
+<p>The class MotionBreathHiccup, inherit from MotionNoisyCos. In addition to noise added to the motion,     this class adds some hiccups to the motion.</p>
+<p>The hiccup is modeled as a periodical event starting at a random date, having a random period,     a random number of period (for ease we set this number between 1 and 10: the value     can be changed in motion.motionBreathHiccup with the global variable nbMaxHiccup) which determines the     ending date of the hiccup. The amplitude of a hiccup is the sum of the initial amplitude (wihtout hiccup)    plus a random value defined by a normal distribution (mean = &#8216;magnitude&#8217;/2 and stdev = &#8216;variationsMag&#8217;/2).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>argsDict</strong> &#8211; <p>Dictionary configuring the motion. Keys that must be in this dictionary are:</p>
+<ul>
+<li><em>&#8216;breathingPeriod&#8217;</em>: numpy array of 3 elements: [ x_period, y_period, z_period]</li>
+<li><em>&#8216;magnitude&#8217;</em>: numpy array of 3 elements: [ x_magnitude, y_magnitude, z_magnitude]</li>
+<li><em>&#8216;initialPhase&#8217;</em>: numpy array of 3 elements: [ x_phase, y_phase, z_phase]</li>
+<li><em>&#8216;variationsMag&#8217;</em>: numpy array of 3 elements representing the standard deviation of the normal distribution applied to        the motion amplitude of each coordinate. We consider that the mean of the distribution is the value defined in &#8216;magnitude&#8217;.        This represents the noise applied to the motion magnitudes.</li>
+<li><em>&#8216;variationsPeriod&#8217;</em>: numpy array of 3 elements representing the standard deviation of the normal distribution applied to        the length of the period for each coordinate. We consider that the mean of the distribution is the value defined in &#8216;breathingPeriod&#8217;.        This represents the noise applied to the length of the periods.</li>
+</ul>
+</li>
+<li><strong>typeFloat</strong> &#8211; type of numpy float to use: &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.motion.motionBreathHiccup.MotionBreathHiccup.getDisplacementVectorAtTime">
+<tt class="descname">getDisplacementVectorAtTime</tt><big>(</big><em>timer</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionBreathHiccup.html#MotionBreathHiccup.getDisplacementVectorAtTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionBreathHiccup.MotionBreathHiccup.getDisplacementVectorAtTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the displacement vector. It uses the getDisplacementVectorAtTime() function of MotionNoisyCos.        We add a &#8220;Hiccup&#8221; when using a random starting date, a random hiccup period duration and a random number of periods.        The amplitude of the hiccup is random using a Gaussian pdf whose mean amplitude is half the amplitude used for the noise        and the stdev is half the stdev used for noise in the motion for each coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timer</strong> &#8211; Time in sec.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Displacement vector : numpy array with 3 elements.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.motion.motionBreathHiccup.updateVecDispl">
+<tt class="descclassname">mspt.motion.motionBreathHiccup.</tt><tt class="descname">updateVecDispl</tt><big>(</big><em>HiccupFunc</em>, <em>vec</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionBreathHiccup.html#updateVecDispl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionBreathHiccup.updateVecDispl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a displacement vector, by adding the hiccup amplitude to each coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>HiccupFunc</strong> &#8211; list of normal distribution functions</li>
+<li><strong>vec</strong> &#8211; Initial displacement vector</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Displacement vector : numpy array with 3 elements.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.motion.motionCos">
+<span id="mspt-motion-motioncos-module"></span><h2>mspt.motion.motionCos module<a class="headerlink" href="#module-mspt.motion.motionCos" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.motion.motionCos.MotionCos">
+<em class="property">class </em><tt class="descclassname">mspt.motion.motionCos.</tt><tt class="descname">MotionCos</tt><big>(</big><em>argsDict</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionCos.html#MotionCos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionCos.MotionCos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class modeling breathing motions as a cosine function. The model is based on models used by:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Lujan et al. 1999: &#8220;A method for incorporating organ motion due to breathing into 3D dose calculations&#8221;</li>
+<li>George et al. 2005: &#8220;The application of the sinusoidal model to lung cancer patient respiratory motion&#8221;</li>
+<li>Seco et al. 2009: &#8220;Breathing interplay effects during proton beam scanning: simulation and statistical analysis.&#8221;</li>
+</ul>
+</div></blockquote>
+<p>The model of the breathing motion based on a cosine function was introduced by Lujan et al. and slightly modified later by George et al.    We use this last version that can be expressed as:</p>
+f(t) = z0 + b cos( (2*Pi*t / tau)  - phi)         where z0 is the average position (it is set to 0),t the time, b the amplitude, and tau the motion period.         Lujan and Seco also added a phase phi that can be added in the cosine. <table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>argsDict</strong> &#8211; <p>Dictionary configuring the motion. Keys that must be in this dictionary are:</p>
+<ul class="simple">
+<li><em>&#8216;breathingPeriod&#8217;</em>: numpy array of 3 elements: [ x_period, y_period, z_period]</li>
+<li><em>&#8216;magnitude&#8217;</em>: numpy array of 3 elements: [ x_magnitude, y_magnitude, z_magnitude]</li>
+<li><em>&#8216;initialPhase&#8217;</em>: numpy array of 3 elements: [ x_phase, y_phase, z_phase]</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If no motion is one direction, set the 3 parameters for this direction (x,y or z) to 0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>typeFloat</strong> &#8211; type of numpy float to use: &#8216;float32&#8217; or &#8216;float64&#8217;.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.motion.motionCos.MotionCos.getDisplacementVectorAtTime">
+<tt class="descname">getDisplacementVectorAtTime</tt><big>(</big><em>timer</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionCos.html#MotionCos.getDisplacementVectorAtTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionCos.MotionCos.getDisplacementVectorAtTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the displacement vector according to the equation:</p>
+f(t) = z0 + b cos( 2*Pi*t / tau  + phi) <table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timer</strong> &#8211; time in sec.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Displacement vector : numpy array with 3 elements.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.motion.motionManager">
+<span id="mspt-motion-motionmanager-module"></span><h2>mspt.motion.motionManager module<a class="headerlink" href="#module-mspt.motion.motionManager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.motion.motionManager.Motion">
+<em class="property">class </em><tt class="descclassname">mspt.motion.motionManager.</tt><tt class="descname">Motion</tt><big>(</big><em>argsDict</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionManager.html#Motion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionManager.Motion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class Motion: used to define motions. They can be of different types:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>&#8216;motionCos&#8217;</em>: Motion defined as a cosine wave along X,Y,Z axis.</li>
+<li><em>&#8216;motionNoisyCos&#8217;</em>: Similar to &#8216;motionCos&#8217; with random noise.</li>
+<li><em>&#8216;motionBreathHiccup&#8217;</em>: &#8216;NoisyCos&#8217; plus hiccup. Hiccup is defined by a starting and ending date and a periodical motion of random amplitude is added to the initial noisy cosine.</li>
+<li><em>&#8216;motionBreathCough&#8217;</em>: &#8216;NoisyCos&#8217; plus cough. Cough is defined by a single random motion occuring at a random time.</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The user could create new motions. To do so, in motionManager.py add the name of the created class (the first letter must be in lower case) in the global variable &#8216;motionTypes&#8217;.        The new class must implement &#8216;getDisplacementVectorAtTime(timer)&#8217; to define the displacement vector at time = timer. On could         decide to return a 3D matrix containing local displacement vectors (In such case patient.patient.py and scanning.deliverySimulation_Static_Dynamic.py        should be adapted for deformable transformations. The &#8216;history&#8217; attribute of MotionManager should also be adapted). It must also implement &#8216;__str__&#8217; to provide information about the motion.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>argsDict</strong> &#8211; dictionary of arguments used to initialize the types of motion. The key &#8216;typeMotion&#8217; must be present. It it equal to     one of theses types: &#8216;motionNoisyCos&#8217;,&#8217;motionCos&#8217;,&#8217;motionBreathHiccup&#8217;,&#8217;motionBreathCough&#8217;</li>
+<li><strong>typeFloat</strong> &#8211; <p>type of numpy float to use: &#8216;float32&#8217; or &#8216;float64&#8217;.</p>
+<p>The units for the stdandard deviations and the averages must be in cm and the time in sec.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.motion.motionManager.Motion.getDisplacementVectorAtTime">
+<tt class="descname">getDisplacementVectorAtTime</tt><big>(</big><em>timer</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionManager.html#Motion.getDisplacementVectorAtTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionManager.Motion.getDisplacementVectorAtTime" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timer</strong> &#8211; Time at when the displacement vector must be computed.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Displacement vector defined in the current motion.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.motion.motionManager.Motion.getHistory">
+<tt class="descname">getHistory</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionManager.html#Motion.getHistory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionManager.Motion.getHistory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the history of the motions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with keys: &#8216;time&#8217;, &#8216;x&#8217;, &#8216;y&#8217; and &#8216;z&#8217;. Each value of these keys is a list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.motion.motionMonitor">
+<span id="mspt-motion-motionmonitor-module"></span><h2>mspt.motion.motionMonitor module<a class="headerlink" href="#module-mspt.motion.motionMonitor" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.motion.motionMonitor.MotionMonitor">
+<em class="property">class </em><tt class="descclassname">mspt.motion.motionMonitor.</tt><tt class="descname">MotionMonitor</tt><big>(</big><em>motion</em>, <em>measureStdErr</em>, <em>measureAvgErr</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionMonitor.html#MotionMonitor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionMonitor.MotionMonitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The class MotionMonitor aims to simulate a motion monitoring system. A motion (motionManager) is assigned to this monitor. This motion     provides the true measurement to the monitor. Some noise is added to this measurement in order to make it more realistic. The noise     is modeled by a normal distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>motion</strong> &#8211; The motion being used. It should be a motion manager so that it can be used for any type of motion.</li>
+<li><strong>measureStdErr</strong> &#8211; Numpy array with 3 values corresponding to the standard deviation of the normal distribution for each coordinate.</li>
+<li><strong>measureAvgErr</strong> &#8211; Numpy array with 3 values corresponding to the mean of the normal distribution for each coordinate.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.motion.motionMonitor.MotionMonitor.getHistory">
+<tt class="descname">getHistory</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionMonitor.html#MotionMonitor.getHistory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionMonitor.MotionMonitor.getHistory" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dictionary: keys:<ul>
+<li>&#8216;time&#8217; : list of time values.</li>
+<li>&#8216;x&#8217; (dictionary): keys:<blockquote>
+<div><ul class="simple">
+<li>&#8216;PatientMotion&#8217;: list of true patient position along the X axis</li>
+<li>&#8216;MeasuredMotion&#8217;: list of patient position measurement along the X axis</li>
+</ul>
+</div></blockquote>
+</li>
+<li>&#8216;y&#8217; (dictionary): keys:<blockquote>
+<div><ul class="simple">
+<li>&#8216;PatientMotion&#8217;: list of true patient position along the Y axis</li>
+<li>&#8216;MeasuredMotion&#8217;: list of patient position measurement along the Y axis</li>
+</ul>
+</div></blockquote>
+</li>
+<li>&#8216;z&#8217; (dictionary): keys:<blockquote>
+<div><ul class="simple">
+<li>&#8216;PatientMotion&#8217;: list of true patient position along the Z axis</li>
+<li>&#8216;MeasuredMotion&#8217;: list of patient position measurement along the Z axis</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.motion.motionMonitor.MotionMonitor.getMotionMeasurement">
+<tt class="descname">getMotionMeasurement</tt><big>(</big><em>patientMotion</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionMonitor.html#MotionMonitor.getMotionMeasurement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionMonitor.MotionMonitor.getMotionMeasurement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the measurement vector. It adds Gaussian noise to true patient motion.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>patientMotion</strong> &#8211; Numpy array with 3 values corresponding to the patient true motion.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Numpy array with 3 values corresponding to the motion measurement.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.motion.motionMonitor.MotionMonitor.monitorPatientMotionAtTime">
+<tt class="descname">monitorPatientMotionAtTime</tt><big>(</big><em>timer</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionMonitor.html#MotionMonitor.monitorPatientMotionAtTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionMonitor.MotionMonitor.monitorPatientMotionAtTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that simulates the acquisition of the measurement.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timer</strong> &#8211; time in sec.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Dictionary: keys:&#8217;PatientMotion&#8217; ( patient True motion) ,  &#8216;MeasuredMotion&#8217; (motion measurement)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.motion.motionMonitor.buildNormDistrFunction">
+<tt class="descclassname">mspt.motion.motionMonitor.</tt><tt class="descname">buildNormDistrFunction</tt><big>(</big><em>mean</em>, <em>stdev</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionMonitor.html#buildNormDistrFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionMonitor.buildNormDistrFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a function that computes the values of a normal distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mean</strong> &#8211; Mean value of the distribution</li>
+<li><strong>stdev</strong> &#8211; Standard deviation of the distribution.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A callable function.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.motion.motionNoisyCos">
+<span id="mspt-motion-motionnoisycos-module"></span><h2>mspt.motion.motionNoisyCos module<a class="headerlink" href="#module-mspt.motion.motionNoisyCos" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.motion.motionNoisyCos.MotionNoisyCos">
+<em class="property">class </em><tt class="descclassname">mspt.motion.motionNoisyCos.</tt><tt class="descname">MotionNoisyCos</tt><big>(</big><em>argsDict</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionNoisyCos.html#MotionNoisyCos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionNoisyCos.MotionNoisyCos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class modeling breathing motions as a cosine function. The model is based on models used by:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Lujan et al. 1999: &#8220;A method for incorporating organ motion due to breathing into 3D dose calculations&#8221;</li>
+<li>George et al. 2005: &#8220;The application of the sinusoidal model to lung cancer patient respiratory motion&#8221;</li>
+<li>Seco et al. 2009: &#8220;Breathing interplay effects during proton beam scanning: simulation and statistical analysis.&#8221;</li>
+</ul>
+</div></blockquote>
+<p>The model of the breathing motion based on a cosine function was introduced by Lujan et al. and slightly modified later by George et al.    We use this last version that can be expressed as:</p>
+<blockquote>
+<div>f(t) = z0 + b cos( (2*Pi*t / tau)  - phi)</div></blockquote>
+<p>where z0 is the average position (it is set to 0),t the time, b the amplitude, and tau the motion period.</p>
+<p>Lujan and Seco also added a phase phi that can be added in the cosine. We add a Gaussian noise on each coordinate to introduce uncertainties.</p>
+<p>We represent the noisy cosine function as: f(t) = z0 + b(t) cos( (2*Pi*t / tau(Cylcle))  + phi) where b(t) is a value of a normal distribution    whose mean is &#8216;magnitude&#8217; and whose standard deviation is &#8216;distributionMag&#8217;. tau(Cylcle) is the period which depends on the number of cylce, i.e.    every new cycle (Cycle = round(timer/(2*Pi)) ) the period tau is changed following the normal distribution. The mean is &#8216;breathingPeriod&#8217; and the     standard deviation is &#8216;distributionPeriod&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>argsDict</strong> &#8211; <p>Dictionary configuring the motion. Keys that must be in this dictionary are:</p>
+<ul>
+<li><em>&#8216;breathingPeriod&#8217;</em>: numpy array of 3 elements: [ x_period, y_period, z_period]</li>
+<li><em>&#8216;magnitude&#8217;</em>: numpy array of 3 elements: [ x_magnitude, y_magnitude, z_magnitude]</li>
+<li><em>&#8216;initialPhase&#8217;</em>: numpy array of 3 elements: [ x_phase, y_phase, z_phase]</li>
+<li><em>&#8216;variationsMag&#8217;</em>: numpy array of 3 elements representing the standard deviation of the normal distribution applied to        the motion amplitude of each coordinate. We consider that the mean of the distribution is the value defined in &#8216;magnitude&#8217;.        This represents the noise applied to the motion magnitudes.</li>
+<li><em>&#8216;variationsPeriod&#8217;</em>: numpy array of 3 elements representing the standard deviation of the normal distribution applied to        the length of the period for each coordinate. We consider that the mean of the distribution is the value defined in &#8216;breathingPeriod&#8217;.        This represents the noise applied to the length of the periods.</li>
+</ul>
+</li>
+<li><strong>typeFloat</strong> &#8211; type of numpy float to use: &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.motion.motionNoisyCos.MotionNoisyCos.getDisplacementVectorAtTime">
+<tt class="descname">getDisplacementVectorAtTime</tt><big>(</big><em>timer</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionNoisyCos.html#MotionNoisyCos.getDisplacementVectorAtTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionNoisyCos.MotionNoisyCos.getDisplacementVectorAtTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the displacement vector according to the equation f(t) = z0 + b(t) cos( (2*Pi*t / tau(Cylcle))  + phi)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timer</strong> &#8211; Time in sec.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Displacement vector : numpy array with 3 elements.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.motion.motionNoisyCos.buildNormDistrFunction">
+<tt class="descclassname">mspt.motion.motionNoisyCos.</tt><tt class="descname">buildNormDistrFunction</tt><big>(</big><em>mean</em>, <em>stdev</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionNoisyCos.html#buildNormDistrFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionNoisyCos.buildNormDistrFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a function that computes the values of a normal distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mean</strong> &#8211; Mean value of the distribution</li>
+<li><strong>stdev</strong> &#8211; Standard deviation of the distribution.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A callable function.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.motion">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mspt.motion" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mspt.patient.html" class="btn btn-neutral float-right" title="mspt.patient package"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mspt.mathTools.html" class="btn btn-neutral" title="mspt.mathTools package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

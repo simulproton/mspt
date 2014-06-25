@@ -1,0 +1,62 @@
+mspt.motion package
+===================
+
+Submodules
+----------
+
+mspt.motion.motionBreathCough module
+------------------------------------
+
+.. automodule:: mspt.motion.motionBreathCough
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+mspt.motion.motionBreathHiccup module
+-------------------------------------
+
+.. automodule:: mspt.motion.motionBreathHiccup
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+mspt.motion.motionCos module
+----------------------------
+
+.. automodule:: mspt.motion.motionCos
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+mspt.motion.motionManager module
+--------------------------------
+
+.. automodule:: mspt.motion.motionManager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+mspt.motion.motionMonitor module
+--------------------------------
+
+.. automodule:: mspt.motion.motionMonitor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+mspt.motion.motionNoisyCos module
+---------------------------------
+
+.. automodule:: mspt.motion.motionNoisyCos
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: mspt.motion
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.dicomReader.dicomRDReader &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.dicomReader.dicomRDReader</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.dicomReader.dicomRDReader</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># dicomRDReader.py</span>
+<span class="c"># Dicom Reader Project</span>
+<span class="c"># Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee</span>
+<span class="c"># On June, 5 2012</span>
+<span class="c"># Copyright 2012, LIGM, Universite Paris-Est Marne La Vallee. All rights reserved</span>
+<span class="c">#</span>
+<span class="c">########################################################################</span>
+
+
+<span class="kn">import</span> <span class="nn">dicom</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">dicom.config</span> 
+<span class="n">dicom</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">enforce_valid_values</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="kn">import</span> <span class="nn">dicomReader</span>
+<span class="kn">from</span> <span class="nn">dicomReader</span> <span class="kn">import</span> <span class="n">DicomReader</span>
+
+<div class="viewcode-block" id="DicomRDReader"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRDReader.DicomRDReader">[docs]</a><span class="k">class</span> <span class="nc">DicomRDReader</span><span class="p">(</span><span class="n">DicomReader</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Dicom reader for dicom dose grids (RD dicom file). It represents a 3D dose distribution. </span>
+
+<span class="sd">    :param path: Path to the RD dicom file.</span>
+<span class="sd">    :param typeFloat: The type of numpy float to use. It should  be either &#39;float32&#39; or &#39;float64&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">path</span> <span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">typeFloat</span> <span class="o">=</span> <span class="s">&#39;float32&#39;</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span> <span class="o">=</span> <span class="n">typeFloat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dosePlan</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loadRTDosePlanFile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dcmType</span> <span class="o">=</span> <span class="s">&#39;RT Dose Storage&#39;</span>
+            <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> loaded&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_dcmType</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span> <span class="p">(</span><span class="s">&quot;Path shouldn&#39;t be None to initialize a RD dicom reader&quot;</span><span class="p">)</span>        
+        
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">        :returns: A string containing information about the dicom dose grid loaded</span>
+<span class="sd">    </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">strToPrint</span> <span class="o">=</span> <span class="s">&quot;[RT Dose:</span><span class="se">\n\t</span><span class="s">-Frame Of Reference UID:</span><span class="si">%s</span><span class="se">\n\t</span><span class="s">-Dose units:</span><span class="si">%s</span><span class="se">\n\t\</span>
+<span class="s">        -Num. Frames:</span><span class="si">%i</span><span class="se">\n\t</span><span class="s">-Num. Rows:</span><span class="si">%i</span><span class="se">\n\t</span><span class="s">-Num. Cols:</span><span class="si">%i</span><span class="s"> ]&quot;</span>\
+        <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataForAttribute</span><span class="p">(</span><span class="s">&#39;FrameOfReferenceUID&#39;</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">DoseUnits</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">PixelArray</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">PixelArray</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">PixelArray</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">strToPrint</span>
+        
+<div class="viewcode-block" id="DicomRDReader.loadRTDosePlanFile"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRDReader.DicomRDReader.loadRTDosePlanFile">[docs]</a>    <span class="k">def</span> <span class="nf">loadRTDosePlanFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Load a RT Plan Dose from a Dicom file located at &quot;path&quot;. It initialize all the attributes of the class.</span>
+<span class="sd">        </span>
+<span class="sd">        :param path: Path where the dicom RD file is located.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+                
+        <span class="n">fileName</span><span class="p">,</span> <span class="n">fileExtension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fileExtension</span> <span class="o">==</span> <span class="s">&quot;.dcm&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dosePlan</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dosePlan</span><span class="o">.</span><span class="n">SOPClassUID</span><span class="p">)</span> <span class="o">!=</span> <span class="s">&#39;RT Dose Storage&#39;</span><span class="p">:</span>
+                <span class="n">strErr</span> <span class="o">=</span> <span class="s">&quot;RD file is not &#39;RT Dose Storage&#39; , but </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_dosePlan</span><span class="o">.</span><span class="n">SOPClassUID</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_array</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_nCols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataForAttribute</span><span class="p">(</span><span class="s">&#39;Columns&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_nRows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataForAttribute</span><span class="p">(</span><span class="s">&#39;Rows&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_nFrames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataForAttribute</span><span class="p">(</span><span class="s">&#39;GridFrameOffsetVector&#39;</span><span class="p">))</span>
+            <span class="k">exec</span> <span class="s">&quot;self._imagePosition = [np.</span><span class="si">%s</span><span class="s">(x) for x in self.dataForAttribute(&#39;ImagePositionPatient&#39;)]&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span>
+            <span class="k">exec</span> <span class="s">&quot;self._frameOffsetVector = [np.</span><span class="si">%s</span><span class="s">(x) for x in self.dataForAttribute(&#39;GridFrameOffsetVector&#39;)]&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span>
+            <span class="k">exec</span> <span class="s">&quot;self._imageOrientation = [np.</span><span class="si">%s</span><span class="s">(x) for x in self.dataForAttribute(&#39;ImageOrientationPatient&#39;)]&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_imageOrientation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_imageOrientation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_imageOrientation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+            <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_imageOrientation</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">)</span>
+            <span class="k">exec</span> <span class="s">&quot;self._spacing = [np.</span><span class="si">%s</span><span class="s">(x) for x in self.dataForAttribute(&#39;PixelSpacing&#39;)]&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_spacingInfo</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;rows&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_spacing</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span> <span class="s">&#39;cols&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_spacing</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="s">&#39;frames&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">_frameOffsetVector</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">}</span>
+    	    <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;File extension : </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="n">fileName</span>
+            <span class="n">strErr</span> <span class="o">=</span> <span class="s">&quot;Error : </span><span class="si">%s</span><span class="s"> files are not supported by DicomRDReader&quot;</span><span class="o">%</span><span class="n">fileExtension</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="DicomRDReader.getPath"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRDReader.DicomRDReader.getPath">[docs]</a>    <span class="k">def</span> <span class="nf">getPath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the path to the RD dicom file.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Path where the dicom RD file is located.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span>      
+  
+  
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DicomRDReader.dcmType"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRDReader.DicomRDReader.dcmType">[docs]</a>    <span class="k">def</span> <span class="nf">dcmType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">         :returns: The type of dicom reader: &#39;RT Dose Storage&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dcmType</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DicomRDReader.PixelArray"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRDReader.DicomRDReader.PixelArray">[docs]</a>    <span class="k">def</span> <span class="nf">PixelArray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the 3D numpy array of the dose distribution.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: 3D numpy array.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>    
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_array</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">exec</span> <span class="s">&quot;scale = np.</span><span class="si">%s</span><span class="s">(self.dataForAttribute(&#39;DoseGridScaling&#39;))&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_array</span> <span class="o">=</span> <span class="n">scale</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataForAttribute</span><span class="p">(</span><span class="s">&#39;pixel_array&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_array</span>
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DicomRDReader.DoseUnits"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRDReader.DicomRDReader.DoseUnits">[docs]</a>    <span class="k">def</span> <span class="nf">DoseUnits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the dose units of the dose distribution.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The value for the attribute &#39;DoseUnits&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>  
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataForAttribute</span><span class="p">(</span><span class="s">&#39;DoseUnits&#39;</span><span class="p">)</span>
+        
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DicomRDReader.SpacingInfo"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRDReader.DicomRDReader.SpacingInfo">[docs]</a>    <span class="k">def</span> <span class="nf">SpacingInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the spacing information of the dose grid.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A dictionary with keys: &#39;rows&#39;, &#39;cols&#39;,&#39;frames&#39; and values the spacings defined in the units defined in the dicom file.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>  
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spacingInfo</span>
+    
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DicomRDReader.dicomData"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRDReader.DicomRDReader.dicomData">[docs]</a>    <span class="k">def</span> <span class="nf">dicomData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get direct access to the dicom data.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The dicom data loaded using the package pydicom.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>  
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dosePlan</span>
+    
+    </div>
+<div class="viewcode-block" id="DicomRDReader.dataForAttribute"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRDReader.DicomRDReader.dataForAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">dataForAttribute</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span>  <span class="n">attribute</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the value of a given attribute ( attribute should be a string,e.g. &#39;DoseUnits&#39;) for the dose planned and</span>
+<span class="sd">        returns the value. </span>
+<span class="sd">        </span>
+<span class="sd">        :param  attribute: The attribute is a string defined in the dicom documentation (data loaded with pydicom) or specific strings:</span>
+<span class="sd">            </span>
+<span class="sd">            * **PixelArray**: returns the 3D numpy array of the dose distribution.</span>
+<span class="sd">            * **DoseUnits**: returns the dose units used in the dose distributions.</span>
+<span class="sd">            * **SpacingInfo**: returns the voxel spacing as a dictionary (spacing between &#39;rows&#39;, &#39;cols&#39; and &#39;frames&#39;).</span>
+<span class="sd">            * **EndImagePositionPatient**: Coordinates of the center of the last voxel of the volume. For example if the volume shape is (m,n,p), it returns the coordinates if the voxel (m-1,n-1,p-1) in the units defined in the spacing information.</span>
+<span class="sd">            * **ImageOrientation**: Orientation of the X,Y,Z axis in the dicom image expressed according to the columns,rows,frames. \</span>
+<span class="sd">            For example: [1,0,0,0,1,0,0,0,1] for X from left to right, Y from top to bottom and Z from front to back. This represents the unit vectors of the 3D volume in the numpy array.</span>
+<span class="sd">            </span>
+<span class="sd">        :returns: Attribute value.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>        
+        <span class="k">if</span>  <span class="n">attribute</span> <span class="o">==</span> <span class="s">&#39;PixelArray&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">PixelArray</span>
+        <span class="k">elif</span>  <span class="n">attribute</span> <span class="o">==</span> <span class="s">&#39;DoseUnits&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DoseUnits</span>
+        <span class="k">elif</span>  <span class="n">attribute</span> <span class="o">==</span>  <span class="s">&#39;SpacingInfo&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">SpacingInfo</span>
+        
+        <span class="k">elif</span>  <span class="n">attribute</span> <span class="o">==</span> <span class="s">&#39;EndImagePositionPatient&#39;</span><span class="p">:</span>
+            <span class="k">exec</span>  <span class="s">&quot;imagePosition = [np.</span><span class="si">%s</span><span class="s">(x) for x in self.dataForAttribute(&#39;ImagePositionPatient&#39;)]&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span>
+            <span class="k">exec</span> <span class="s">&quot;frameOffsetVector = [np.</span><span class="si">%s</span><span class="s">(x) for x in self.dataForAttribute(&#39;GridFrameOffsetVector&#39;)]&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span>
+            <span class="k">if</span> <span class="n">frameOffsetVector</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Error - GridFrameOffsetVector type not implemented&#39;</span><span class="p">)</span>
+            <span class="k">exec</span> <span class="s">&quot;spacing = [np.</span><span class="si">%s</span><span class="s">(x) for x in self.dataForAttribute(&#39;PixelSpacing&#39;)]&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataForAttribute</span><span class="p">(</span><span class="s">&#39;Rows&#39;</span><span class="p">))</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataForAttribute</span><span class="p">(</span><span class="s">&#39;Columns&#39;</span><span class="p">))</span>
+            <span class="n">xEnd</span> <span class="o">=</span> <span class="p">(</span><span class="n">imagePosition</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">cols</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">spacing</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">yEnd</span> <span class="o">=</span> <span class="p">(</span><span class="n">imagePosition</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">rows</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">spacing</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">zEnd</span> <span class="o">=</span> <span class="p">(</span><span class="n">imagePosition</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">frameOffsetVector</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">xEnd</span><span class="p">,</span><span class="n">yEnd</span><span class="p">,</span><span class="n">zEnd</span><span class="p">)</span>
+        <span class="k">elif</span>  <span class="n">attribute</span> <span class="o">==</span> <span class="s">&#39;ImageOrientation&#39;</span><span class="p">:</span>
+            <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_imageOrientation</span><span class="p">)</span> <span class="o">==</span> <span class="mi">9</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imageOrientation</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dosePlan</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span> 
+            </div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

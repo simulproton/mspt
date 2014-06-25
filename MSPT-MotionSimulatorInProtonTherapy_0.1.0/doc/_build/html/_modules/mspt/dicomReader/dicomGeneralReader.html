@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.dicomReader.dicomGeneralReader &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.dicomReader.dicomGeneralReader</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.dicomReader.dicomGeneralReader</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># dicomGeneralReader.py</span>
+<span class="c"># Dicom Reader Project</span>
+<span class="c"># Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee</span>
+<span class="c"># On June, 5 2012</span>
+<span class="c"># Copyright 2012, LIGM, Universite Paris-Est Marne La Vallee. All rights reserved</span>
+<span class="c">#</span>
+<span class="c">########################################################################</span>
+
+
+<span class="kn">import</span> <span class="nn">dicom</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">tools</span>
+
+<span class="kn">import</span> <span class="nn">dicomReader</span>
+<span class="kn">from</span> <span class="nn">dicomReader</span> <span class="kn">import</span> <span class="n">DicomReader</span>
+
+
+<div class="viewcode-block" id="DicomGeneralReader"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomGeneralReader.DicomGeneralReader">[docs]</a><span class="k">class</span> <span class="nc">DicomGeneralReader</span><span class="p">(</span><span class="n">DicomReader</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;A general dicom reader.</span>
+<span class="sd">    </span>
+<span class="sd">    :param path: Path to a directory where the CT slices are stored.</span>
+<span class="sd">    :param typeFloat: The type of numpy float to use. It should  be either &#39;float32&#39; or &#39;float64&#39;.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">typeFloat</span> <span class="o">=</span> <span class="s">&#39;float32&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span> <span class="o">=</span> <span class="n">typeFloat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dicomData</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">fileName</span><span class="p">,</span> <span class="n">fileExtension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fileExtension</span> <span class="o">==</span> <span class="s">&quot;.dcm&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dicomData</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_dcmType</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dicomData</span><span class="o">.</span><span class="n">SOPClassUID</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span> 
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_dcmType</span> <span class="o">=</span> <span class="s">&quot;General Dicom Storage&quot;</span>
+                
+            <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> loaded&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_dcmType</span>
+    
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DicomGeneralReader.dcmType"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomGeneralReader.DicomGeneralReader.dcmType">[docs]</a>    <span class="k">def</span> <span class="nf">dcmType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">         :returns: The type of dicom reader.</span>
+<span class="sd">    </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dcmType</span>    
+    
+
+        
+    </div>
+<div class="viewcode-block" id="DicomGeneralReader.getFrameOfReferenceUID"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomGeneralReader.DicomGeneralReader.getFrameOfReferenceUID">[docs]</a>    <span class="k">def</span> <span class="nf">getFrameOfReferenceUID</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Access the field providing the Frame of reference UID. </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_dicomData</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">frameOfRef</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">_dicomData</span><span class="o">.</span><span class="n">FrameOfReferenceUID</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">frameOfRef</span> <span class="o">=</span> <span class="s">&#39;No_FrameOfReferenceUID&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s">&quot;No Frame Of Reference UID because dicom data not loaded&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">frameOfRef</span>
+        
+
+
+        </div>
+<div class="viewcode-block" id="DicomGeneralReader.dataForAttribute"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomGeneralReader.DicomGeneralReader.dataForAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">dataForAttribute</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">attribute</span><span class="p">):</span>
+    
+        <span class="k">if</span> <span class="n">attribute</span> <span class="o">==</span> <span class="s">&#39;FrameOfReferenceUID&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getFrameOfReferenceUID</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dicomData</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            </div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

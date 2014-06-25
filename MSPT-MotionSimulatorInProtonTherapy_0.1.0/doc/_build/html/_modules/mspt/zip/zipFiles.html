@@ -1,0 +1,276 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.zip.zipFiles &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.zip.zipFiles</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.zip.zipFiles</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># zipFiles.py</span>
+<span class="c"># Proton Therapy Simulator Project</span>
+<span class="c"># Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee</span>
+<span class="c"># July 2013</span>
+<span class="c"># </span>
+<span class="c">#</span>
+<span class="c">########################################################################</span>
+
+
+
+<span class="kn">import</span> <span class="nn">zipfile</span><span class="o">,</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="createZipArchiveForFiles"><a class="viewcode-back" href="../../../mspt.zip.html#mspt.zip.zipFiles.createZipArchiveForFiles">[docs]</a><span class="k">def</span> <span class="nf">createZipArchiveForFiles</span><span class="p">(</span><span class="n">listFiles</span><span class="p">,</span> <span class="n">zipname</span><span class="p">,</span> <span class="n">rmCommonPath</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Creates a zip archive from a list of files.</span>
+<span class="sd">    </span>
+<span class="sd">    :param listFiles: list of paths to files</span>
+<span class="sd">    :param zipname: name of the archive</span>
+<span class="sd">    :param rmCommonPath: True if you want to remove the common prefixe path to all the files when they are being archived</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: A list [Bool , String], where bool is True if the zip process was achieved, False otherwise. The string correspond to an informative message.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">listFiles</span> <span class="o">==</span> <span class="p">[]:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">False</span> <span class="p">,</span> <span class="s">&#39;No files to archive... Archiving failed..&#39;</span><span class="p">]</span>
+        
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">zipname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;.zip&quot;</span><span class="p">):</span>
+        <span class="n">zipname</span> <span class="o">=</span> <span class="n">zipname</span> <span class="o">+</span> <span class="s">&#39;.zip&#39;</span>
+        
+    <span class="n">zipf</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zipname</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">,</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span><span class="p">,</span><span class="n">allowZip64</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rmCommonPath</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">listFiles</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">common</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">commonprefix</span><span class="p">(</span><span class="n">listFiles</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">common</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">listFiles</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">listFiles</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rmCommonPath</span><span class="p">:</span>
+            <span class="n">newName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">relpath</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="n">common</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">listFiles</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">newName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">zipname</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span><span class="s">&#39;/&#39;</span><span class="o">+</span> <span class="n">newName</span>
+            <span class="n">zipf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">arcname</span> <span class="o">=</span> <span class="n">newName</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">zipf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">zipf</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">[</span><span class="bp">True</span> <span class="p">,</span><span class="s">&#39;Archive </span><span class="si">%s</span><span class="s"> done&#39;</span><span class="o">%</span><span class="n">zipname</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="getFileListForDirectory"><a class="viewcode-back" href="../../../mspt.zip.html#mspt.zip.zipFiles.getFileListForDirectory">[docs]</a><span class="k">def</span> <span class="nf">getFileListForDirectory</span><span class="p">(</span> <span class="n">dirPath</span> <span class="p">,</span> <span class="n">visitSubDir</span> <span class="o">=</span> <span class="bp">True</span> <span class="p">,</span> <span class="n">listExt</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Creates a list of files from a directory path: the files are in the directory or its subdirectories.</span>
+<span class="sd">    </span>
+<span class="sd">    :param dirPath: path to the directory</span>
+<span class="sd">    :param visitSubDir: True if we list the files contained in the subdirectories</span>
+<span class="sd">    :param listExt: list of extensions, if we want to list only files with given extensions</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: A list of files.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">listFiles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dirPath</span><span class="p">):</span>
+        <span class="n">newPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirPath</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">newPath</span><span class="p">):</span>
+            <span class="k">if</span>  <span class="n">listExt</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">listFiles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newPath</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">flag</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">listExt</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">ext</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">):</span>
+                        <span class="n">ext</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="o">+</span><span class="n">ext</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">newPath</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">ext</span><span class="p">:</span>
+                        <span class="n">flag</span> <span class="o">=</span> <span class="mi">1</span>
+                        <span class="k">break</span>
+                <span class="k">if</span> <span class="n">flag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">listFiles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newPath</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">newPath</span><span class="p">)</span> <span class="ow">and</span> <span class="n">visitSubDir</span><span class="p">:</span>
+            <span class="n">subList</span> <span class="o">=</span> <span class="n">getFileListForDirectory</span><span class="p">(</span> <span class="n">newPath</span> <span class="p">,</span> <span class="n">visitSubDir</span>  <span class="p">,</span> <span class="n">listExt</span><span class="p">)</span>
+            <span class="n">listFiles</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">subList</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">listFiles</span>
+
+
+</div>
+<div class="viewcode-block" id="archiveDataFromListPath"><a class="viewcode-back" href="../../../mspt.zip.html#mspt.zip.zipFiles.archiveDataFromListPath">[docs]</a><span class="k">def</span> <span class="nf">archiveDataFromListPath</span><span class="p">(</span><span class="n">listPath</span> <span class="p">,</span> <span class="n">zipname</span><span class="p">,</span> <span class="n">goToSubDir</span> <span class="o">=</span> <span class="bp">True</span> <span class="p">,</span><span class="n">listExt</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">rmCommonPath</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;From given directory and file path create a zip archive.</span>
+<span class="sd">    </span>
+<span class="sd">    :param listPath: list of path of files and directories</span>
+<span class="sd">    :param zipname: name of the archive</span>
+<span class="sd">    :param goToSubDir: if True, when the path is a directory list the files in the subdirectories</span>
+<span class="sd">    :param listExt: list of extensions we want add in the zip archive. Files with other extensions won&#39;t be added</span>
+<span class="sd">    :param rmCommonPath: True if you want to remove the common prefixe path to all the files when they are being archived</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: Informative text on the success or the failure.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c">#Make sure that all extensions start with a &quot;.&quot;.</span>
+    <span class="k">if</span> <span class="n">listExt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">newListExt</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">listExt</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">):</span>
+                <span class="n">newExt</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="o">+</span><span class="n">item</span>
+                <span class="n">newListExt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newExt</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">newListExt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">newListExt</span> <span class="o">=</span> <span class="n">listExt</span>
+    <span class="c">#Create a list of all the files that need to be added to the archive        </span>
+    <span class="n">listFiles</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">listPath</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="n">listFiles</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">getFileListForDirectory</span><span class="p">(</span> <span class="n">path</span> <span class="p">,</span> <span class="n">goToSubDir</span> <span class="p">,</span> <span class="n">newListExt</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">newListExt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">extFile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> 
+                <span class="k">if</span> <span class="n">extFile</span> <span class="ow">in</span> <span class="n">newListExt</span><span class="p">:</span>
+                    <span class="n">listFiles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">listFiles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">success</span><span class="p">,</span><span class="n">text</span><span class="p">]</span> <span class="o">=</span> <span class="n">createZipArchiveForFiles</span><span class="p">(</span><span class="n">listFiles</span><span class="p">,</span> <span class="n">zipname</span><span class="p">,</span> <span class="n">rmCommonPath</span><span class="p">)</span>     
+    <span class="k">print</span> <span class="n">text</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

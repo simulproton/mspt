@@ -1,0 +1,41 @@
+#############################
+## Configuration file for simulation runBeamletStatic 
+#############################
+MeV = 1.602e-13 
+copyZip = False 
+ddCurves = 'RayStation' 
+displayScanPathUpdates = False 
+displaySliceOrderingInfo = False 
+dvhRelativeVolume = True 
+emailPwd = None 
+emailRecipient = None 
+emailSMTP = None 
+emailSMTPPort = None 
+emailUser = None 
+exportSliceOrderingInfo = False 
+importNewMassStopPwr = False 
+listSaveCTImageAlong = ['z'] 
+listSaveCompDoseAlong = ['z'] 
+listSaveRefDoseAlong = ['z'] 
+mainPath = '../Data_Simulation/' 
+nameCompDose = 'RD_Beamlet_CompDose_MSPT.dcm' 
+nameProfilage = 'profilagerunBeamletStatic.profile' 
+nameRefDose = 'RD_RefDose.dcm' 
+nameSimulation = 'runBeamletStatic/' 
+protPerMU = 1000000000.0 
+removeProfilageData = True 
+saveCTImage = True 
+saveCompDoseAsDcm = True 
+saveRefDose = True 
+saveRefDoseAsDcm = True 
+skipSaveBeamlets = True 
+skipSaveDeff = True 
+skipSaveDensityImage = True 
+skipSaveStpPwrImage = True 
+sliceRepaint = 'FullWeightRepainting' 
+staticDelivery = True 
+stdOutErrToFile = False 
+storeMasksAsCPKL = False 
+typeFloat = 'float64' 
+volumeRepaint = 'NonVolumetric' 
+zipSavedData = True 

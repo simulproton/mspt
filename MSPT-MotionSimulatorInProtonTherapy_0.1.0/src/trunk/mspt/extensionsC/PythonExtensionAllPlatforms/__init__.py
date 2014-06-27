@@ -242,12 +242,15 @@
                     * Row 3: corresponding relative mass Stopping Power value. 
                     * Each column corresponds to 1 type of medium: 'air','adipose,','muscle','bone' ...\
                         sorted by increasing density
+                #. tableCorrectionFactor : Table used to correct the mass stopping power.
+                        Row 0: Densities
+                        Row 1: Correction factor
  
             * Output: 
                 
                 3D numpy array in which the relative stopping power is stored.
                 
-           **float scalingFactor(float density)**
+           **float scalingFactor(float density, float * factCorrecTable, int * tableShape )**
             
                 Returns the stopping power scaling factor. It is calculated from a static table. 
   

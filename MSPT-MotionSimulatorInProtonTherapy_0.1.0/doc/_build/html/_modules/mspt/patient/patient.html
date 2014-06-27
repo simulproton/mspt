@@ -103,8 +103,24 @@
 <span class="c"># Proton Therapy Simulator Project</span>
 <span class="c"># Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee</span>
 <span class="c"># On 04/06/2012</span>
-<span class="c"># Copyright 2012, LIGM, Universite Paris-Est Marne La Vallee. All rights reserved</span>
 <span class="c">#</span>
+<span class="c"># Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France</span>
+<span class="c">#</span>
+<span class="c"># This file is part of MSPT- Motion Simulator in Proton Therapy.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator in Proton Therapy is free software: you can redistribute it and/or modify</span>
+<span class="c">#    it under the terms of the GNU General Public License as published by</span>
+<span class="c">#    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c">#    (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator in Proton Therapy is distributed in the hope that it will be useful,</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c">#    GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c">#    You should have received a copy of the GNU General Public License</span>
+<span class="c">#    along with MSPT- Motion Simulator in Proton Therapy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">##</span>
 <span class="c">########################################################################</span>
 <span class="kn">import</span> <span class="nn">tools</span> <span class="kn">as</span> <span class="nn">patientTools</span>
 <span class="kn">import</span> <span class="nn">math</span>
@@ -582,7 +598,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">convTable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stopPwrDataRef</span><span class="o">.</span><span class="n">getConversionTableStpPwrForEnergy</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">)</span>
 <span class="c">#         tStpPwr0 = time.clock()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stpPwrArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">patientTools</span><span class="o">.</span><span class="n">fillPatientStopPwr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_densityArray</span><span class="p">,</span><span class="n">convTable</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">)</span>
+        <span class="n">correcFactorTable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stopPwrDataRef</span><span class="o">.</span><span class="n">getStopPwrCorrecFactor</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stpPwrArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">patientTools</span><span class="o">.</span><span class="n">fillPatientStopPwr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_densityArray</span><span class="p">,</span><span class="n">convTable</span><span class="p">,</span><span class="n">correcFactorTable</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">)</span>
 <span class="c">#         tStpPwr1 = time.clock()</span>
 <span class="c">#         print &quot;Time Conversion to Stop Pwr Ratio (energy:%f): %s sec&quot;%(energy,str( tStpPwr1 - tStpPwr0 ))    </span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">skipSaveStpPwrImage</span><span class="p">:</span>

@@ -4,8 +4,6 @@
 # Proton Therapy Simulator Project
 # Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee
 # On 04/06/2012
-# 
-#
 #
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
@@ -23,8 +21,7 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with MSPT- Motion Simulator in Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
-#
-#
+##
 ########################################################################
 import tools as patientTools
 import math
@@ -502,7 +499,8 @@ class Patient(object):
         '''
         convTable = self._stopPwrDataRef.getConversionTableStpPwrForEnergy(energy).astype(self._globalVar.typeFloat)
 #         tStpPwr0 = time.clock()
-        self._stpPwrArray = np.ascontiguousarray(patientTools.fillPatientStopPwr(self._densityArray,convTable,self._globalVar.typeFloat),dtype=self._globalVar.typeFloat)
+        correcFactorTable = self._stopPwrDataRef.getStopPwrCorrecFactor()
+        self._stpPwrArray = np.ascontiguousarray(patientTools.fillPatientStopPwr(self._densityArray,convTable,correcFactorTable,self._globalVar.typeFloat),dtype=self._globalVar.typeFloat)
 #         tStpPwr1 = time.clock()
 #         print "Time Conversion to Stop Pwr Ratio (energy:%f): %s sec"%(energy,str( tStpPwr1 - tStpPwr0 ))    
         if not self._globalVar.skipSaveStpPwrImage:

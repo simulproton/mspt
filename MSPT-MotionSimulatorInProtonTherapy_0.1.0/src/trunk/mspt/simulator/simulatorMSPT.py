@@ -6,7 +6,6 @@
 # April 2012
 # 
 #
-#
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
 # This file is part of MSPT- Motion Simulator in Proton Therapy.
@@ -23,7 +22,6 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with MSPT- Motion Simulator in Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
-#
 #
 ########################################################################
 import sys,os,csv
@@ -152,7 +150,9 @@ class MSPT(object):
                 * **exportSliceOrderingInfo** : True to export the order and positions (in mm) of the CT dicom slices into a cszv file. False otherwise. Default: False.
                 * **storeMasksAsCPKL** : True to store binary matrices representing the patient structures (VOIs: Volumes of Interest) into cPickle structures.
                 * **protPerMU** : Number of protons per Monitor Units (MU). Default: 1e9 prot.MU-1.
-            
+                * **nameStopPwrCorrecFactor** : name of the correction factor for the stopping power to use.
+                * **importNewMassStopPwr** : True to import new mass stopping power data, False (default) otherwise.
+                * **nameDoseCorrecFactor**: name of the dose correction factor to use.
             
             * variables for dynamic deliveries:
                 

@@ -389,6 +389,13 @@
 </ul>
 </div></blockquote>
 </li>
+<li><dl class="first docutils">
+<dt>tableCorrectionFactor <span class="classifier-delimiter">:</span> <span class="classifier">Table used to correct the mass stopping power.</span></dt>
+<dd><p class="first last">Row 0: Densities
+Row 1: Correction factor</p>
+</dd>
+</dl>
+</li>
 </ol>
 </div></blockquote>
 </li>
@@ -399,7 +406,7 @@
 </li>
 </ul>
 </div></blockquote>
-<p><strong>float scalingFactor(float density)</strong></p>
+<p><strong>float scalingFactor(float density, float * factCorrecTable, int * tableShape )</strong></p>
 <blockquote>
 <div><p>Returns the stopping power scaling factor. It is calculated from a static table.</p>
 </div></blockquote>

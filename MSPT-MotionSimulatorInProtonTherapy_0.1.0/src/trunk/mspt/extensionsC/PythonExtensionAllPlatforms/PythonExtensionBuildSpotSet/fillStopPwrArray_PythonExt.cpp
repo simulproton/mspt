@@ -8,7 +8,6 @@
 # September 2012
 # 
 #
-#
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
 # This file is part of MSPT- Motion Simulator in Proton Therapy.
@@ -26,7 +25,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with MSPT- Motion Simulator in Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
 #
-##
+#
 ########################################################################
 */ 
 #include "fillStopPwrArray_PythonExt.h"
@@ -64,6 +63,9 @@ static PyObject * fillStopPwrGrid(PyObject *self, PyObject *args){
                         Row 3: corresponding relative mass Stopping Power value. 
                         Each column corresponds to 1 type of medium: 'air','adipose,','muscle','bone' ...
                         sorted by increasing density
+    tableCorrectionFactor : Table used to correct the mass stopping power.
+                        Row 0: Densities
+                        Row 1: Correction factor
  
  Output: 
     3D numpy array in which the relative stopping power is stored.
@@ -73,24 +75,31 @@ static PyObject * fillStopPwrGrid(PyObject *self, PyObject *args){
     //Initialize pointers that will receive input data
     PyArrayObject * densityGrid = NULL; 
     PyArrayObject * conversionTable = NULL;  
+    PyArrayObject * correcTable = NULL;  
  
     //Parse input args:
-    if (!PyArg_ParseTuple(args, "O!O!", 
+    if (!PyArg_ParseTuple(args, "O!O!O!", 
         &PyArray_Type,&densityGrid, 
-        &PyArray_Type,&conversionTable))  return NULL;
+        &PyArray_Type,&conversionTable,
+        &PyArray_Type,&correcTable))  return NULL;
         
     if(!densityGrid) return NULL;
     if(!conversionTable) return NULL;
+    if(!correcTable) return NULL;
 
     
     //Cast values to float values: numpy creates array with float values
     if (densityGrid->descr->type_num != NPY_FLOAT) densityGrid = (PyArrayObject*)PyArray_Cast(densityGrid,PyArray_FLOAT);
     if (conversionTable->descr->type_num != NPY_FLOAT) conversionTable = (PyArrayObject*)PyArray_Cast(conversionTable,PyArray_FLOAT);
+    if (correcTable->descr->type_num != NPY_FLOAT) correcTable = (PyArrayObject*)PyArray_Cast(correcTable,PyArray_FLOAT);
+
+
     
-    float  * dataStpPwrGrid, * dataDensGrid, * dataConversion;
+    float  * dataStpPwrGrid, * dataDensGrid, * dataConversion, * dataCorrecTable;
     
     dataDensGrid = (float*) densityGrid -> data;  
     dataConversion = (float*) conversionTable -> data; 
+    dataCorrecTable = (float*) correcTable -> data; 
    
     int nbColsConvTab = conversionTable->dimensions[1];
   
@@ -99,6 +108,9 @@ static PyObject * fillStopPwrGrid(PyObject *self, PyObject *args){
     int nbColsDens = densityGrid-> dimensions[2];
     int dimGrid[] ={nbFramesDens,nbRowsDens,nbColsDens} ;
     
+    int shapeCorrecTable[2];
+    shapeCorrecTable[0] = correcTable->dimensions[0];
+    shapeCorrecTable[1] = correcTable->dimensions[1];
     
       
     // create output grid
@@ -184,7 +196,7 @@ static PyObject * fillStopPwrGrid(PyObject *self, PyObject *args){
                         }
                     }
                 }
-            dataStpPwrGrid[ idx ] = convertedValue * densValueMass * scalingFactor(densValueMass); // if converted value is mass stopping power ratio
+            dataStpPwrGrid[ idx ] = convertedValue * densValueMass * scalingFactor(densValueMass,dataCorrecTable,shapeCorrecTable); // if converted value is mass stopping power ratio
             if (convertedValue < 0 ){
                     printf("Before exit: idx = %i, converted Value= %f , Dens Value = %f , minDensity = %f , max Density = %f \n",idx,convertedValue,densValue,dataConversion[0],dataConversion[1 * nbColsConvTab+nbColsConvTab-1]);
                     PyErr_SetString(PyExc_ValueError,"Wrong Smw value < 0 ");
@@ -199,20 +211,31 @@ static PyObject * fillStopPwrGrid(PyObject *self, PyObject *args){
 }
 
 
-float scalingFactor(float density){
+float scalingFactor(float density , float * factCorrecTable, int * tableShape){
+    /*
+        density : density in g.cm-3
+        factCorrecTable : table containing the correction factors
+        tableShape: shape (rows , columns) of factCorrecTable. It should be (2,n)
+
+    */
+    
 
     if(density <= 0 || density > BONE_HIGH){
         PyErr_SetString(PyExc_ValueError,"Density < 0 density > BONE_HIGH or in fillStopPwrArray\n");
         
     }
-    float  lDens[] = {0.01,	0.05,	0.1,	0.15,	0.2,	0.25,	0.3,	0.35,	0.4,	0.45,	0.5,	0.825,	0.85,	0.857,	0.9,	0.925,	0.95,	0.975,  0.975,	1.0,	1.025,	1.05,	1.075,	1.1,	1.14,	1.16,	1.2,	1.25,	1.3,	1.35,	1.4,	1.45,	1.5};
-    float  lFact[] = {15.0,	5.48,	1.9,	1.7,	1.4,	1.28,	1.22,	1.18,	1.16,	1.17,	1.11,	1.12,	1.04,	1.02,	1.04,	1.019,	1.03,	1.05,	1.0,    1.0,	1.0,	1.06,	1.03,	1.03,	1.02,	1.02,	1.02,	1.03,	1.04,	1.04,	1.05,	1.05,	1.04};
-    int lenList = 33;
+//     float  lDens[] = {0.01,	0.05,	0.1,	0.15,	0.2,	0.25,	0.3,	0.35,	0.4,	0.45,	0.5,	0.825,	0.85,	0.857,	0.9,	0.925,	0.95,	0.975,  0.976,	1.0,	1.025,	1.05,	1.075,	1.1,	1.14,	1.16,	1.2,	1.25,	1.3,	1.35,	1.4,	1.45,	1.5};
+//     float  lFact[] = {15.0,	5.48,	1.9,	1.7,	1.4,	1.28,	1.22,	1.18,	1.16,	1.17,	1.11,	1.12,	1.04,	1.02,	1.04,	1.019,	1.03,	1.05,	1.0,    1.0,	1.0,	1.06,	1.03,	1.03,	1.02,	1.02,	1.02,	1.03,	1.04,	1.04,	1.05,	1.05,	1.04};
+//     int lenList = 33;
 
-
-    return interpList(density,lDens, lFact , lenList);
-    
+    if (factCorrecTable && tableShape){ 
+        int lenList = tableShape[1]; // Number of columns
+        float * lDens = factCorrecTable;
+        float * lFact = factCorrecTable + lenList;
+        return interpList(density,lDens, lFact , lenList);
+    }
     return 1.0;
+    
 }
 
 

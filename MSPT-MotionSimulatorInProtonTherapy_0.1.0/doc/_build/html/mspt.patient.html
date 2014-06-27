@@ -788,7 +788,7 @@ dicomRDReader.</p>
 
 <dl class="function">
 <dt id="mspt.patient.tools.fillPatientStopPwr">
-<tt class="descclassname">mspt.patient.tools.</tt><tt class="descname">fillPatientStopPwr</tt><big>(</big><em>densGrid</em>, <em>conversionTable</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/patient/tools.html#fillPatientStopPwr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.patient.tools.fillPatientStopPwr" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">mspt.patient.tools.</tt><tt class="descname">fillPatientStopPwr</tt><big>(</big><em>densGrid</em>, <em>conversionTable</em>, <em>correcFactorTable</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/patient/tools.html#fillPatientStopPwr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.patient.tools.fillPatientStopPwr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls the C extension: fillStopPwrArray_PythonExt and returns its result.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -797,6 +797,7 @@ dicomRDReader.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>densGrid</strong> &#8211; 3D grid of densiy values</li>
 <li><strong>conversionTable</strong> &#8211; table used for the conversion from density to relative stopping power. Array of 3 rows and 4 columns. Row 0 : lowest bound of the density values for each medium,     Row 1 : upper bound of the density values for each medium , Row 3: corresponding Stopping Power value. Each column correspond to 1 type of medium.</li>
+<li><strong>correcFactorTable</strong> &#8211; Table 2 rows, n columns representing the correction factor used for the mass stopping power.</li>
 <li><strong>typeFloat</strong> &#8211; &#8216;float32&#8217; or &#8216;float64&#8217;. It it the numpy float type to be used.</li>
 </ul>
 </td>

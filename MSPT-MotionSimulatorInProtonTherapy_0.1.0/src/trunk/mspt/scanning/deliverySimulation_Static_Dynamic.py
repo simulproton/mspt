@@ -7,7 +7,6 @@
 # June 2013
 # 
 #
-#
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
 # This file is part of MSPT- Motion Simulator in Proton Therapy.
@@ -24,7 +23,6 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with MSPT- Motion Simulator in Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
-#
 #   
 ########################################################################
 
@@ -703,7 +701,7 @@ class simulatorDelivery(object):
                     #Find Bragg Peak
                     self.findBraggPeak(computedDose, self._radiolDepth)
         
-                    correcFactor =  doseCorrectionFactor(T0)
+                    correcFactor =  self._ddCurvesData.doseCorrectionFactor(T0)
 
                     weightedDose = (weightLoop * computedDose * (self._protPerMU / (nbProtons)) *correcFactor )
                     
@@ -1401,22 +1399,5 @@ def beamletSimul(rhomw,Smw,Xr,Yr,Zr,dmax,z_dd,dd,sig0,xrshift,yrshift,sad,ssd0,D
     else:
         return _beamletSimulationDouble.beamletSimulDouble(rhomw,Smw,Xr,Yr,Zr,dmax,z_dd,dd,sig0,xrshift,yrshift,sad,ssd0,Deff,indicesRay,x0y0z0_IECF,IECFSpacing,rotMatrixInv)
 
-def doseCorrectionFactor( energy):
-    '''Function created to match RayStation absolute dose. It uses a linear interpolation to obtain a multiplicative dose correction factor for an energy.
-    
-    The function has been obtained by measuring the ratio between the dose obtained in RayStation and in our simulator
-    for single beamlets in water for energies ranging from 30MeV to 245MeV.
-    
-    :param energy: energy in MeV
-    
-    :returns: The correction factor
-    
-    '''
-    
-    listCoeff = [1.926,	1.346,	1.215,	1.155,	1.117,	1.090,	1.070,	1.055,	1.044,	1.034,	1.026,	1.019,	1.014,	1.008,	1.004,	0.999,	0.995,	0.992,	0.989,	0.986,	0.983,	0.980,	0.977,	0.974,	0.972,	0.969,	0.966,	0.964,	0.961,	0.959,	0.956,	0.954,	0.951,	0.949,	0.947,	0.944,	0.942,	0.939,	0.937,	0.934,	0.932,	0.930,	0.927,	0.923,	0.920,	0.918]
-    listEner =   [20.1    ,	25.1    ,	30.1    ,	35.1    ,	40.1    ,	45.1    ,	50.1    ,	55.1    ,	60.1    ,	65.09   ,	70.09   ,	75.09   ,	80.09   ,	85.09   ,	90.09   ,	95.09   ,	100.09  ,	105.09  ,	110.09  ,	115.09  ,	120.09  ,	125.09  ,	130.09  ,	135.09  ,	140.09  ,	145.09  ,	150.09  ,	155.09  ,	160.09  ,	165.09  ,	170.09  ,	175.09  ,	180.09  ,	185.09  ,	190.09  ,	195.09  ,	200.09  ,	205.09  ,	210.09  ,	215.09  ,	220.09  ,	225.09  ,	230.09  ,	235.09  ,	240.09  ,	245.09]
-    f = interp1d(listEner, listCoeff, kind='linear',bounds_error=False,fill_value = 1.0)
-    factor = f(energy)
-    return factor
 
     

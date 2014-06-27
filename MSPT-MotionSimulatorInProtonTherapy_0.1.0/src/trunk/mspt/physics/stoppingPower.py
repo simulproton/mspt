@@ -5,7 +5,6 @@
 # Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee
 # On 06/04/2012
 #
-#
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
 # This file is part of MSPT- Motion Simulator in Proton Therapy.
@@ -22,7 +21,6 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with MSPT- Motion Simulator in Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
-#
 ##
 ########################################################################
 import numpy as np
@@ -39,6 +37,9 @@ globalListFilenamesMassStopWater= ['/RefData/MassStoppingPower_PSTAR/MassStopPwr
 
 patternFilenames = 'MassStopPwrData-*.txt'
 
+pathToCorrecFactor = '/RefData/CorrecFactor_StopPwr/'
+patternFilenameCorrecFactor = 'dataCorrecFactorStopPwr_*.txt'
+
 class StoppingPower(object):
     '''
     The stopping power data has been extracted from the `PSTAR database <http://physics.nist.gov/PhysRefData/Star/Text/PSTAR.html>`_ 
@@ -47,6 +48,8 @@ class StoppingPower(object):
     Mandatory key:
         
         * 'typeFloat': type of numpy float to use: 'float32' or 'float64'.
+        * 'nameStopPwrCorrecFactor' : name of the correction factor for the mass stopping power to use.
+        * 'importNewMassStopPwr' : True to use new stopping power data, false otherwise. Default is False
     
     .. note::
     
@@ -64,8 +67,23 @@ class StoppingPower(object):
             #. Once all the files have been created (1 per medium!), add these files into the folder *MSPT-MotionSimulatorInProtonTherapy/src/trunk/RefData/MassStoppingPower_NewData/*
             #. Set the configuration variable *importNewMassStopPwr* to True to be able to use this new mass stopping power data.
     
+   
+    .. note::
     
-    
+        To use another correction factor for the stopping power:
+        
+            #. Create a table with 2 columns into a tab delimited '.txt' file:
+                
+                #. The fist line must contains the headers: 1st column: 'Density', 2nd column: Correction factor
+                #. Then, for each new line:  1st column: the density in g/cm3 , 2nd column: the corresponding correction factor unitless.
+                #. The filename must respect this pattern: 'dataCorrecFactorStopPwr_NAMEDATA.txt' where 'NAMEDATA' will be the name \
+                you want to give to this data. For example, by default the name for the correction factors used in MSPT is 'MSPT', so the file name is 'dataCorrecFactorStopPwr_MSPT.txt'
+            
+            #. Place the file in the folder *MSPT-MotionSimulatorInProtonTherapy/src/trunk/RefData/CorrecFactor_StopPwr/*
+            #. Set the MSPT configuration variable *nameStopPwrCorrecFactor* to 'NAMEDATA'
+            
+        And you're done!
+            
     '''
 
 
@@ -82,6 +100,8 @@ class StoppingPower(object):
         if self._globalVar.importNewMassStopPwr:
             self.importNewStopPwrData()
         self.precomputeMassStopPowerRatios()
+        self.importCorrecStopPwrData()
+        
 
 
         
@@ -183,6 +203,42 @@ class StoppingPower(object):
             return # stop after the first level of files has been processed
 
 
+    def importCorrecStopPwrData(self):
+        '''Function used to import stopping power correction factor data. It scans the folder */RefData/CorrecFactor_StopPwr/*\. 
+        
+        Each file matching the pattern 'dataCorrecFactorStopPwr_NAMEDATA.txt'.\
+        NAMEDATA must also be provided by the mspt global variable : nameStopPwrCorrecFactor = 'NAMEDATA'
+        
+        '''
+             
+             
+        dirPath = os.getcwd()+'/RefData/CorrecFactor_StopPwr/'
+        print "#### Importing correction factor stopping power ####"
+        self._CorrecFactorTable = None
+        for r,d,f in os.walk(dirPath):
+            for files in f:
+                if fnmatch.fnmatch(files, patternFilenameCorrecFactor):
+                    nameData = os.path.splitext(files)[0].split('dataCorrecFactorStopPwr_')[1]
+                    if nameData == self._globalVar.nameStopPwrCorrecFactor:
+                        filename = os.path.join(r,files)
+                        loadedArray = np.loadtxt(filename,dtype="|S",delimiter='\t',skiprows = 1,usecols=(0,1))
+                        loadedArray = loadedArray.astype(self._globalVar.typeFloat)
+                        loadedArray = loadedArray.transpose()
+                        loadedArray.view('%s,%s'%(self._globalVar.typeFloat,self._globalVar.typeFloat)).sort(order=['f1'], axis=0)
+                        print "Stopping power correction factor %s imported"%nameData
+                        self._CorrecFactorTable = np.array(loadedArray,dtype = self._globalVar.typeFloat, order = 'C')
+            if self._CorrecFactorTable is None:
+                print "Correction factor data (stopping power) for name : %s , has not been found"%self._globalVar.nameStopPwrCorrecFactor
+                raise ValueError('Error - No stopping power correction factor data has been found in /RefData/CorrecFactor_StopPwr/. Please check the data and try again..')
+            print "#### End Importing correction factor mass stopping power ####"
+            return # stop after the first level of files has been processed
+
+
+    def getStopPwrCorrecFactor(self):
+        '''Get the stopping power correction factor table
+        
+        '''
+        return self._CorrecFactorTable
             
     def precomputeMassStopPowerRatios(self):
         '''Compute relative mass stopping power (relative to water). For each medium divide the mass stopping power \

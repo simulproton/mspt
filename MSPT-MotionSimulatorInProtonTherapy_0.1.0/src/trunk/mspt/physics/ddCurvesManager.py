@@ -4,8 +4,6 @@
 # Proton Therapy Simulator Project
 # Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee
 # Jan 13 2014
-# 
-#
 #
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
@@ -38,6 +36,8 @@ patternEnerDigit2 = 16
 patternEnerDigit3 = 18
 patternEnerDigit4 = 19
 
+patternDoseCorrecFile = 'doseCorrecFactor_MSPT.txt'
+
 
 class DDCurves(object):
     '''Class managing the depth dose curves used in MSPT.
@@ -47,6 +47,7 @@ class DDCurves(object):
         
         * 'ddCurves' : The type of Depth-Dose curves to use. In MSPT only RayStation DD curves are available.
         * 'typeFloat': type of numpy float to use: 'float32' or 'float64'.
+        * 'nameDoseCorrecFactor': name of the dose correction factor to use.
     
     .. note::
     
@@ -66,6 +67,22 @@ class DDCurves(object):
             #. To use these depth-dose curves set the variable *ddCurves*, of the configuration file, to 'NAME_NEWFOLDER'.
             
     
+    
+    .. note::
+    
+        If one wants to modify the dose corrections factors:
+        
+            #. Create a table with 2 columns into a tab delimited '.txt' file:
+                
+                #. Then fist line must contains the headers: 1st column: 'Energy', 2nd column: 'Factor'
+                #. Then, for each new line:  1st column: the energy in MeV , 2nd column: the corresponding correction factor unitless.
+                #. The filename must respect this pattern: 'doseCorrecFactor__NAMEDATA.txt' where 'NAMEDATA' will be the name \
+                you want to give to this data. For example, by default the name for the correction factors used in MSPT is 'MSPT', so the file name is 'doseCorrecFactor_MSPT.txt'
+            
+            #. Place the file in the folder *MSPT-MotionSimulatorInProtonTherapy/src/trunk/RefData/DoseCorrecFactor/*
+            #. Set the MSPT configuration variable *nameDoseCorrecFactor* to 'NAMEDATA'
+            
+        And you're done!
     
     '''
 
@@ -92,6 +109,7 @@ class DDCurves(object):
         self._funcEnergyvsBP = None #Function Energy = f(BP)
         self._funcDoseAtBPVsEnergy = None # Function DoseAtBP = f(Energy)
         self._listEnergies = np.array(self._lookupTable.keys())
+        self.loadDoseCorrectionFactor()
         
         
         
@@ -470,8 +488,58 @@ class DDCurves(object):
             return lookupTable# stop after the first level of files has been processed
                
 
+    def loadDoseCorrectionFactor(self):
+    
+        '''Function used to import dose correction factor data. It scans the folder */RefData/DoseCorrecFactor/*\. 
+        
+        Each file matching the pattern 'doseCorrecFactor_NAMEDATA.txt'.\
+        NAMEDATA must also be provided by the mspt global variable : nameDoseCorrecFactor = 'NAMEDATA'
+        
+        '''
+        dirPath = os.getcwd()+'/RefData/DoseCorrecFactor/'
+        print "#### Importing dose correction factor ####"
+        self._DoseCorrecFactor = None
+        self._funcInterpDoseCorrec = None
+        for r,d,f in os.walk(dirPath):
+            for files in f:
+                if fnmatch.fnmatch(files, patternDoseCorrecFile):
+                    nameData = os.path.splitext(files)[0].split('doseCorrecFactor_')[1]
+                    if nameData == self._globalVar.nameDoseCorrecFactor:
+                        filename = os.path.join(r,files)
+                        loadedArray = np.loadtxt(filename,dtype="|S",delimiter='\t',skiprows = 1,usecols=(0,1))
+                        loadedArray = loadedArray.astype(self._globalVar.typeFloat)
+                        loadedArray = loadedArray.transpose()
+                        loadedArray.view('%s,%s'%(self._globalVar.typeFloat,self._globalVar.typeFloat)).sort(order=['f1'], axis=0)
+                        print "Dose correction factor %s imported"%nameData
+                        self._DoseCorrecFactor = np.array(loadedArray,dtype = self._globalVar.typeFloat, order = 'C')
+            print "YOYO"
+            if self._DoseCorrecFactor is None:
+                print "Correction factor data (dose) for name : %s , has not been found"%self._globalVar.nameMassStopPwrCorrecFactor
+                raise ValueError('Error - No dose correction factor data has been found in /RefData/DoseCorrecFactor/. Please check the data and try again..')
+            print "#### End Importing dose correction factor ####"
+            return # stop after the first level of files has been processed
 
 
+    def doseCorrectionFactor(self, energy):
+        '''Function created to match RayStation absolute dose. It uses a linear interpolation to obtain a multiplicative dose correction factor for an energy.
+    
+        The function has been obtained by measuring the ratio between the dose obtained in RayStation and in our simulator
+        for single beamlets in water for energies ranging from 30MeV to 245MeV.
+    
+        :param energy: energy in MeV
+    
+        :returns: The correction factor
+    
+        '''
+    
+#         listCoeff = [1.926,	1.346,	1.215,	1.155,	1.117,	1.090,	1.070,	1.055,	1.044,	1.034,	1.026,	1.019,	1.014,	1.008,	1.004,	0.999,	0.995,	0.992,	0.989,	0.986,	0.983,	0.980,	0.977,	0.974,	0.972,	0.969,	0.966,	0.964,	0.961,	0.959,	0.956,	0.954,	0.951,	0.949,	0.947,	0.944,	0.942,	0.939,	0.937,	0.934,	0.932,	0.930,	0.927,	0.923,	0.920,	0.918]
+#         listEner =   [20.1    ,	25.1    ,	30.1    ,	35.1    ,	40.1    ,	45.1    ,	50.1    ,	55.1    ,	60.1    ,	65.09   ,	70.09   ,	75.09   ,	80.09   ,	85.09   ,	90.09   ,	95.09   ,	100.09  ,	105.09  ,	110.09  ,	115.09  ,	120.09  ,	125.09  ,	130.09  ,	135.09  ,	140.09  ,	145.09  ,	150.09  ,	155.09  ,	160.09  ,	165.09  ,	170.09  ,	175.09  ,	180.09  ,	185.09  ,	190.09  ,	195.09  ,	200.09  ,	205.09  ,	210.09  ,	215.09  ,	220.09  ,	225.09  ,	230.09  ,	235.09  ,	240.09  ,	245.09]
+        if self._funcInterpDoseCorrec is None:
+            listCoeff = self._DoseCorrecFactor[1]
+            listEner = self._DoseCorrecFactor[0]
+            self._funcInterpDoseCorrec = interp1d(listEner, listCoeff, kind='linear',bounds_error=False,fill_value = 1.0)
+        factor = self._funcInterpDoseCorrec(energy)
+        return factor
 
 
 

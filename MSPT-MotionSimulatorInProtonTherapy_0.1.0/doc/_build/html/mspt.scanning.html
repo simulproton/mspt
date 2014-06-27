@@ -146,24 +146,6 @@
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.doseCorrectionFactor">
-<tt class="descclassname">mspt.scanning.deliverySimulation_Static_Dynamic.</tt><tt class="descname">doseCorrectionFactor</tt><big>(</big><em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#doseCorrectionFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.doseCorrectionFactor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function created to match RayStation absolute dose. It uses a linear interpolation to obtain a multiplicative dose correction factor for an energy.</p>
-<p>The function has been obtained by measuring the ratio between the dose obtained in RayStation and in our simulator
-for single beamlets in water for energies ranging from 30MeV to 245MeV.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>energy</strong> &#8211; energy in MeV</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The correction factor</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <dl class="class">
 <dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery">
 <em class="property">class </em><tt class="descclassname">mspt.scanning.deliverySimulation_Static_Dynamic.</tt><tt class="descname">simulatorDelivery</tt><big>(</big><em>patient</em>, <em>ddCurvesData</em>, <em>configData</em>, <em>motion=None</em>, <em>monitor=None</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery" title="Permalink to this definition">¶</a></dt>

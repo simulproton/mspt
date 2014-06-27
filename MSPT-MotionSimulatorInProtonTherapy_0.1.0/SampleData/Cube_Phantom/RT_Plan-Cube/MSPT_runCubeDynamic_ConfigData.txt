@@ -62,4 +62,6 @@ unitTimeForDelivery = 0.001
 unlimitedRescanning = False 
 verticalScanningSpeed = 1000 
 volumeRepaint = 'NonVolumetric' 
-zipSavedData = True 
+zipSavedData = True
+nameDoseCorrecFactor = 'MSPT' 
+nameMassStopPwrCorrecFactor = 'MSPT'

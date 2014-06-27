@@ -120,6 +120,7 @@
 <ul class="simple">
 <li>&#8216;ddCurves&#8217; : The type of Depth-Dose curves to use. In MSPT only RayStation DD curves are available.</li>
 <li>&#8216;typeFloat&#8217;: type of numpy float to use: &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+<li>&#8216;nameDoseCorrecFactor&#8217;: name of the dose correction factor to use.</li>
 </ul>
 </td>
 </tr>
@@ -146,6 +147,28 @@
 </li>
 </ol>
 </div></blockquote>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If one wants to modify the dose corrections factors:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Create a table with 2 columns into a tab delimited &#8216;.txt&#8217; file:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Then fist line must contains the headers: 1st column: &#8216;Energy&#8217;, 2nd column: &#8216;Factor&#8217;</li>
+<li>Then, for each new line:  1st column: the energy in MeV , 2nd column: the corresponding correction factor unitless.</li>
+<li>The filename must respect this pattern: &#8216;doseCorrecFactor__NAMEDATA.txt&#8217; where &#8216;NAMEDATA&#8217; will be the name                 you want to give to this data. For example, by default the name for the correction factors used in MSPT is &#8216;MSPT&#8217;, so the file name is &#8216;doseCorrecFactor_MSPT.txt&#8217;</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Place the file in the folder <em>MSPT-MotionSimulatorInProtonTherapy/src/trunk/RefData/DoseCorrecFactor/</em></p>
+</li>
+<li><p class="first">Set the MSPT configuration variable <em>nameDoseCorrecFactor</em> to &#8216;NAMEDATA&#8217;</p>
+</li>
+</ol>
+</div></blockquote>
+<p class="last">And you&#8217;re done!</p>
 </div>
 <dl class="method">
 <dt id="mspt.physics.ddCurvesManager.DDCurves.buildFuncBPvsEner">
@@ -194,6 +217,24 @@
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The data.</p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.doseCorrectionFactor">
+<tt class="descname">doseCorrectionFactor</tt><big>(</big><em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.doseCorrectionFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.doseCorrectionFactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function created to match RayStation absolute dose. It uses a linear interpolation to obtain a multiplicative dose correction factor for an energy.</p>
+<p>The function has been obtained by measuring the ratio between the dose obtained in RayStation and in our simulator
+for single beamlets in water for energies ranging from 30MeV to 245MeV.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>energy</strong> &#8211; energy in MeV</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The correction factor</td>
 </tr>
 </tbody>
 </table>
@@ -276,6 +317,13 @@
 <li><em>&#8216;EnergyRemaining&#8217;</em> : Remaining energy along the depth</li>
 </ul>
 </div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.loadDoseCorrectionFactor">
+<tt class="descname">loadDoseCorrectionFactor</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.loadDoseCorrectionFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.loadDoseCorrectionFactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to import dose correction factor data. It scans the folder <em>/RefData/DoseCorrecFactor/</em>.</p>
+<p>Each file matching the pattern &#8216;doseCorrecFactor_NAMEDATA.txt&#8217;.        NAMEDATA must also be provided by the mspt global variable : nameDoseCorrecFactor = &#8216;NAMEDATA&#8217;</p>
 </dd></dl>
 
 <dl class="method">
@@ -464,6 +512,8 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>configData</strong> &#8211; <p>dictionary (globalVariables) storing the data configuring the simulator.     Mandatory key:</p>
 <ul class="simple">
 <li>&#8216;typeFloat&#8217;: type of numpy float to use: &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+<li>&#8216;nameStopPwrCorrecFactor&#8217; : name of the correction factor for the mass stopping power to use.</li>
+<li>&#8216;importNewMassStopPwr&#8217; : True to use new stopping power data, false otherwise. Default is False</li>
 </ul>
 </td>
 </tr>
@@ -490,6 +540,28 @@
 </li>
 </ol>
 </div></blockquote>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>To use another correction factor for the stopping power:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Create a table with 2 columns into a tab delimited &#8216;.txt&#8217; file:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The fist line must contains the headers: 1st column: &#8216;Density&#8217;, 2nd column: Correction factor</li>
+<li>Then, for each new line:  1st column: the density in g/cm3 , 2nd column: the corresponding correction factor unitless.</li>
+<li>The filename must respect this pattern: &#8216;dataCorrecFactorStopPwr_NAMEDATA.txt&#8217; where &#8216;NAMEDATA&#8217; will be the name                 you want to give to this data. For example, by default the name for the correction factors used in MSPT is &#8216;MSPT&#8217;, so the file name is &#8216;dataCorrecFactorStopPwr_MSPT.txt&#8217;</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Place the file in the folder <em>MSPT-MotionSimulatorInProtonTherapy/src/trunk/RefData/CorrecFactor_StopPwr/</em></p>
+</li>
+<li><p class="first">Set the MSPT configuration variable <em>nameStopPwrCorrecFactor</em> to &#8216;NAMEDATA&#8217;</p>
+</li>
+</ol>
+</div></blockquote>
+<p class="last">And you&#8217;re done!</p>
 </div>
 <dl class="method">
 <dt id="mspt.physics.stoppingPower.StoppingPower.buildMediumToTable">
@@ -545,6 +617,19 @@
 <p class="first admonition-title">Note</p>
 <p class="last">Mass stopping power [MeV.cm^-1 / (g.cm^-3)] = [MeV.cm^2.g^-1]</p>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.stoppingPower.StoppingPower.getStopPwrCorrecFactor">
+<tt class="descname">getStopPwrCorrecFactor</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower.getStopPwrCorrecFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower.getStopPwrCorrecFactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the stopping power correction factor table</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.stoppingPower.StoppingPower.importCorrecStopPwrData">
+<tt class="descname">importCorrecStopPwrData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower.importCorrecStopPwrData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower.importCorrecStopPwrData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to import stopping power correction factor data. It scans the folder <em>/RefData/CorrecFactor_StopPwr/</em>.</p>
+<p>Each file matching the pattern &#8216;dataCorrecFactorStopPwr_NAMEDATA.txt&#8217;.        NAMEDATA must also be provided by the mspt global variable : nameStopPwrCorrecFactor = &#8216;NAMEDATA&#8217;</p>
 </dd></dl>
 
 <dl class="method">

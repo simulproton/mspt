@@ -26,20 +26,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with MSPT- Motion Simulator in Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
 #
-#
-########################################################################
-
-
-########################################################################
-#
-# Description:
-#  
-# 
-# 
-#               
-#               
-# 
-#
 ########################################################################
 import numpy as np
 
@@ -266,12 +252,13 @@ def fillPatientCT(ctGrid,newShape,indStart,typeFloat):
         return _fillCTArrayDouble.fillCTGrid(ctGrid,newShape,indStart)
         
             
-def fillPatientStopPwr(densGrid,conversionTable,typeFloat):
+def fillPatientStopPwr(densGrid,conversionTable,correcFactorTable,typeFloat):
     '''Calls the C extension: fillStopPwrArray_PythonExt and returns its result.
 
     :param densGrid: 3D grid of densiy values
     :param conversionTable: table used for the conversion from density to relative stopping power. Array of 3 rows and 4 columns. Row 0 : lowest bound of the density values for each medium, \
     Row 1 : upper bound of the density values for each medium , Row 3: corresponding Stopping Power value. Each column correspond to 1 type of medium.
+    :param correcFactorTable: Table 2 rows, n columns representing the correction factor used for the mass stopping power.
     :param typeFloat: 'float32' or 'float64'. It it the numpy float type to be used.
     
     .. note::
@@ -305,17 +292,29 @@ def fillPatientStopPwr(densGrid,conversionTable,typeFloat):
         raise Exception(strErr)
     if conversionTable.dtype != datatest:
         raise Exception('In fillSpotsetStopPwr, conversionTable is not *Float* NumPy array')
+
+    test=np.zeros(correcFactorTable.shape,dtype=typeFloat)
+    typetest= type(test)
+    datatest=test.dtype    
+    if type(correcFactorTable) != typetest:
+        raise Exception('In fillSpotsetStopPwr, correcFactorTable is not *NumPy* array')
+    if correcFactorTable.shape  != test.shape :
+        strErr = 'In fillSpotsetStopPwr, correcFactorTable is not a *2 x %i* Numpy array'%correcFactorTable.shape[1]
+        raise Exception(strErr)
+    if correcFactorTable.dtype != datatest:
+        raise Exception('In fillSpotsetStopPwr, correcFactorTable is not *Float* NumPy array')
+
     
-    for idx,name in enumerate(['densGrid','conversionTable']):
+    for idx,name in enumerate(['densGrid','conversionTable','correcFactorTable']):
         item = eval(name)
         if not item.flags['C_CONTIGUOUS']:
             strErr = 'In fillSpotsetStopPwr, '+str(name) +' is not *C-Contiguous* NumPy array'
             raise ValueError(strErr)
         
     if typeFloat == 'float32':
-        return _fillStopPwrArray.fillStopPwrGrid(densGrid,conversionTable)
+        return _fillStopPwrArray.fillStopPwrGrid(densGrid,conversionTable,correcFactorTable)
     else:
-        return _fillStopPwrArrayDouble.fillStopPwrGrid(densGrid,conversionTable)
+        return _fillStopPwrArrayDouble.fillStopPwrGrid(densGrid,conversionTable,correcFactorTable)
     
 def calcRadiolDepth(stPwrGrid,startVec,incVec,sourceVec,typeFloat):
     '''Calls the C extension: calcRadiolDepth_PythonExt and returns its result.

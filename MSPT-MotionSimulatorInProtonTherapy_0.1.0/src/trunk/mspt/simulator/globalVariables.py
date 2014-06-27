@@ -3,9 +3,8 @@
 # globalVariables.py
 # Proton Therapy Simulator Project
 # Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee
-# July 2013
+# July 2013 - Modified Jan 13 2014
 # 
-#
 #
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
@@ -24,7 +23,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with MSPT- Motion Simulator in Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
 #
-#
 ########################################################################
 import numpy as np
 import traceback
@@ -35,8 +33,8 @@ listAuthorizedKeys = ['MeV', 'typeFloat', 'removeProfilageData', 'stdOutErrToFil
 'listSaveDeffAlong', 'saveDeffCPKL', 'saveCTImage', 'listSaveCTImageAlong', 'skipSaveDensityImage', 'listSaveDensImAlong', 'saveDensCPKL', \
 'skipSaveStpPwrImage', 'listSaveStPwrImAlong', 'saveStpPwrCPKL', 'skipSaveBeamlets', 'saveBeamletsCPKL', 'displaySliceOrderingInfo',\
 'exportSliceOrderingInfo', 'saveCompDoseAsDcm', 'nameCompDose', 'saveRefDoseAsDcm', 'nameRefDose', 'storeMasksAsCPKL' , 'emailUser', \
-'emailPwd', 'emailSMTP', 'emailSMTPPort', 'emailRecipient', 'protPerMU', 'dvhRelativeVolume', 'importNewMassStopPwr', 'nameSimulation',\
-'nameProfilage', 'sliceRepaint', 'volumeRepaint', 'ctPadding', 'padValueFRC', 'paddedCTValue', 'storeInterDoseDens', 'motionDuringBeam', \
+'emailPwd', 'emailSMTP', 'emailSMTPPort', 'emailRecipient', 'protPerMU', 'dvhRelativeVolume', 'importNewMassStopPwr','nameStopPwrCorrecFactor', 'nameSimulation',\
+'nameDoseCorrecFactor','nameProfilage', 'sliceRepaint', 'volumeRepaint', 'ctPadding', 'padValueFRC', 'paddedCTValue', 'storeInterDoseDens', 'motionDuringBeam', \
 'compensationDynamic', 'unlimitedRescanning', 'repaintingFactor', 'sliceRepaint', 'volumeRepaint', 'findStartPos', 'NameNewRPFile', \
 'measurementStdev', 'measurementAvg', 'addMargins', 'marginsParam', 'updateMargins', 'evaluateDiffStatDyna', 'arrayPeriod', \
 'arrayAmpl', 'arrayPhase', 'typeMotion', 'breathingPeriod', 'magnitude', 'initialPhase', 'arrayStDevPeriod', 'arrayStDevAmpl', \
@@ -308,6 +306,15 @@ class GlobalVariables(dict):
             print "'importNewMassStopPwr' set to default:  False"
             print "\t\t-------------------"              
             
+        if 'nameStopPwrCorrecFactor' not in self:
+            self['nameStopPwrCorrecFactor'] = 'MSPT'
+            print "'nameStopPwrCorrecFactor' set to default:  'MSPT'"
+            print "\t\t-------------------"                        
+            
+        if 'nameDoseCorrecFactor' not in self:
+            self['nameDoseCorrecFactor'] = 'MSPT'
+            print "'nameDoseCorrecFactor' set to default:  'MSPT'"
+            print "\t\t-------------------"                        
     
     
     def processConfigStaticSimul(self):

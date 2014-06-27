@@ -39,3 +39,5 @@ storeMasksAsCPKL = False
 typeFloat = 'float64' 
 volumeRepaint = 'NonVolumetric' 
 zipSavedData = True 
+nameDoseCorrecFactor = 'MSPT' 
+nameMassStopPwrCorrecFactor = 'MSPT'

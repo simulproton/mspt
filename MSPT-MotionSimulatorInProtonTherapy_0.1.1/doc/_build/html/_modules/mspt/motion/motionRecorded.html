@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.motion.motionRecorded &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.motion.motionRecorded</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.motion.motionRecorded</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># motionRecorded.py</span>
+<span class="c"># Proton Therapy Simulator Project</span>
+<span class="c"># Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee</span>
+<span class="c"># June 2014</span>
+<span class="c"># </span>
+<span class="c">#</span>
+<span class="c"># Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France</span>
+<span class="c">#</span>
+<span class="c"># This file is part of MSPT- Motion Simulator in Proton Therapy.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator in Proton Therapy is free software: you can redistribute it and/or modify</span>
+<span class="c">#    it under the terms of the GNU General Public License as published by</span>
+<span class="c">#    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c">#    (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator in Proton Therapy is distributed in the hope that it will be useful,</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c">#    GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c">#    You should have received a copy of the GNU General Public License</span>
+<span class="c">#    along with MSPT- Motion Simulator in Proton Therapy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#</span>
+<span class="c">########################################################################</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+
+<span class="c"># typeFloat = &#39;float32&#39;</span>
+<span class="c"># #typeFloat = &#39;float64&#39;</span>
+
+<div class="viewcode-block" id="MotionRecorded"><a class="viewcode-back" href="../../../mspt.motion.html#mspt.motion.motionRecorded.MotionRecorded">[docs]</a><span class="k">class</span> <span class="nc">MotionRecorded</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Class modeling breathing motions as using a list of displacements at specific dates. </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    :param argsDict: Dictionary configuring the motion. Keys that must be in this dictionary are:</span>
+<span class="sd">        </span>
+<span class="sd">        * *&#39;fileRecordedMotion&#39;*: name of the &#39;.txt&#39; file containing the motion information.</span>
+<span class="sd">    </span>
+<span class="sd">        .. note:: </span>
+<span class="sd">        </span>
+<span class="sd">            The file containing the motion information should be formatted as follows:</span>
+<span class="sd">            </span>
+<span class="sd">                #. The file must contain 4 columns. The first row should be: &#39;Date&#39; , &#39;X_displacement&#39;,\</span>
+<span class="sd">                &#39;Y_displacement&#39; and &#39;Z_displacement&#39;. The displacement should be expressed in the IEC fixed \</span>
+<span class="sd">                coordinate system.</span>
+<span class="sd">                #. Then fill each row with the information for each date recorded. The dates must be in seconds \</span>
+<span class="sd">                and the displacements in cm. The first date provided should be zero seconds.</span>
+<span class="sd">                #. Save a file as a tab delimited &#39;NAMEFILE.txt&#39; file and place it in /RefData/RecordedMotions/</span>
+<span class="sd">                #. Set the MSPT configuration variable &#39;fileRecordedMotion&#39; = &#39;NAMEFILE.txt&#39; and set the variable </span>
+<span class="sd">                #. Set the &#39;typeMotion&#39; configuration variable to &#39;motionRecorded&#39;.</span>
+<span class="sd">            </span>
+<span class="sd">            </span>
+<span class="sd">    </span>
+<span class="sd">    :param typeFloat: type of numpy float to use: &#39;float32&#39; or &#39;float64&#39;.</span>
+<span class="sd">     </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">argsDict</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">):</span>
+    
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="n">requiredKeys</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;fileRecordedMotion&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">requiredKeys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">argsDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">strErr</span> <span class="o">=</span> <span class="s">&#39;motionRecorded should be initialized with a file.&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">requiredKeys</span><span class="p">,</span><span class="n">key</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span> <span class="o">=</span> <span class="n">typeFloat</span>
+        
+        
+        
+        <span class="n">dirPath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s">&#39;/RefData/RecordedMotions/&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">dirPath</span> <span class="o">+</span> <span class="n">argsDict</span><span class="p">[</span><span class="s">&#39;fileRecordedMotion&#39;</span><span class="p">]):</span>
+            <span class="k">print</span> <span class="s">&quot;Motion file: </span><span class="si">%s</span><span class="s"> not found&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">dirPath</span> <span class="o">+</span> <span class="n">argsDict</span><span class="p">[</span><span class="s">&#39;fileRecordedMotion&#39;</span><span class="p">])</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Motion file not found&#39;</span><span class="p">)</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">dirPath</span> <span class="o">+</span> <span class="n">argsDict</span><span class="p">[</span><span class="s">&#39;fileRecordedMotion&#39;</span><span class="p">]</span>
+        <span class="k">print</span> <span class="s">&quot;#### Importing motion file ####&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">loadedArray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s">&quot;|S&quot;</span><span class="p">,</span><span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="p">,</span><span class="n">skiprows</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">usecols</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+        <span class="n">loadedArray</span> <span class="o">=</span> <span class="n">loadedArray</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">)</span>
+        <span class="n">loadedArray</span> <span class="o">=</span> <span class="n">loadedArray</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+        <span class="n">loadedArray</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">))</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;f1&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Motion file </span><span class="si">%s</span><span class="s"> imported&quot;</span><span class="o">%</span><span class="n">argsDict</span><span class="p">[</span><span class="s">&#39;fileRecordedMotion&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">loadedArray</span><span class="p">,</span><span class="n">dtype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="s">&#39;C&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;The first date provided is not set to 0 but to </span><span class="si">%f</span><span class="s">. All the dates will be shifted by </span><span class="si">%f</span><span class="s"> seconds.&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">shift</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">shift</span>
+        <span class="k">print</span> <span class="s">&quot;#### End Importing motion file ####&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_funcX</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">kind</span> <span class="o">=</span> <span class="s">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_funcY</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">kind</span> <span class="o">=</span> <span class="s">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_funcZ</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[:,</span><span class="mi">3</span><span class="p">],</span> <span class="n">kind</span> <span class="o">=</span> <span class="s">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_maxDate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+        
+          
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">strValue</span> <span class="o">=</span> <span class="s">&quot;Motion recorded :</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">strValue</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\t\t</span><span class="s"> Date(s) </span><span class="se">\t</span><span class="s"> X shift(cm) </span><span class="se">\t</span><span class="s"> Y shift(cm) </span><span class="se">\t</span><span class="s"> Z shift(cm)</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motionTable</span><span class="p">:</span>
+            <span class="n">strValue</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\t\t</span><span class="s"> </span><span class="si">%0.3f</span><span class="s"> </span><span class="se">\t</span><span class="s"> </span><span class="si">%0.3f</span><span class="s"> </span><span class="se">\t</span><span class="s"> </span><span class="si">%0.3f</span><span class="s"> </span><span class="se">\t</span><span class="s"> </span><span class="si">%0.3f</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">row</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">strValue</span>
+   
+    
+<div class="viewcode-block" id="MotionRecorded.getDisplacementVectorAtTime"><a class="viewcode-back" href="../../../mspt.motion.html#mspt.motion.motionRecorded.MotionRecorded.getDisplacementVectorAtTime">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplacementVectorAtTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">timer</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Computes the displacement vector according to the motion information provided:</span>
+<span class="sd">        </span>
+<span class="sd">        :param timer: time in sec. </span>
+<span class="sd">        </span>
+<span class="sd">        If timer is greater than the maximum date provided in the motion file, we consider that the displacement\</span>
+<span class="sd">        restart from the initial date</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Displacement vector : numpy array with 3 elements.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">timer</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Time &lt; 0 in get displacement vector&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">timer</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maxDate</span><span class="p">:</span>
+            <span class="n">currTimer</span> <span class="o">=</span> <span class="n">timer</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maxDate</span>
+        <span class="k">else</span><span class="p">:</span> 
+            <span class="n">currTimer</span> <span class="o">=</span> <span class="n">timer</span>
+        
+        <span class="n">vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span><span class="p">)</span>
+        <span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_funcX</span><span class="p">(</span><span class="n">currTimer</span><span class="p">)</span>
+        <span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_funcY</span><span class="p">(</span><span class="n">currTimer</span><span class="p">)</span>
+        <span class="n">vec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_funcZ</span><span class="p">(</span><span class="n">currTimer</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">vec</span>
+    
+    
+        </div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,553 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.simulator package &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="index.html"/>
+        <link rel="up" title="mspt package" href="mspt.html"/>
+        <link rel="next" title="mspt.zip package" href="mspt.zip.html"/>
+        <link rel="prev" title="mspt.scanning package" href="mspt.scanning.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="mspt.html">mspt package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="mspt.html">mspt package</a> &raquo;</li>
+      
+    <li>mspt.simulator package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/mspt.simulator.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="mspt-simulator-package">
+<h1>mspt.simulator package<a class="headerlink" href="#mspt-simulator-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-mspt.simulator.globalVariables">
+<span id="mspt-simulator-globalvariables-module"></span><h2>mspt.simulator.globalVariables module<a class="headerlink" href="#module-mspt.simulator.globalVariables" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.simulator.globalVariables.GlobalVariables">
+<em class="property">class </em><tt class="descclassname">mspt.simulator.globalVariables.</tt><tt class="descname">GlobalVariables</tt><big>(</big><em>configFilename</em><big>)</big><a class="reference internal" href="_modules/mspt/simulator/globalVariables.html#GlobalVariables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.globalVariables.GlobalVariables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></p>
+<p>The class GlobalVariables is a subclass of dictionary to manage the configuration parameters from the input configuration file provided.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>configFilename</strong> &#8211; Path to the configuration file. (.txt or .py)</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="mspt.simulator.globalVariables.GlobalVariables.authorizedKeys">
+<tt class="descname">authorizedKeys</tt><a class="reference internal" href="_modules/mspt/simulator/globalVariables.html#GlobalVariables.authorizedKeys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.globalVariables.GlobalVariables.authorizedKeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the authorized keys in the configuration file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.simulator.globalVariables.GlobalVariables.buildSettingsForScanningDelivery">
+<tt class="descname">buildSettingsForScanningDelivery</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/simulator/globalVariables.html#GlobalVariables.buildSettingsForScanningDelivery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.globalVariables.GlobalVariables.buildSettingsForScanningDelivery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a dictionary for the initialization of the ScanningPath (in dicomReader package) .</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.simulator.globalVariables.GlobalVariables.checkConfigData">
+<tt class="descname">checkConfigData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/simulator/globalVariables.html#GlobalVariables.checkConfigData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.globalVariables.GlobalVariables.checkConfigData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the configuration keys to ensure that all the needed keys are present. If they are missing they are added         to the GlobalVariables instance with the default settings. The parameters verified in this function correspond to         variables common between static and dynamic delivery.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.simulator.globalVariables.GlobalVariables.processConfigMotionSimul">
+<tt class="descname">processConfigMotionSimul</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/simulator/globalVariables.html#GlobalVariables.processConfigMotionSimul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.globalVariables.GlobalVariables.processConfigMotionSimul" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process the keys:values specifically needed for the dynamic delivery.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.simulator.globalVariables.GlobalVariables.processConfigStaticSimul">
+<tt class="descname">processConfigStaticSimul</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/simulator/globalVariables.html#GlobalVariables.processConfigStaticSimul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.globalVariables.GlobalVariables.processConfigStaticSimul" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process the keys:values specifically needed for the static delivery.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.simulator.simulatorMSPT">
+<span id="mspt-simulator-simulatormspt-module"></span><h2>mspt.simulator.simulatorMSPT module<a class="headerlink" href="#module-mspt.simulator.simulatorMSPT" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.simulator.simulatorMSPT.MSPT">
+<em class="property">class </em><tt class="descclassname">mspt.simulator.simulatorMSPT.</tt><tt class="descname">MSPT</tt><big>(</big><em>params</em>, <em>globalVars=None</em><big>)</big><a class="reference internal" href="_modules/mspt/simulator/simulatorMSPT.html#MSPT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.simulatorMSPT.MSPT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The class &#8220;MSPT&#8221;,  is the main class of the simulator. It controls the global simulation process.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>params</strong> &#8211; <p>List of the input files of the simulator:</p>
+<ul>
+<li>The path to a CT dicom directory in which is contained the CT dicom series.</li>
+<li>The path to the RP dicom file (treatment plan)</li>
+<li>The path to the RS dicom file (structures defined in the CT)</li>
+<li>(optional) The path to the RD dicom file (expected dose distribution)</li>
+<li>(optional) The path to the file configuring MSPT. If no file is provided MSPT will run a simulation on a static patient and         MSPT will be configured using default settings (see simulator.globalVariables). If provided, the configuration file is received by MSPT         but the configuration can be performed before. In such case &#8216;globalVars&#8217; should not be None.</li>
+</ul>
+</li>
+<li><strong>globalVars</strong> &#8211; <p>Dictionary containing the configuration data of MSPT. If None:</p>
+<ul>
+<li>If the configuration file is provided: MSPT will be configured using this file. The missing parameters will be set to default.</li>
+<li>If the configuration file is not provided: SPT will be configured with default settings: static delivery and output data stored to local directory.</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The configuration file can either be &#8216;.txt&#8217; or &#8216;.py&#8217;. In this file do not precede variables with an indentation.        Enter 1 variable per line: myVariable = Value . All the following variables can be set in this file, but they are not mandatory since they all have        a default value:</p>
+<blockquote class="last">
+<div><ul>
+<li><p class="first">variables common to static and dynamic deliveries:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>mainPath</strong>: String defining the path where the simulation directory will be created. By default: &#8216;../Data_Simulation/&#8217;</li>
+<li><strong>nameSimulation</strong> : corresponds to the path where the simulation output data will be saved. Default: &#8216;runSimulStatic/&#8217;&#8217; for a static                delivery, &#8216;runSimulDynamic/&#8217; for a dynamic simulation.</li>
+<li><strong>nameProfilage</strong> : name of the profilage file created using the package &#8216;cProfile&#8217;. This profilage data can be after studied using the cProfile package in python or                 with the profilage viewer <a class="reference external" href="http://www.vrplumber.com/programming/runsnakerun/">runsnake</a> . Default: &#8216;profilagerunSimulStatic.profile&#8217; for a static delivery,                 &#8216;profilagerunSimulDynamic.profile&#8217; for a dynamic delivery.</li>
+<li><strong>removeProfilageData</strong> : True (default) or False depending if the user wants to delete the profilage data when the simulation ends.</li>
+<li><strong>stdOutErrToFile</strong> : True or False (default). If True the standard output and error are redirected to a text file                 in the simulation directory.</li>
+<li><strong>zipSavedData</strong> : True (default) or False. If True, the simulation directory containing the output data is zipped in &#8216;maintPath&#8217;.                 Note: if the user access directly the class MSPT (not using the &#8216;__main__&#8217; function) the zip option is not available.</li>
+<li><strong>copyZip</strong> : True (default) or False. If True the zip file is copied to the &#8216;pathToCopyZip&#8217; directory.</li>
+<li><strong>pathToCopyZip</strong> : String defining where to copy the zip file. Default: &#8216;../Data_Zip/&#8217;</li>
+<li><strong>typeFloat</strong> : The type of numpy float to be used: &#8216;float32&#8217; or &#8216;float64&#8217;. Default : &#8216;float64&#8217;.</li>
+<li><strong>emailUser</strong> : If the user wants to send an email saying that the simulation ended with the DVH(s) and the the data printed in the                 standard output (or if the simulation crashed for any reason), he can fill this variable with his e-mail address en fill the next fields.                 Note: if the user access directly the class MSPT (not using the &#8216;__main__&#8217; function) the email option is not available.                Default: None</li>
+<li><strong>emailPwd</strong> : e-mail password. Default: None</li>
+<li><strong>emailSMTP</strong> : e-mail smpt server address. Default: None</li>
+<li><strong>emailSMTPPort</strong> : smtp server port. Default: None</li>
+<li><strong>emailRecipient</strong> : e-mail address of the e-mail&#8217;s recipient. Default: None</li>
+<li><strong>staticDelivery</strong>: True (default) or False. If True the delivery is performed for a static patient. Otherwise for a moving (dynamic)                patient.</li>
+<li><strong>ddCurves</strong>: String defining the set of dept-dose curves to use. By default &#8216;RayStation&#8217;. It is also possible to use &#8216;MCNPX&#8217; or &#8216;Eclipse&#8217;,                 but these two datasets have not been tested. The user can also add its own depth dose curves. See physics.ddCurvesManager.DDCurve for more information.</li>
+<li><strong>displayScanPathUpdates</strong> : True or False (default). If True it displays the evolution of 2D array representing the scanning path                in an energy layer. See dicomReader.scanningPath for more details.</li>
+<li><strong>saveCTImage</strong> : True :save the CT dicom image as tiff image files, False otherwise. Default: True</li>
+<li><strong>listSaveCTImageAlong</strong> (if &#8216;saveCTImage&#8217; is True): list of the axis along which the user wants to save the CT images of the patient. Possible values are                &#8216;x&#8217; (i.e. the images are stored along the column axis of the dicom image), &#8216;y&#8217; (i.e. the images are stored along the rows axis of the dicom image),                 &#8216;z&#8217; (i.e. the images are stored along the frame axis of the dicom image - default). Examlpes: listSaveCTImageAlong = [] (in this case default value is used) , or listSaveCompDoseAlong = [&#8216;x&#8217;] or listSaveCompDoseAlong = [&#8216;x&#8217;,&#8217;z&#8217;] ...                 Default: [&#8216;z&#8217;].</li>
+<li><strong>skipSaveDensityImage</strong> : False to save the 3D density array as a set of png images. True otherwise. Default: True</li>
+<li><strong>listSaveDensImAlong</strong> (if &#8216;skipSaveDensityImage&#8217; is False): list of the axis along which the user wants to save the density                 images of the patient. Default: [&#8216;z&#8217;].</li>
+<li><strong>saveDensCPKL</strong> (if &#8216;skipSaveDensityImage&#8217; is False): True if the user wants to store the density 3D array in a cPickle structure (this allows to have access to the                 3D numpy array outdise the simulation). False otherwise. Moreover, if False and the patient is moving                it will stored the 3D density array every time the array is updated. Default: False.</li>
+<li><strong>skipSaveStpPwrImage</strong> : False to save the 3D relative stopping power array as a set of png images. True otherwise. Default: True</li>
+<li><strong>listSaveStPwrImAlong</strong> (if &#8216;skipSaveStpPwrImage&#8217; is False): list of the axis along which the user wants to save the rel. stop. power                 images of the patient. Default: [&#8216;z&#8217;].</li>
+<li><strong>saveStpPwrCPKL</strong> (if &#8216;skipSaveStpPwrImage&#8217; is False):Similar to &#8216;saveDensCPKL&#8217; to save the 3D array of the relative stopping power. However, if the patient is moving it only stores it once.</li>
+<li><strong>skipSaveDeff</strong> : False to save the 3D radiological depth array as a set of png images. True otherwise. Default: True</li>
+<li><strong>listSaveDeffAlong</strong> : Similar to &#8216;listSaveDensImAlong&#8217;, to save the images of the 3D radiological depth matrix.</li>
+<li><strong>saveDeffCPKL</strong> : Similar to &#8216;saveDensCPKL&#8217; to save the 3D radiological depth matrix. If the patient is moving it stores the array at every update.</li>
+<li><strong>skipSaveBeamlets</strong> : False to save an image of the dose distribution of each beamlet simulated, True otherwise. Default : True</li>
+<li><strong>saveBeamletsCPKL</strong> (if skipSaveBeamlets is False): True to save the dose distribution of each beamlet (a 3D numpy array) in a cPickle structure.</li>
+<li><strong>listSaveCompDoseAlong</strong> : list of the axis along which the user wants to save the computed dose                 images (png) of the patient. Default: [&#8216;z&#8217;]. Note: This variable is also used to store the density and the pencil beam dose distribution in a                 dynamic delivery if the variable &#8216;storeInterDoseDens&#8217; (defined below) is True.</li>
+<li><strong>saveCompDoseAsDcm</strong> : True to save the computed dose distribution into a RD dicom file. False otherwise. Default : True</li>
+<li><strong>nameCompDose</strong> : Name of the output RD dicom file for the computed dose distribution. Default: &#8216;RD_CompDose_MSPT.dcm&#8217;</li>
+<li><strong>saveRefDoseAsDcm</strong> : True to save the expect dose distribution into a RD dicom file  (False otherwise). This is useful if the input dose grid                must be resampled to the voxel spacing of the input CT dicom series. Moreover, this can only be done if the user provided an inpu RD dicom file. Default : True</li>
+<li><strong>nameRefDose</strong> : Name of the output RD dicom file for the expected dose distribution. Default: &#8216;RD_RefDose.dcm&#8217;</li>
+<li><strong>saveRefDose</strong> : True :save the expected dose distribution image as png image files, False otherwise. Default: True</li>
+<li><strong>listSaveRefDoseAlong</strong> (if saveRefDose True) : list of the axis along which the user wants to save the expected dose distribution images.</li>
+<li><strong>dvhRelativeVolume</strong> : True to convert the volumes into relative volumes in the dose volume histograms. False otherwise.  Default: True.</li>
+<li><strong>displaySliceOrderingInfo</strong> : True to display the order and positions (in mm) of the CT dicom slices. False otherwise. Default: False.</li>
+<li><strong>exportSliceOrderingInfo</strong> : True to export the order and positions (in mm) of the CT dicom slices into a cszv file. False otherwise. Default: False.</li>
+<li><strong>storeMasksAsCPKL</strong> : True to store binary matrices representing the patient structures (VOIs: Volumes of Interest) into cPickle structures.</li>
+<li><strong>protPerMU</strong> : Number of protons per Monitor Units (MU). Default: 1e9 prot.MU-1.</li>
+<li><strong>nameStopPwrCorrecFactor</strong> : name of the correction factor for the stopping power to use.</li>
+<li><strong>importNewMassStopPwr</strong> : True to import new mass stopping power data, False (default) otherwise.</li>
+<li><strong>nameDoseCorrecFactor</strong>: name of the dose correction factor to use.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">variables for dynamic deliveries:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>unitTimeForDelivery</strong> : time unit to simulate the dynamic delivery (moving patient) expressed in seconds. It corresponds to the time resolution. Default: 1e-3.</li>
+<li><strong>typeMotion</strong> : the type of motion applied to the patient: &#8216;motionNoisyCos&#8217;,&#8217;motionCos&#8217;,&#8217;motionBreathHiccup&#8217;, &#8216;motionBreathCough&#8217; or &#8216;motionRecorded&#8217;. See package motion for more information.                 Default: &#8216;motionCos&#8217;.</li>
+<li><strong>fileRecordedMotion</strong> : if the type motion is &#8216;motionRecorded&#8217; this should be the filename (&#8216;NAMEFILE.txt&#8217;) of the motion information. See the module motionRecorded for more information.</li>
+<li><strong>arrayPeriod</strong> : List of the motion period (in seconds) along x,y, and z axis in the IEC fixed coordinate system.                 Default : [4.0,  3.5,   0.0].Note: X_IEC fixed= X_Dicom, Y_IEC fixed = Z_Dicom, Z_IEC fixed = -Y_Dicom.</li>
+<li><strong>arrayAmpl</strong> : List of the motion amplitude (in cm) along x,y, and z axis in the IEC fixed coordinate system.                 Default : [1.0,  1.0,  0.0]</li>
+<li><strong>arrayPhase</strong> : List of the motion initial phase (in rad.) along x,y, and z axis in the IEC fixed coordinate system.                 Default : [0,  0,  0]</li>
+<li><strong>arrayStDevPeriod</strong> (if &#8216;typeMotion&#8217; is &#8216;motionNoisyCos&#8217;, &#8216;motionBreathHiccup&#8217; or &#8216;motionBreathCough&#8217;): List of standard deviations (in seconds)                 for the gaussian distribution used to simulate changes (noise) in period of the motion along x,y, and z axis in the IEC fixed coordinate system.                 Default : [0,  0,  0]</li>
+<li><strong>arrayStDevAmpl</strong> (if &#8216;typeMotion&#8217; is &#8216;motionNoisyCos&#8217;, &#8216;motionBreathHiccup&#8217; or &#8216;motionBreathCough&#8217;): List of standard deviations (in cm)                for the gaussian distribution used to simulate changes (noise) in amplitude of the motion along x,y, and z axis in the IEC fixed coordinate system.                 Default : [0,  0,  0]</li>
+<li><strong>ctPadding</strong> : True if the user wants to add margins of a specified density (see &#8216;paddedCTValue&#8217; ) around                the current CT image. This is useful, when the moving patient can be outside of the bounding box formed by the borders of the CT image.</li>
+<li><strong>padValueFRC</strong> (if &#8216;ctPadding&#8217; is True) : Numpy array of 3 integer values : [ number of added frames : nbF, number of added rows : nbR,                 number of added columns : nbC]. For exemple : [ 0,0,10] will add 10 columns to the right of the CT image and 10 columns to the left of the CT image.                Default: [10,10,10].</li>
+<li><strong>paddedCTValue</strong> (if &#8216;ctPadding&#8217; is True): The value in CT number (Hounsfield Units) to use to pad the CT image. For example: air = -1000 HU, water = 0 HU.</li>
+<li><strong>storeInterDoseDens</strong> : True to store the density image of the moving patient and the dose distribution of the beam when the                 patient is moving while being irradiated by a pencil beam. False otherwise. Default: False. Note: It uses the variable                 &#8216;listSaveCompDoseAlong&#8217; to save the images.</li>
+<li><strong>motionDuringBeam</strong> :  True to allow the patient to move while the beam is irradiating, False otherwise. Default : True.</li>
+<li><strong>compensationDynamic</strong> : True to allow motion compensation, False otherwise. Default : False.</li>
+<li><strong>measurementStdev</strong> (if compensationDynamic is True):  List of the standard deviation of the motion monitoring accuracy (in cm.)                 along x,y, and z axis in the IEC fixed coordinate system. Default : [0.1,  0.1,  0]</li>
+<li><strong>measurementAvg</strong> (if compensationDynamic is True):List of the average of the motion monitoring accuracy (in cm.) along x,y, and z axis in the IEC fixed                coordinate system. Default : [0.1,  0.1,  0].</li>
+<li><strong>timeMeasureDisplacement</strong> (if compensationDynamic is True): Time (in seconds) needed to measure the patient displacement with the monitoring system. Default: 1e-3.</li>
+<li><strong>findStartPos</strong> (if compensationDynamic is True):</li>
+<li><strong>nameNewRPFile</strong> (if compensationDynamic is True):</li>
+<li><strong>addMargins</strong> (if compensationDynamic is True):</li>
+<li><strong>marginsParam</strong> (if compensationDynamic is True):</li>
+<li><strong>updateMargins</strong> (if compensationDynamic is True):</li>
+<li><strong>unlimitedRescanning</strong> : True to allow an unlimited number (the maximum, however, is set to 32767 repaintings to avoid infinite loops) of repainting per energy slice.                False otherwise.</li>
+<li><strong>repaintingFactor</strong> (if unlimitedRescanning is False): Repainting factor. Default: 1.</li>
+<li><strong>sliceRepaint</strong> : Type of slice repainting method. Types :&#8217;IsolayerRepaint&#8217;,&#8217;ScaledRepaint&#8217; or &#8216;FullWeightRepainting&#8217;.                Note: &#8216;FullWeightRepainting&#8217;: we deliver the full weight at once instead of a maximum weight or a scaled weight.</li>
+<li><strong>volumeRepaint</strong> : Type volume repainting method. Types : &#8216;Volumetric&#8217; and &#8216;NonVolumetric&#8217;. Default : &#8216;NonVolumetric&#8217;.</li>
+<li><strong>evaluateDiffStatDyna</strong> : True to show and store statistics about the differences between dose distributions  at a beam position when                 the patient is moving and when he is static. Default: False.</li>
+<li><strong>synchrotron</strong> : True to make MSPT behave like a synchrotron (i.e., pulsatile proton delivery, time needed to refill the synchrotron and the                 time to change the energy is longer than for cyclotrons). Otherwise (False) it behaves like a cyclotron (i.e., continuous proton delivery                 the time to change the energy is shorter. Default: True</li>
+<li><strong>spillLength</strong> ( if synchrotron is True): length in seconds of a proton spill. Default: 5.</li>
+<li><strong>timeEnergyChange</strong> : Time (in seconds) to change the energy. Default: 2.1 ( if synchrotron is True) , 50e-3 ( if synchrotron is False).</li>
+<li><strong>spotSettlingTime</strong> : Time (in seconds) needed to stabilize the beam position. Default : 5e-3.</li>
+<li><strong>lateralScanningSpeed</strong> : Lateral scanning speed of the beam (in cm/s). Default : 1000.</li>
+<li><strong>verticalScanningSpeed</strong> : Vertical scanning speed of the beam (in cm/s). Default : 1000.</li>
+<li><strong>speedGantryRotation</strong> : Gantry rotational speed in degrees / min. Default: 360.</li>
+<li><strong>beamIntensity</strong> : Beam intensity (or extraction rate), i.e. number of protons per second being delivered. Default: 6.8e10</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<dl class="method">
+<dt id="mspt.simulator.simulatorMSPT.MSPT.save2DListToCSV">
+<tt class="descname">save2DListToCSV</tt><big>(</big><em>data</em>, <em>filename</em><big>)</big><a class="reference internal" href="_modules/mspt/simulator/simulatorMSPT.html#MSPT.save2DListToCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.simulatorMSPT.MSPT.save2DListToCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a 2D list into a CSV file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; 2D list</li>
+<li><strong>filename</strong> &#8211; <p>Name of the output file.</p>
+<p>The csv file is stored in the CSV_Data/ folder of the simulation directory.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.simulator.simulatorMSPT.MSPT.save2DSliceToCSV">
+<tt class="descname">save2DSliceToCSV</tt><big>(</big><em>data</em>, <em>filename</em><big>)</big><a class="reference internal" href="_modules/mspt/simulator/simulatorMSPT.html#MSPT.save2DSliceToCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.simulatorMSPT.MSPT.save2DSliceToCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a 2D numpy array to CSV file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> &#8211; 2D numpy array</li>
+<li><strong>filename</strong> &#8211; Name of the output file.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>If the number of columns is greater than 255 and and the number of rows is smaller than 255, we trasnpose the rows and columns        in order to be able to open the file in Excel or Numbers. If both dimensions are greater than 255, we remove the same number of columns on the left         and on the right, such that the remaining number of columns is 255.</p>
+<p>The csv file is stored in the CSV_Data/ folder of the simulation directory.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.simulator.simulatorMSPT.exportListDataToCSV">
+<tt class="descclassname">mspt.simulator.simulatorMSPT.</tt><tt class="descname">exportListDataToCSV</tt><big>(</big><em>listsValues</em>, <em>names</em>, <em>pathToSave</em>, <em>filename</em><big>)</big><a class="reference internal" href="_modules/mspt/simulator/simulatorMSPT.html#exportListDataToCSV"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.simulatorMSPT.exportListDataToCSV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export a list to a CSV file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>listsValues</strong> &#8211; List of values to store.</li>
+<li><strong>names</strong> &#8211; List of headers.</li>
+<li><strong>pathToSave</strong> &#8211; Path where to save the CSV file.</li>
+<li><strong>filename</strong> &#8211; Name of the output file.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.simulator.tools">
+<span id="mspt-simulator-tools-module"></span><h2>mspt.simulator.tools module<a class="headerlink" href="#module-mspt.simulator.tools" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.simulator.tools.Tools">
+<em class="property">class </em><tt class="descclassname">mspt.simulator.tools.</tt><tt class="descname">Tools</tt><big>(</big><em>configData</em><big>)</big><a class="reference internal" href="_modules/mspt/simulator/tools.html#Tools"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.tools.Tools" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class Tools aims at providing utilities to the simulator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>configData</strong> &#8211; Dictionary storing the MSPT configuration. Mandatory key is &#8216;typeFloat&#8217; : &#8216;float32&#8217; or &#8216;float64&#8217;.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.simulator.tools.Tools.evaluateDifference">
+<tt class="descname">evaluateDifference</tt><big>(</big><em>vol1</em>, <em>vol2</em><big>)</big><a class="reference internal" href="_modules/mspt/simulator/tools.html#Tools.evaluateDifference"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.tools.Tools.evaluateDifference" title="Permalink to this definition">¶</a></dt>
+<dd><p>!Function that computes the difference between two 3D numpy arrays and calculate statistics: absDiff = abs( vol1 - vol2).        It also saves the results into a text file (EvalDiffDoseDistrib.txt) in the simulation directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>vol1</strong> &#8211; First 3D numpy array</li>
+<li><strong>vol2</strong> &#8211; second 3D numpy array</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>Dictionary with keys:</p>
+<ul>
+<li><p class="first">&#8216;vol1&#8217;: Dictionary with keys:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;min&#8221; : minimum value of vol1</li>
+<li>&#8220;max&#8221; : maximum value of vol1</li>
+<li>&#8220;std&#8221; : standard deviation value of vol1</li>
+<li>&#8220;avg&#8221; : average value of vol1</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">&#8216;vol2&#8217;: Dictionary with keys:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;min&#8221; : minimum value of vol2</li>
+<li>&#8220;max&#8221; : maximum value of vol2</li>
+<li>&#8220;std&#8221; : standard deviation value of vol2</li>
+<li>&#8220;avg&#8221; : average value of vol2</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">&#8216;absDiff&#8217;: Dictionary with keys:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;min&#8221; : minimum value of absDiff</li>
+<li>&#8220;max&#8221; : maximum value of absDiff</li>
+<li>&#8220;std&#8221; : standard deviation value of absDiff</li>
+<li>&#8220;avg&#8221; : average value of absDiff</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.simulator.tools.Tools.getMatrixHotAndColdSpot">
+<tt class="descname">getMatrixHotAndColdSpot</tt><big>(</big><em>volRef</em>, <em>volTest</em><big>)</big><a class="reference internal" href="_modules/mspt/simulator/tools.html#Tools.getMatrixHotAndColdSpot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.tools.Tools.getMatrixHotAndColdSpot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that computes the 3D array of hot and cold spots as: diff = volTest - volRef</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>volRef</strong> &#8211; 3D array of reference</li>
+<li><strong>volTest</strong> &#8211; 3D array tested</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">3D array diff.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.simulator.tools.Tools.saveCompensatedRTPlan">
+<tt class="descname">saveCompensatedRTPlan</tt><big>(</big><em>rtPlanPath</em>, <em>newRTPlanPath</em>, <em>dictPlan</em><big>)</big><a class="reference internal" href="_modules/mspt/simulator/tools.html#Tools.saveCompensatedRTPlan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.tools.Tools.saveCompensatedRTPlan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that save a dictionary storing a treatment plan to a RP dicom file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rtPlanPath</strong> &#8211; Path to the input RP dicom file.</li>
+<li><strong>newRTPlanPath</strong> &#8211; Path to the new RP dicom file.</li>
+<li><strong>dictPlan</strong> &#8211; Dictionary storing the new treatment plan : dictionary[beam angle][Energy Rounded][ &#8220;ScanSpotPositionMap&#8221; / &#8220;ScanSpotMetersetWeights&#8221;]</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.simulator.tools.Tools.showHotColdSpots">
+<tt class="descname">showHotColdSpots</tt><big>(</big><em>volRef</em>, <em>volTest</em>, <em>title=None</em>, <em>pathToSaveImg=None</em><big>)</big><a class="reference internal" href="_modules/mspt/simulator/tools.html#Tools.showHotColdSpots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.simulator.tools.Tools.showHotColdSpots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that display the hot and cold spots on a frame located at the &#8220;middle&#8221; of the dose distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>volRef</strong> &#8211; 3D array of reference</li>
+<li><strong>volTest</strong> &#8211; 3D array tested</li>
+<li><strong>title</strong> &#8211; Title for the figure. Default: None</li>
+<li><strong>pathToSaveImg</strong> &#8211; Path where to save the figure. Default: None</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.simulator">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mspt.simulator" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mspt.zip.html" class="btn btn-neutral float-right" title="mspt.zip package"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mspt.scanning.html" class="btn btn-neutral" title="mspt.scanning package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

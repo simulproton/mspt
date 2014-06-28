@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.motion.motionManager &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.motion.motionManager</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.motion.motionManager</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># motionSuperClass.py</span>
+<span class="c"># Proton Therapy Simulator Project</span>
+<span class="c"># Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee</span>
+<span class="c"># October 2013</span>
+<span class="c"># </span>
+<span class="c">#</span>
+<span class="c"># Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France</span>
+<span class="c">#</span>
+<span class="c"># This file is part of MSPT- Motion Simulator in Proton Therapy.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator in Proton Therapy is free software: you can redistribute it and/or modify</span>
+<span class="c">#    it under the terms of the GNU General Public License as published by</span>
+<span class="c">#    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c">#    (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator in Proton Therapy is distributed in the hope that it will be useful,</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c">#    GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c">#    You should have received a copy of the GNU General Public License</span>
+<span class="c">#    along with MSPT- Motion Simulator in Proton Therapy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#</span>
+<span class="c">########################################################################</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">motionCos</span> <span class="kn">import</span> <span class="n">MotionCos</span>
+<span class="kn">from</span> <span class="nn">motionNoisyCos</span> <span class="kn">import</span> <span class="n">MotionNoisyCos</span>
+<span class="kn">from</span> <span class="nn">motionBreathHiccup</span> <span class="kn">import</span> <span class="n">MotionBreathHiccup</span>
+<span class="kn">from</span> <span class="nn">motionBreathCough</span> <span class="kn">import</span> <span class="n">MotionBreathCough</span>
+<span class="kn">from</span> <span class="nn">motionRecorded</span> <span class="kn">import</span> <span class="n">MotionRecorded</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="n">motionTypes</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;motionNoisyCos&#39;</span><span class="p">,</span><span class="s">&#39;motionCos&#39;</span><span class="p">,</span><span class="s">&#39;motionBreathHiccup&#39;</span><span class="p">,</span><span class="s">&#39;motionBreathCough&#39;</span><span class="p">,</span><span class="s">&#39;motionRecorded&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Motion"><a class="viewcode-back" href="../../../mspt.motion.html#mspt.motion.motionManager.Motion">[docs]</a><span class="k">class</span> <span class="nc">Motion</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Class Motion: used to define motions. They can be of different types: </span>
+<span class="sd">    </span>
+<span class="sd">        * *&#39;motionCos&#39;*: Motion defined as a cosine wave along X,Y,Z axis.</span>
+<span class="sd">        * *&#39;motionNoisyCos&#39;*: Similar to &#39;motionCos&#39; with random noise.</span>
+<span class="sd">        * *&#39;motionBreathHiccup&#39;*: &#39;NoisyCos&#39; plus hiccup. Hiccup is defined by a starting and ending date and a periodical motion of random amplitude is added to the initial noisy cosine.</span>
+<span class="sd">        * *&#39;motionBreathCough&#39;*: &#39;NoisyCos&#39; plus cough. Cough is defined by a single random motion occuring at a random time.</span>
+<span class="sd">        * *&#39;motionRecorded&#39;*: A list of dates and X,Y,Z displacement vectors</span>
+<span class="sd">        </span>
+<span class="sd">    .. note::</span>
+<span class="sd">    </span>
+<span class="sd">        The user could create new motions. To do so, in motionManager.py add the name of the created class (the first letter must be in lower case) in the global variable &#39;motionTypes&#39;.\</span>
+<span class="sd">        The new class must implement &#39;getDisplacementVectorAtTime(timer)&#39; to define the displacement vector at time = timer. One could \</span>
+<span class="sd">        decide to return a 3D matrix containing local displacement vectors (In such case patient.patient.py and scanning.deliverySimulation_Static_Dynamic.py\</span>
+<span class="sd">        should be adapted for deformable transformations. The &#39;history&#39; attribute of MotionManager should also be adapted). It must also implement &#39;__str__&#39; to provide information about the motion.</span>
+<span class="sd">        </span>
+<span class="sd">    :param argsDict: dictionary of arguments used to initialize the types of motion. The key &#39;typeMotion&#39; must be present. It it equal to \</span>
+<span class="sd">    one of theses types: &#39;motionNoisyCos&#39;,&#39;motionCos&#39;,&#39;motionBreathHiccup&#39;,&#39;motionBreathCough&#39;</span>
+<span class="sd">    :param typeFloat: type of numpy float to use: &#39;float32&#39; or &#39;float64&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">        .. note: </span>
+<span class="sd">    </span>
+<span class="sd">        The units for the stdandard deviations and the averages must be in cm and the time in sec.</span>
+<span class="sd">   </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">argsDict</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="s">&#39;typeMotion&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">argsDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span> <span class="p">(</span><span class="s">&quot;Motion initialization impossible: no &#39;typeMotion&#39; value defined&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">argsDict</span><span class="p">[</span><span class="s">&#39;typeMotion&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">motionTypes</span><span class="p">:</span>
+            <span class="n">code</span>  <span class="o">=</span> <span class="s">&#39;self._motion = </span><span class="si">%s</span><span class="s">(argsDict,typeFloat)&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">argsDict</span><span class="p">[</span><span class="s">&#39;typeMotion&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="o">+</span><span class="n">argsDict</span><span class="p">[</span><span class="s">&#39;typeMotion&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">exec</span> <span class="n">code</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">strErr</span> <span class="o">=</span> <span class="s">&quot;Unknown motion type: </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="n">argsDict</span><span class="p">[</span><span class="s">&#39;typeMotion&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_history</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;time&#39;</span><span class="p">:[],</span><span class="s">&#39;x&#39;</span><span class="p">:[],</span><span class="s">&#39;y&#39;</span><span class="p">:[],</span><span class="s">&#39;z&#39;</span><span class="p">:[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span> <span class="o">=</span> <span class="n">typeFloat</span>
+     
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :returns: The string information about the current motion.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_motion</span><span class="p">)</span>
+   
+    
+<div class="viewcode-block" id="Motion.getDisplacementVectorAtTime"><a class="viewcode-back" href="../../../mspt.motion.html#mspt.motion.motionManager.Motion.getDisplacementVectorAtTime">[docs]</a>    <span class="k">def</span> <span class="nf">getDisplacementVectorAtTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">timer</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        :param timer: Time at when the displacement vector must be computed.    </span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Displacement vector defined in the current motion.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">vec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_motion</span><span class="o">.</span><span class="n">getDisplacementVectorAtTime</span><span class="p">(</span><span class="n">timer</span><span class="p">)</span>
+        <span class="n">vecTest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">timer</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">vec</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">vecTest</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timer</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="s">&#39;z&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">timer</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_history</span><span class="p">[</span><span class="s">&#39;time&#39;</span><span class="p">]:</span>
+            <span class="k">print</span> <span class="s">&quot;Warning: History of motion won&#39;t be saved. Please adapt the code for the history in motion.motionManager.&quot;</span>
+        <span class="k">return</span> <span class="n">vec</span>
+    </div>
+<div class="viewcode-block" id="Motion.getHistory"><a class="viewcode-back" href="../../../mspt.motion.html#mspt.motion.motionManager.Motion.getHistory">[docs]</a>    <span class="k">def</span> <span class="nf">getHistory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the history of the motions. </span>
+<span class="sd">        </span>
+<span class="sd">        :returns: A dictionary with keys: &#39;time&#39;, &#39;x&#39;, &#39;y&#39; and &#39;z&#39;. Each value of these keys is a list.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_history</span>
+
+    
+    
+    
+    </div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

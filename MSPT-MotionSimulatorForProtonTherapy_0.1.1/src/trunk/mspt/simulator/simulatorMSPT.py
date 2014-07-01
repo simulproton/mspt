@@ -153,6 +153,7 @@ class MSPT(object):
                 * **nameStopPwrCorrecFactor** : name of the correction factor for the stopping power to use.
                 * **importNewMassStopPwr** : True to import new mass stopping power data, False (default) otherwise.
                 * **nameDoseCorrecFactor**: name of the dose correction factor to use.
+                * **nameCTToDensTable**: Name of the CT number to density conversion file.
             
             * variables for dynamic deliveries:
                 

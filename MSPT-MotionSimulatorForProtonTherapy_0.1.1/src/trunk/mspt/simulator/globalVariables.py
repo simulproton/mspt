@@ -34,7 +34,7 @@ listAuthorizedKeys = ['MeV', 'typeFloat', 'removeProfilageData', 'stdOutErrToFil
 'skipSaveStpPwrImage', 'listSaveStPwrImAlong', 'saveStpPwrCPKL', 'skipSaveBeamlets', 'saveBeamletsCPKL', 'displaySliceOrderingInfo',\
 'exportSliceOrderingInfo', 'saveCompDoseAsDcm', 'nameCompDose', 'saveRefDoseAsDcm', 'nameRefDose', 'storeMasksAsCPKL' , 'emailUser', \
 'emailPwd', 'emailSMTP', 'emailSMTPPort', 'emailRecipient', 'protPerMU', 'dvhRelativeVolume', 'importNewMassStopPwr','nameStopPwrCorrecFactor', 'nameSimulation',\
-'nameDoseCorrecFactor','nameProfilage', 'sliceRepaint', 'volumeRepaint', 'ctPadding', 'padValueFRC', 'paddedCTValue', 'storeInterDoseDens', 'motionDuringBeam', \
+'nameDoseCorrecFactor','nameCTToDensTable','nameProfilage', 'sliceRepaint', 'volumeRepaint', 'ctPadding', 'padValueFRC', 'paddedCTValue', 'storeInterDoseDens', 'motionDuringBeam', \
 'compensationDynamic', 'unlimitedRescanning', 'repaintingFactor', 'sliceRepaint', 'volumeRepaint', 'findStartPos', 'NameNewRPFile', \
 'measurementStdev', 'measurementAvg', 'addMargins', 'marginsParam', 'updateMargins', 'evaluateDiffStatDyna', 'arrayPeriod', \
 'arrayAmpl', 'arrayPhase', 'typeMotion','fileRecordedMotion', 'breathingPeriod', 'magnitude', 'initialPhase', 'arrayStDevPeriod', 'arrayStDevAmpl', \
@@ -314,6 +314,12 @@ class GlobalVariables(dict):
         if 'nameDoseCorrecFactor' not in self:
             self['nameDoseCorrecFactor'] = 'MSPT'
             print "'nameDoseCorrecFactor' set to default:  'MSPT'"
+            print "\t\t-------------------"                        
+
+
+        if 'nameCTToDensTable' not in self:
+            self['nameCTToDensTable'] = 'MSPT'
+            print "'nameCTToDensTable' set to default:  'MSPT'"
             print "\t\t-------------------"                        
     
     

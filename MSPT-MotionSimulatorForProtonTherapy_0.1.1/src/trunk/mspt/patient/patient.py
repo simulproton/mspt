@@ -92,7 +92,7 @@ class Patient(object):
         * *'saveDeffCPKL'* (if 'skipSaveDeff' is False) :  Similar to 'saveDensCPKL' to save the 3D radiological depth matrix. If the patient is moving it stores the array at every update. 
         * *'MeV'* : Constant to convert 1MeV to Joules: 1MeV = 1.602e-13J
         * *'protPerMU'* : Number of protons per MU to use.
-
+        * *'nameCTToDensTable'*: Name of the CT number to density conversion file.
     
     
   
@@ -435,7 +435,7 @@ class Patient(object):
         
         
         ### Fill density grid ############################################################################################
-        tableConversion = ctToDensConv.getConversionTableCTToMassDens()
+        tableConversion = ctToDensConv.getConversionTableCTToMassDens(self._globalVar.nameCTToDensTable)
         self._densityArray = np.ascontiguousarray(patientTools.fillPatientDensity(self._pixelArray,tableConversion,self._globalVar.typeFloat),dtype=self._globalVar.typeFloat)
         if not self._globalVar.skipSaveDensityImage:
             for axis in self._globalVar.listSaveDensImAlong:

@@ -215,23 +215,24 @@ class StoppingPower(object):
         dirPath = os.getcwd()+'/RefData/CorrecFactor_StopPwr/'
         print "#### Importing correction factor stopping power ####"
         self._CorrecFactorTable = None
-        for r,d,f in os.walk(dirPath):
-            for files in f:
-                if fnmatch.fnmatch(files, patternFilenameCorrecFactor):
-                    nameData = os.path.splitext(files)[0].split('dataCorrecFactorStopPwr_')[1]
-                    if nameData == self._globalVar.nameStopPwrCorrecFactor:
-                        filename = os.path.join(r,files)
-                        loadedArray = np.loadtxt(filename,dtype="|S",delimiter='\t',skiprows = 1,usecols=(0,1))
-                        loadedArray = loadedArray.astype(self._globalVar.typeFloat)
-                        loadedArray = loadedArray.transpose()
-                        loadedArray.view('%s,%s'%(self._globalVar.typeFloat,self._globalVar.typeFloat)).sort(order=['f1'], axis=0)
-                        print "Stopping power correction factor %s imported"%nameData
-                        self._CorrecFactorTable = np.array(loadedArray,dtype = self._globalVar.typeFloat, order = 'C')
-            if self._CorrecFactorTable is None:
-                print "Correction factor data (stopping power) for name : %s , has not been found"%self._globalVar.nameStopPwrCorrecFactor
-                raise ValueError('Error - No stopping power correction factor data has been found in /RefData/CorrecFactor_StopPwr/. Please check the data and try again..')
-            print "#### End Importing correction factor mass stopping power ####"
-            return # stop after the first level of files has been processed
+        
+        filename = dirPath + 'dataCorrecFactorStopPwr_%s.txt'%self._globalVar.nameStopPwrCorrecFactor
+        if not os.path.isfile(filename) or self._globalVar.nameStopPwrCorrecFactor == '' or self._globalVar.nameStopPwrCorrecFactor == ' ':
+            print "Correction factor data (stopping power) for name : %s , has not been found"%self._globalVar.nameStopPwrCorrecFactor
+            print "Factor set to 1."
+            array = [[ globalmassDensities[0],globalmassDensities[-1]],[1.0,1.0]]
+            self._CorrecFactorTable = np.array(array,dtype = self._globalVar.typeFloat, order = 'C')
+#                 raise ValueError('Error - No stopping power correction factor data has been found in /RefData/CorrecFactor_StopPwr/. Please check the data and try again..')
+        else:
+            loadedArray = np.loadtxt(filename,dtype="|S",delimiter='\t',skiprows = 1,usecols=(0,1))
+            loadedArray = loadedArray.astype(self._globalVar.typeFloat)
+            loadedArray = loadedArray.transpose()
+            loadedArray.view('%s,%s'%(self._globalVar.typeFloat,self._globalVar.typeFloat)).sort(order=['f1'], axis=0)
+            print "Stopping power correction factor %s imported"%self._globalVar.nameStopPwrCorrecFactor
+            self._CorrecFactorTable = np.array(loadedArray,dtype = self._globalVar.typeFloat, order = 'C')
+            
+        print "#### End Importing correction factor mass stopping power ####"
+      
 
 
     def getStopPwrCorrecFactor(self):

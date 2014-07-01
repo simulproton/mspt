@@ -36,7 +36,7 @@ patternEnerDigit2 = 16
 patternEnerDigit3 = 18
 patternEnerDigit4 = 19
 
-patternDoseCorrecFile = 'doseCorrecFactor_MSPT.txt'
+patternDoseCorrecFile = 'doseCorrecFactor_*.txt'
 
 
 class DDCurves(object):
@@ -500,24 +500,24 @@ class DDCurves(object):
         print "#### Importing dose correction factor ####"
         self._DoseCorrecFactor = None
         self._funcInterpDoseCorrec = None
-        for r,d,f in os.walk(dirPath):
-            for files in f:
-                if fnmatch.fnmatch(files, patternDoseCorrecFile):
-                    nameData = os.path.splitext(files)[0].split('doseCorrecFactor_')[1]
-                    if nameData == self._globalVar.nameDoseCorrecFactor:
-                        filename = os.path.join(r,files)
-                        loadedArray = np.loadtxt(filename,dtype="|S",delimiter='\t',skiprows = 1,usecols=(0,1))
-                        loadedArray = loadedArray.astype(self._globalVar.typeFloat)
-                        loadedArray = loadedArray.transpose()
-                        loadedArray.view('%s,%s'%(self._globalVar.typeFloat,self._globalVar.typeFloat)).sort(order=['f1'], axis=0)
-                        print "Dose correction factor %s imported"%nameData
-                        self._DoseCorrecFactor = np.array(loadedArray,dtype = self._globalVar.typeFloat, order = 'C')
-            print "YOYO"
-            if self._DoseCorrecFactor is None:
-                print "Correction factor data (dose) for name : %s , has not been found"%self._globalVar.nameMassStopPwrCorrecFactor
-                raise ValueError('Error - No dose correction factor data has been found in /RefData/DoseCorrecFactor/. Please check the data and try again..')
-            print "#### End Importing dose correction factor ####"
-            return # stop after the first level of files has been processed
+        filename = dirPath + 'doseCorrecFactor_%s.txt'%self._globalVar.nameDoseCorrecFactor
+        if not os.path.isfile(filename) or self._globalVar.nameDoseCorrecFactor == '' or self._globalVar.nameDoseCorrecFactor == ' ':
+            print "Correction factor data (dose) for name : %s , has not been found"%self._globalVar.nameDoseCorrecFactor
+            print "Dose correction factor set to 1."
+            maxEner = max(self._lookupTable.keys())
+            minEnergy =  min(self._lookupTable.keys())
+            array = [[minEnergy,maxEner],[1.0,1.0]]
+            self._DoseCorrecFactor = np.array(array,dtype = self._globalVar.typeFloat, order = 'C')
+#                 raise ValueError('Error - No dose correction factor data has been found in /RefData/DoseCorrecFactor/. Please check the data and try again..')
+
+        else:
+            loadedArray = np.loadtxt(filename,dtype="|S",delimiter='\t',skiprows = 1,usecols=(0,1))
+            loadedArray = loadedArray.astype(self._globalVar.typeFloat)
+            loadedArray = loadedArray.transpose()
+            loadedArray.view('%s,%s'%(self._globalVar.typeFloat,self._globalVar.typeFloat)).sort(order=['f1'], axis=0)
+            print "Dose correction factor %s imported"%self._globalVar.nameDoseCorrecFactor
+            self._DoseCorrecFactor = np.array(loadedArray,dtype = self._globalVar.typeFloat, order = 'C')
+        print "#### End Importing dose correction factor ####"
 
 
     def doseCorrectionFactor(self, energy):

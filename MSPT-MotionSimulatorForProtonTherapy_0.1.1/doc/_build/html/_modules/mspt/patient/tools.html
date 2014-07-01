@@ -1,0 +1,690 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.patient.tools &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.patient.tools</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.patient.tools</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># File: tools.py</span>
+<span class="c">#  </span>
+<span class="c"># Proton Therapy Simulator Project</span>
+<span class="c"># Written by by Paul Morel, </span>
+<span class="c">#               LIGM, Universite Paris-Est Marne La Vallee (France)</span>
+<span class="c">#               paul.morel@univ-mlv.fr</span>
+<span class="c"># </span>
+<span class="c">#</span>
+<span class="c">#</span>
+<span class="c"># Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France</span>
+<span class="c">#</span>
+<span class="c"># This file is part of MSPT- Motion Simulator for Proton Therapy.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator for Proton Therapy is free software: you can redistribute it and/or modify</span>
+<span class="c">#    it under the terms of the GNU General Public License as published by</span>
+<span class="c">#    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c">#    (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator for Proton Therapy is distributed in the hope that it will be useful,</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c">#    GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c">#    You should have received a copy of the GNU General Public License</span>
+<span class="c">#    along with MSPT- Motion Simulator for Proton Therapy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#</span>
+<span class="c">########################################################################</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+
+<span class="c"># Import C extensions (wrapped in C++ code) using float values (float32)</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionBuildSpotSet</span> <span class="kn">import</span> <span class="n">_fillDoseArray_PythonExt</span> <span class="k">as</span> <span class="n">_fillDoseArray</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionBuildSpotSet</span> <span class="kn">import</span> <span class="n">_fillDensityArray_PythonExt</span> <span class="k">as</span> <span class="n">_fillDensityArray</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionBuildSpotSet</span> <span class="kn">import</span> <span class="n">_fillCTArray_PythonExt</span> <span class="k">as</span> <span class="n">_fillCTArray</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionBuildSpotSet</span> <span class="kn">import</span> <span class="n">_fillStopPwrArray_PythonExt</span> <span class="k">as</span> <span class="n">_fillStopPwrArray</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionCalcDeff</span> <span class="kn">import</span> <span class="n">_calcRadiolDepth_PythonExt</span> <span class="k">as</span> <span class="n">_calcRadDeff</span> 
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionCalcDeff</span> <span class="kn">import</span> <span class="n">_singleRay_PythonExt</span> <span class="k">as</span> <span class="n">_singleRay</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionCalcDeff</span> <span class="kn">import</span> <span class="n">_fewRays_RadDepth_PythonExt</span> <span class="k">as</span> <span class="n">_fewRaysRadDepth</span>
+
+
+<span class="c"># Import C extensions (wrapped in C++ code) using double values (float64)</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionCalcDeffDouble</span> <span class="kn">import</span> <span class="n">_calcRadiolDepth_PythonExtDouble</span> <span class="k">as</span> <span class="n">_calcRadDeffDouble</span> 
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionCalcDeffDouble</span> <span class="kn">import</span> <span class="n">_singleRay_PythonExtDouble</span> <span class="k">as</span> <span class="n">_singleRayDouble</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionCalcDeffDouble</span> <span class="kn">import</span> <span class="n">_fewRays_RadDepth_PythonExtDouble</span> <span class="k">as</span> <span class="n">_fewRaysRadDepthDouble</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionBuildSpotSetDouble</span> <span class="kn">import</span> <span class="n">_fillDoseArray_PythonExtDouble</span> <span class="k">as</span> <span class="n">_fillDoseArrayDouble</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionBuildSpotSetDouble</span> <span class="kn">import</span> <span class="n">_fillDensityArray_PythonExtDouble</span> <span class="k">as</span> <span class="n">_fillDensityArrayDouble</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionBuildSpotSetDouble</span> <span class="kn">import</span> <span class="n">_fillCTArray_PythonExtDouble</span> <span class="k">as</span> <span class="n">_fillCTArrayDouble</span>
+<span class="kn">from</span> <span class="nn">..extensionsC.PythonExtensionAllPlatforms.PythonExtensionBuildSpotSetDouble</span> <span class="kn">import</span> <span class="n">_fillStopPwrArray_PythonExtDouble</span> <span class="k">as</span> <span class="n">_fillStopPwrArrayDouble</span>
+
+            
+<span class="c"># def wrapFunction(func, *args):</span>
+<span class="c">#     &#39;&#39;&#39;Wrapper function:</span>
+<span class="c">#     </span>
+<span class="c">#     &#39;&#39;&#39;</span>
+<span class="c">#     def wrapper( val ):</span>
+<span class="c">#         ret = func(val,*args)</span>
+<span class="c">#         return ret</span>
+<span class="c">#     return wrapper</span>
+    
+    
+<div class="viewcode-block" id="fillPatientDose"><a class="viewcode-back" href="../../../mspt.patient.html#mspt.patient.tools.fillPatientDose">[docs]</a><span class="k">def</span> <span class="nf">fillPatientDose</span><span class="p">(</span><span class="n">dimNewGrid</span><span class="p">,</span><span class="n">originalDoseGrid</span><span class="p">,</span><span class="n">imagePosition</span><span class="p">,</span><span class="n">imageEndPosition</span><span class="p">,</span><span class="n">imageOrientation</span><span class="p">,</span><span class="n">spacingInfoCT</span><span class="p">,</span><span class="n">spacingInfoRD</span><span class="p">,</span><span class="n">imagePositionRD</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calls the C extension: fillDoseArray_PythonExt and returns its result.</span>
+<span class="sd">        </span>
+<span class="sd">    :param dimNewGrid: dimensions of the 3D array to fill with the dose contained in originalDoseGrid. Its size is m x n x q.</span>
+<span class="sd">    :param originalDoseGrid: 3D array containing the planned dose extracted from RD dicom file. Its size can be different than m x n x q, \</span>
+<span class="sd">    it can be smaller or greater.  </span>
+<span class="sd">    :param imagePosition: coordinates (in mm) of the top left corner on the first slice of the volume representing the field of view. Equal to \</span>
+<span class="sd">    imagePositionRD if the field of view of dose grid is smaller than the field of view of the CT image.</span>
+<span class="sd">    :param imageEndPosition: coordinates (in mm) of the bottom right corner on the last slice of the field of view</span>
+<span class="sd">    :param imageOrientation: axis information in orginialDoseGrid: 1D array with 9 elements</span>
+<span class="sd">    :param spacingInfoCT: spacing information (mm) in newDoseGrid: x:spacingInfoCT[0] ,y:spacingInfoCT[1] ,z:spacingInfoCT[2] ,</span>
+<span class="sd">    :param spacingInfoRD: spacing information (mm) in originalDoseGrid (from RD File) : x:spacingInfoRD[0] ,y:spacingInfoRD[1] ,z:spacingInfoRD[2] </span>
+<span class="sd">    :param imagePositionRD: coordinates (in mm) of the top left corner on the first slice of the original dose grid</span>
+<span class="sd">    :param typeFloat: &#39;float32&#39; or &#39;float64&#39;. It it the numpy float type to be used.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note::</span>
+<span class="sd">        </span>
+<span class="sd">        All the arguments of the function (except typeFloat) must be numpy arrays of float values (typeFloat) and stored internally \</span>
+<span class="sd">        according to the &#39;C&#39; order.</span>
+<span class="sd">        </span>
+<span class="sd">    :returns: The dose grid filled with the values of the original dose grid and resampled to match the spacing of the CT image.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+    <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+    
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">originalDoseGrid</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSposetDose, originalDoseGrid is not *NumPy* array&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">originalDoseGrid</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSposetDose, originalDoseGrid is not NumPy *3D array*&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">originalDoseGrid</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSposetDose, originalDoseGrid is not *Float* NumPy array&#39;</span><span class="p">)</span>
+    
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">imagePosition</span><span class="p">,</span><span class="n">imageEndPosition</span><span class="p">,</span><span class="n">spacingInfoCT</span><span class="p">,</span><span class="n">spacingInfoRD</span><span class="p">,</span><span class="n">dimNewGrid</span><span class="p">,</span><span class="n">imagePositionRD</span><span class="p">]):</span>
+        <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+        <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+        
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In fillSposetDose, itemVec(&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;) is not *NumPy* array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In fillSposetDose, itemVec(&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;) is not NumPy *matrix*&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In fillSposetDose, itemVec(&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;) is not *Float* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        
+        <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">9</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+        <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">imageOrientation</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSposetDose, imageOrientation is not *NumPy* array&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">imageOrientation</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSposetDose, imageOrientation is not NumPy *1D array*&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">imageOrientation</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSposetDose, imageOrientation is not *Float* NumPy array&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;dimNewGrid&#39;</span><span class="p">,</span><span class="s">&#39;originalDoseGrid&#39;</span><span class="p">,</span><span class="s">&#39;imagePosition&#39;</span><span class="p">,</span><span class="s">&#39;imageEndPosition&#39;</span><span class="p">,</span><span class="s">&#39;imageOrientation&#39;</span><span class="p">,</span><span class="s">&#39;spacingInfoCT&#39;</span><span class="p">,</span><span class="s">&#39;spacingInfoRD&#39;</span><span class="p">,</span><span class="s">&#39;imagePositionRD&#39;</span><span class="p">]):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s">&#39;C_CONTIGUOUS&#39;</span><span class="p">]:</span>
+            <span class="n">strErr</span> <span class="o">=</span> <span class="s">&#39;In fillSposetDose, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *C-Contiguous* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">typeFloat</span> <span class="o">==</span> <span class="s">&#39;float32&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_fillDoseArray</span><span class="o">.</span><span class="n">fillDoseGrid</span><span class="p">(</span><span class="n">dimNewGrid</span><span class="p">,</span><span class="n">originalDoseGrid</span><span class="p">,</span><span class="n">imagePosition</span><span class="p">,</span><span class="n">imageEndPosition</span><span class="p">,</span><span class="n">imageOrientation</span><span class="p">,</span><span class="n">spacingInfoCT</span><span class="p">,</span><span class="n">spacingInfoRD</span><span class="p">,</span><span class="n">imagePositionRD</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_fillDoseArrayDouble</span><span class="o">.</span><span class="n">fillDoseGrid</span><span class="p">(</span><span class="n">dimNewGrid</span><span class="p">,</span><span class="n">originalDoseGrid</span><span class="p">,</span><span class="n">imagePosition</span><span class="p">,</span><span class="n">imageEndPosition</span><span class="p">,</span><span class="n">imageOrientation</span><span class="p">,</span><span class="n">spacingInfoCT</span><span class="p">,</span><span class="n">spacingInfoRD</span><span class="p">,</span><span class="n">imagePositionRD</span><span class="p">)</span>
+
+            </div>
+<div class="viewcode-block" id="fillPatientDensity"><a class="viewcode-back" href="../../../mspt.patient.html#mspt.patient.tools.fillPatientDensity">[docs]</a><span class="k">def</span> <span class="nf">fillPatientDensity</span><span class="p">(</span><span class="n">ctGrid</span><span class="p">,</span><span class="n">conversionTable</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calls the C extension: fillDensityArray_PythonExt and returns its result.</span>
+<span class="sd">    </span>
+<span class="sd">    :param ctGrid: 3D numpy array of CT values</span>
+<span class="sd">    :param conversionTable: Table used for the conversion lits of tuples : [ ( ,) ,( ,) , ( ,) ,( ,)], \</span>
+<span class="sd">    each tuple is composed of 2 elements, the CT value and the corresopnding mass density.</span>
+<span class="sd">    :param typeFloat: &#39;float32&#39; or &#39;float64&#39;. It it the numpy float type to be used.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note::</span>
+<span class="sd">    </span>
+<span class="sd">        All the arguments of the function (except typeFloat) must be numpy arrays of float values (typeFloat) and stored internally \</span>
+<span class="sd">        according to the &#39;C&#39; order.</span>
+<span class="sd">        </span>
+<span class="sd">    :returns: The density grid filled with the density values from the original CT image.</span>
+<span class="sd">       </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+        
+        
+    <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+    <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+    
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ctGrid</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetDensity, ctGrid is not *NumPy* array&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">ctGrid</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetDensity, ctGrid is not NumPy *3D array*&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ctGrid</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetDensity, ctGrid is not *Float* NumPy array&#39;</span><span class="p">)</span>
+    
+    
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">conversionTable</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetDensity, conversion table is not of length &gt;0&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">conversionTable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span><span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetDensity, conversion table has tuple of size != 2&#39;</span><span class="p">)</span>
+        
+    <span class="n">convTable</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">conversionTable</span><span class="p">)),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">conversionTable</span><span class="p">)):</span>
+            <span class="n">convTable</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">conversionTable</span><span class="p">[</span><span class="n">col</span><span class="p">][</span><span class="n">row</span><span class="p">]</span>
+            
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;ctGrid&#39;</span><span class="p">,</span><span class="s">&#39;convTable&#39;</span><span class="p">]):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s">&#39;C_CONTIGUOUS&#39;</span><span class="p">]:</span>
+            <span class="n">strErr</span> <span class="o">=</span> <span class="s">&#39;In fillSpotsetDensity, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *C-Contiguous* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">typeFloat</span> <span class="o">==</span> <span class="s">&#39;float32&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_fillDensityArray</span><span class="o">.</span><span class="n">fillDensityGrid</span><span class="p">(</span><span class="n">ctGrid</span><span class="p">,</span><span class="n">convTable</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_fillDensityArrayDouble</span><span class="o">.</span><span class="n">fillDensityGrid</span><span class="p">(</span><span class="n">ctGrid</span><span class="p">,</span><span class="n">convTable</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="fillPatientCT"><a class="viewcode-back" href="../../../mspt.patient.html#mspt.patient.tools.fillPatientCT">[docs]</a><span class="k">def</span> <span class="nf">fillPatientCT</span><span class="p">(</span><span class="n">ctGrid</span><span class="p">,</span><span class="n">newShape</span><span class="p">,</span><span class="n">indStart</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calls the C extension: fillCTArray_PythonExt and returns its result.</span>
+
+
+<span class="sd">    :param ctGrid: 3D numpy array of CT values</span>
+<span class="sd">    :param newShape: shape of the new CT grid</span>
+<span class="sd">    :param indStart: Indices where to start taking the CT values from the original CT grid in order to fill the new grid. </span>
+<span class="sd">    :param typeFloat: &#39;float32&#39; or &#39;float64&#39;. It it the numpy float type to be used.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note::</span>
+<span class="sd">        </span>
+<span class="sd">        All the arguments of the function (except typeFloat) must be numpy arrays of float values (typeFloat) and stored internally \</span>
+<span class="sd">        according to the &#39;C&#39; order.</span>
+<span class="sd">        </span>
+<span class="sd">    :returns: The reshaped CT grid.</span>
+<span class="sd">        </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+        
+        
+    <span class="c"># .... Check arguments</span>
+    <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+    <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+
+    
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ctGrid</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetCT, ctGrid is not *NumPy* array&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">ctGrid</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetCT, ctGrid is not NumPy *3D array*&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ctGrid</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;type ctGrid: </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="n">ctGrid</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetCT, ctGrid is not *Float* NumPy array&#39;</span><span class="p">)</span>
+    
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">newShape</span><span class="p">,</span><span class="n">indStart</span> <span class="p">]):</span>
+        <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+        <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+        
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In fillSposetCT, itemVec(&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;) is not *NumPy* array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In fillSposetCT, itemVec(&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;) is not NumPy *matrix*&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In fillSposetCT, itemVec(&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39;) is not *Float* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+    
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;ctGrid&#39;</span><span class="p">,</span><span class="s">&#39;newShape&#39;</span><span class="p">,</span><span class="s">&#39;indStart&#39;</span><span class="p">]):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s">&#39;C_CONTIGUOUS&#39;</span><span class="p">]:</span>
+                <span class="n">strErr</span> <span class="o">=</span> <span class="s">&#39;In fillSposetCT, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *C-Contiguous* NumPy array&#39;</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">typeFloat</span> <span class="o">==</span> <span class="s">&#39;float32&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_fillCTArray</span><span class="o">.</span><span class="n">fillCTGrid</span><span class="p">(</span><span class="n">ctGrid</span><span class="p">,</span><span class="n">newShape</span><span class="p">,</span><span class="n">indStart</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_fillCTArrayDouble</span><span class="o">.</span><span class="n">fillCTGrid</span><span class="p">(</span><span class="n">ctGrid</span><span class="p">,</span><span class="n">newShape</span><span class="p">,</span><span class="n">indStart</span><span class="p">)</span>
+        
+            </div>
+<div class="viewcode-block" id="fillPatientStopPwr"><a class="viewcode-back" href="../../../mspt.patient.html#mspt.patient.tools.fillPatientStopPwr">[docs]</a><span class="k">def</span> <span class="nf">fillPatientStopPwr</span><span class="p">(</span><span class="n">densGrid</span><span class="p">,</span><span class="n">conversionTable</span><span class="p">,</span><span class="n">correcFactorTable</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calls the C extension: fillStopPwrArray_PythonExt and returns its result.</span>
+
+<span class="sd">    :param densGrid: 3D grid of densiy values</span>
+<span class="sd">    :param conversionTable: table used for the conversion from density to relative stopping power. Array of 3 rows and 4 columns. Row 0 : lowest bound of the density values for each medium, \</span>
+<span class="sd">    Row 1 : upper bound of the density values for each medium , Row 3: corresponding Stopping Power value. Each column correspond to 1 type of medium.</span>
+<span class="sd">    :param correcFactorTable: Table 2 rows, n columns representing the correction factor used for the mass stopping power.</span>
+<span class="sd">    :param typeFloat: &#39;float32&#39; or &#39;float64&#39;. It it the numpy float type to be used.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note::</span>
+<span class="sd">        </span>
+<span class="sd">        All the arguments of the function (except typeFloat) must be numpy arrays of float values (typeFloat) and stored internally \</span>
+<span class="sd">        according to the &#39;C&#39; order.</span>
+<span class="sd">        </span>
+<span class="sd">    :returns: The relative stopping power grid.</span>
+<span class="sd">         </span>
+<span class="sd">     &#39;&#39;&#39;</span>
+    <span class="c"># .... Check arguments</span>
+    <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+    <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+
+    
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">densGrid</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetStopPwr, densGrid is not *NumPy* array&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">densGrid</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetStopPwr, densGrid is not NumPy *3D array*&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">densGrid</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetStopPwr, densGrid is not *Float* NumPy array&#39;</span><span class="p">)</span>
+    
+    <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="n">conversionTable</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+    <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>    
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">conversionTable</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetStopPwr, conversionTable is not *NumPy* array&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">conversionTable</span><span class="o">.</span><span class="n">shape</span>  <span class="o">!=</span> <span class="n">test</span><span class="o">.</span><span class="n">shape</span> <span class="p">:</span>
+        <span class="n">strErr</span> <span class="o">=</span> <span class="s">&#39;In fillSpotsetStopPwr, conversionTable is not a *3 x </span><span class="si">%i</span><span class="s">* Numpy array&#39;</span><span class="o">%</span><span class="n">conversionTable</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">conversionTable</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetStopPwr, conversionTable is not *Float* NumPy array&#39;</span><span class="p">)</span>
+
+    <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">correcFactorTable</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+    <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>    
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">correcFactorTable</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetStopPwr, correcFactorTable is not *NumPy* array&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">correcFactorTable</span><span class="o">.</span><span class="n">shape</span>  <span class="o">!=</span> <span class="n">test</span><span class="o">.</span><span class="n">shape</span> <span class="p">:</span>
+        <span class="n">strErr</span> <span class="o">=</span> <span class="s">&#39;In fillSpotsetStopPwr, correcFactorTable is not a *2 x </span><span class="si">%i</span><span class="s">* Numpy array&#39;</span><span class="o">%</span><span class="n">correcFactorTable</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">correcFactorTable</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In fillSpotsetStopPwr, correcFactorTable is not *Float* NumPy array&#39;</span><span class="p">)</span>
+
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;densGrid&#39;</span><span class="p">,</span><span class="s">&#39;conversionTable&#39;</span><span class="p">,</span><span class="s">&#39;correcFactorTable&#39;</span><span class="p">]):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s">&#39;C_CONTIGUOUS&#39;</span><span class="p">]:</span>
+            <span class="n">strErr</span> <span class="o">=</span> <span class="s">&#39;In fillSpotsetStopPwr, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *C-Contiguous* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">typeFloat</span> <span class="o">==</span> <span class="s">&#39;float32&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_fillStopPwrArray</span><span class="o">.</span><span class="n">fillStopPwrGrid</span><span class="p">(</span><span class="n">densGrid</span><span class="p">,</span><span class="n">conversionTable</span><span class="p">,</span><span class="n">correcFactorTable</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_fillStopPwrArrayDouble</span><span class="o">.</span><span class="n">fillStopPwrGrid</span><span class="p">(</span><span class="n">densGrid</span><span class="p">,</span><span class="n">conversionTable</span><span class="p">,</span><span class="n">correcFactorTable</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="calcRadiolDepth"><a class="viewcode-back" href="../../../mspt.patient.html#mspt.patient.tools.calcRadiolDepth">[docs]</a><span class="k">def</span> <span class="nf">calcRadiolDepth</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">,</span><span class="n">startVec</span><span class="p">,</span><span class="n">incVec</span><span class="p">,</span><span class="n">sourceVec</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calls the C extension: calcRadiolDepth_PythonExt and returns its result.</span>
+<span class="sd">    </span>
+<span class="sd">    :param stPwrGrid: 3D grid of relative stopping power values</span>
+<span class="sd">    :param startVec: Coordinates (x,y,z) in cm of the voxel (0,nb Rows - 1, 0) in the IEC fixed coordinate system.</span>
+<span class="sd">    :param incVec: Positive increment vector. It corresponds to (x_spacing, y_spacing, z_spacing) in cm.</span>
+<span class="sd">    :param sourceVec: (x,y,z) coordinates of the beam&#39;s source in cm in the in the IEC fixed coordinate system.</span>
+<span class="sd">    :param typeFloat: &#39;float32&#39; or &#39;float64&#39;. It it the numpy float type to be used.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note::</span>
+<span class="sd">        </span>
+<span class="sd">        All the arguments of the function (except typeFloat) must be numpy arrays of float values (typeFloat) and stored internally \</span>
+<span class="sd">        according to the &#39;C&#39; order.</span>
+<span class="sd">        </span>
+<span class="sd">    :returns: The radiological depth grid.</span>
+
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+    <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In calcRadiolDepth, densityGrid is not *NumPy* array&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In calcRadiolDepth, densityGrid is not NumPy *3D array*&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">stPwrGrid</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In calcRadiolDepth, densityGrid is not *Float* NumPy array&#39;</span><span class="p">)</span>
+
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;startVec&#39;</span><span class="p">,</span><span class="s">&#39;incVec&#39;</span><span class="p">,</span><span class="s">&#39;sourceVec&#39;</span><span class="p">]):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+        <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+        
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepth, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *NumPy* array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepth, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not NumPy *matrix*&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepth, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *Float* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">stPwrGrid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span>  <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Stopping Power grid: values &lt; 0 when going to compute Radio Depth&quot;</span><span class="p">)</span>
+    
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;stPwrGrid&#39;</span><span class="p">,</span><span class="s">&#39;startVec&#39;</span><span class="p">,</span><span class="s">&#39;incVec&#39;</span><span class="p">,</span><span class="s">&#39;sourceVec&#39;</span><span class="p">]):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s">&#39;C_CONTIGUOUS&#39;</span><span class="p">]:</span>
+            <span class="n">strErr</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepth, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *C-Contiguous* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+                
+        
+    <span class="k">if</span> <span class="n">typeFloat</span> <span class="o">==</span> <span class="s">&#39;float32&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_calcRadDeff</span><span class="o">.</span><span class="n">calcRadDeff</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">,</span><span class="n">startVec</span><span class="p">,</span><span class="n">incVec</span><span class="p">,</span><span class="n">sourceVec</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_calcRadDeffDouble</span><span class="o">.</span><span class="n">calcRadDeff</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">,</span><span class="n">startVec</span><span class="p">,</span><span class="n">incVec</span><span class="p">,</span><span class="n">sourceVec</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="singleRay"><a class="viewcode-back" href="../../../mspt.patient.html#mspt.patient.tools.singleRay">[docs]</a><span class="k">def</span> <span class="nf">singleRay</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">,</span><span class="n">startVec</span><span class="p">,</span><span class="n">incVec</span><span class="p">,</span><span class="n">sourceVec</span><span class="p">,</span> <span class="n">targetVec</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calls the C extension: _singleRay_PythonExt and returns its result.</span>
+<span class="sd">    </span>
+<span class="sd">    :param stPwrGrid: 3D grid of relative stopping power values</span>
+<span class="sd">    :param startVec: Coordinates (x,y,z) in cm of the voxel (0,nb Rows - 1, 0) in the IEC fixed coordinate system.</span>
+<span class="sd">    :param incVec: Positive increment vector. It corresponds to (x_spacing, y_spacing, z_spacing) in cm.</span>
+<span class="sd">    :param sourceVec: (x,y,z) coordinates of the beam&#39;s source in cm in the in the IEC fixed coordinate system.</span>
+<span class="sd">    :param targetVec: (x,y,z) coordinates of the beam&#39;s target in cm in the in the IEC fixed coordinate system.</span>
+<span class="sd">    :param typeFloat: &#39;float32&#39; or &#39;float64&#39;. It it the numpy float type to be used.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note::</span>
+<span class="sd">        </span>
+<span class="sd">        All the arguments of the function (except typeFloat) must be numpy arrays of float values (typeFloat) and stored internally \</span>
+<span class="sd">        according to the &#39;C&#39; order.</span>
+<span class="sd">        </span>
+<span class="sd">    :returns: The radiological depth grid.  </span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+    <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">datatest</span><span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In singleRay, densityGrid is not *NumPy* array&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In singleRay, densityGrid is not NumPy *3D array*&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">stPwrGrid</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In singleRay, densityGrid is not *Float* NumPy array&#39;</span><span class="p">)</span>
+
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;startVec&#39;</span><span class="p">,</span><span class="s">&#39;incVec&#39;</span><span class="p">,</span><span class="s">&#39;sourceVec&#39;</span><span class="p">,</span><span class="s">&#39;targetVec&#39;</span><span class="p">]):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+        <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+        
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In singleRay, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *NumPy* array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In singleRay, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not NumPy *matrix*&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In singleRay, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *Float* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">stPwrGrid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span>  <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Stopping Power grid: values &lt; 0 when going to compute Radio Depth&quot;</span><span class="p">)</span>
+    
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;stPwrGrid&#39;</span><span class="p">,</span><span class="s">&#39;startVec&#39;</span><span class="p">,</span><span class="s">&#39;incVec&#39;</span><span class="p">,</span><span class="s">&#39;sourceVec&#39;</span><span class="p">,</span><span class="s">&#39;targetVec&#39;</span><span class="p">]):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s">&#39;C_CONTIGUOUS&#39;</span><span class="p">]:</span>
+            <span class="n">strErr</span> <span class="o">=</span> <span class="s">&#39;In singleRay, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *C-Contiguous* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">typeFloat</span> <span class="o">==</span> <span class="s">&#39;float32&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_singleRay</span><span class="o">.</span><span class="n">singleRayTrace</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">,</span><span class="n">startVec</span><span class="p">,</span><span class="n">incVec</span><span class="p">,</span><span class="n">sourceVec</span><span class="p">,</span><span class="n">targetVec</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_singleRayDouble</span><span class="o">.</span><span class="n">singleRayTrace</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">,</span><span class="n">startVec</span><span class="p">,</span><span class="n">incVec</span><span class="p">,</span><span class="n">sourceVec</span><span class="p">,</span><span class="n">targetVec</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="calcRadiolDepthFewRays"><a class="viewcode-back" href="../../../mspt.patient.html#mspt.patient.tools.calcRadiolDepthFewRays">[docs]</a><span class="k">def</span> <span class="nf">calcRadiolDepthFewRays</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">,</span><span class="n">startVec</span><span class="p">,</span><span class="n">incVec</span><span class="p">,</span><span class="n">sourceVec</span><span class="p">,</span> <span class="n">targetVec</span><span class="p">,</span><span class="n">auxTargets</span><span class="p">,</span><span class="n">typeFloat</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calls the C extension:  _fewRays_RadDepth_PythonExt and returns its result.</span>
+<span class="sd">    </span>
+<span class="sd">    :param stPwrGrid: 3D grid of relative stopping power values</span>
+<span class="sd">    :param startVec: Coordinates (x,y,z) in cm of the voxel (0,nb Rows - 1, 0) in the IEC fixed coordinate system.</span>
+<span class="sd">    :param incVec: Positive increment vector. It corresponds to (x_spacing, y_spacing, z_spacing) in cm.</span>
+<span class="sd">    :param sourceVec: (x,y,z) coordinates of the beam&#39;s source in cm in the in the IEC fixed coordinate system.</span>
+<span class="sd">    :param targetVec: (x,y,z) coordinates of the beam&#39;s target in cm in the in the IEC fixed coordinate system.</span>
+<span class="sd">    :param auxVec: array of (x,y,z) coordinates of the beam&#39;s auxiliary targets (i.e., targets around the main target targetVec)\</span>
+<span class="sd">    in cm in the in the IEC fixed coordinate system.</span>
+<span class="sd">    :param typeFloat: &#39;float32&#39; or &#39;float64&#39;. It it the numpy float type to be used.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note::</span>
+<span class="sd">        </span>
+<span class="sd">        All the arguments of the function (except typeFloat) must be numpy arrays of float values (typeFloat) and stored internally \</span>
+<span class="sd">        according to the &#39;C&#39; order.</span>
+<span class="sd">        </span>
+<span class="sd">    :returns: The radiological depth grid. </span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+    <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In calcRadiolDepthFewRays, densityGrid is not *NumPy* array&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In calcRadiolDepthFewRays, densityGrid is not NumPy *3D array*&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">stPwrGrid</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;In calcRadiolDepthFewRays, densityGrid is not *Float* NumPy array&#39;</span><span class="p">)</span>
+
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;startVec&#39;</span><span class="p">,</span><span class="s">&#39;incVec&#39;</span><span class="p">,</span><span class="s">&#39;sourceVec&#39;</span><span class="p">,</span><span class="s">&#39;targetVec&#39;</span><span class="p">]):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+        <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+        
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepthFewRays, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *NumPy* array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">item</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepthFewRays, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not NumPy *matrix*&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepthFewRays, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *Float* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;auxTargets&#39;</span><span class="p">]):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">test</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="n">dtype</span><span class="o">=</span><span class="n">typeFloat</span><span class="p">)</span>
+        <span class="n">typetest</span><span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+        <span class="n">datatest</span><span class="o">=</span><span class="n">test</span><span class="o">.</span><span class="n">dtype</span>
+        
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">!=</span> <span class="n">typetest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepthFewRays, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *NumPy* array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">item</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">test</span><span class="p">)[</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepthFewRays, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not NumPy *matrix*&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">datatest</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="n">stringError</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepthFewRays, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *Float* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">stringError</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">stPwrGrid</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span>  <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Stopping Power grid: values &lt; 0 when going to compute Radio Depth&quot;</span><span class="p">)</span>
+    
+    
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s">&#39;stPwrGrid&#39;</span><span class="p">,</span><span class="s">&#39;startVec&#39;</span><span class="p">,</span><span class="s">&#39;incVec&#39;</span><span class="p">,</span><span class="s">&#39;sourceVec&#39;</span><span class="p">,</span><span class="s">&#39;targetVec&#39;</span><span class="p">,</span><span class="s">&#39;auxTargets&#39;</span><span class="p">]):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s">&#39;C_CONTIGUOUS&#39;</span><span class="p">]:</span>
+            <span class="n">strErr</span> <span class="o">=</span> <span class="s">&#39;In calcRadiolDepthFewRays, &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span><span class="s">&#39; is not *C-Contiguous* NumPy array&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+                
+        
+    <span class="k">if</span> <span class="n">typeFloat</span> <span class="o">==</span> <span class="s">&#39;float32&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_fewRaysRadDepth</span><span class="o">.</span><span class="n">fewRaysRadDepth</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">,</span><span class="n">startVec</span><span class="p">,</span><span class="n">incVec</span><span class="p">,</span><span class="n">sourceVec</span><span class="p">,</span> <span class="n">targetVec</span><span class="p">,</span><span class="n">auxTargets</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_fewRaysRadDepthDouble</span><span class="o">.</span><span class="n">fewRaysRadDepthDouble</span><span class="p">(</span><span class="n">stPwrGrid</span><span class="p">,</span><span class="n">startVec</span><span class="p">,</span><span class="n">incVec</span><span class="p">,</span><span class="n">sourceVec</span><span class="p">,</span> <span class="n">targetVec</span><span class="p">,</span><span class="n">auxTargets</span><span class="p">)</span>
+</pre></div></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

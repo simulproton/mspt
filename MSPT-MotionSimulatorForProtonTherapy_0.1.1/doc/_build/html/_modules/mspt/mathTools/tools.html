@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.mathTools.tools &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.mathTools.tools</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.mathTools.tools</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># File: tools.py</span>
+<span class="c">#  </span>
+<span class="c"># Proton Therapy Simulator Project</span>
+<span class="c"># Written by by Paul Morel, </span>
+<span class="c">#               LIGM, Universite Paris-Est Marne La Vallee (France)</span>
+<span class="c">#               paul.morel@univ-mlv.fr</span>
+<span class="c">#</span>
+<span class="c"># Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France</span>
+<span class="c">#</span>
+<span class="c"># This file is part of MSPT- Motion Simulator for Proton Therapy.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator for Proton Therapy is free software: you can redistribute it and/or modify</span>
+<span class="c">#    it under the terms of the GNU General Public License as published by</span>
+<span class="c">#    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c">#    (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator for Proton Therapy is distributed in the hope that it will be useful,</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c">#    GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c">#    You should have received a copy of the GNU General Public License</span>
+<span class="c">#    along with MSPT- Motion Simulator for Proton Therapy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">##</span>
+<span class="c">########################################################################</span>
+
+
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># Description:</span>
+<span class="c">#  </span>
+<span class="c"># Tools for mathematical operations.</span>
+<span class="c"># </span>
+<span class="c">#               </span>
+<span class="c">#               </span>
+<span class="c"># </span>
+<span class="c">#</span>
+<span class="c">########################################################################</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="kn">as</span> <span class="nn">sp</span>
+
+
+    
+<div class="viewcode-block" id="interp"><a class="viewcode-back" href="../../../mspt.mathTools.html#mspt.mathTools.tools.interp">[docs]</a><span class="k">def</span> <span class="nf">interp</span><span class="p">(</span><span class="n">xValue</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">y2</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Interpolates linearly between (x1,y1) and (x2,y2) and return the value for xValue</span>
+<span class="sd">    </span>
+<span class="sd">    :param xValue: value to interpolate</span>
+<span class="sd">    :param x1: x coordinate of the first point</span>
+<span class="sd">    :param x2: x coordinate of the second point</span>
+<span class="sd">    :param y1: y coordinate of the first point</span>
+<span class="sd">    :param y2: y coordinate of the second point</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: Interpolated value.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">y2</span><span class="o">-</span><span class="n">y1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x2</span><span class="o">-</span><span class="n">x1</span><span class="p">)</span>
+    <span class="n">intercept</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">x1</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">xValue</span> <span class="o">*</span> <span class="n">slope</span> <span class="o">+</span> <span class="n">intercept</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="rotateCoordinates"><a class="viewcode-back" href="../../../mspt.mathTools.html#mspt.mathTools.tools.rotateCoordinates">[docs]</a><span class="k">def</span> <span class="nf">rotateCoordinates</span><span class="p">(</span><span class="n">rotMatrix</span><span class="p">,</span><span class="n">point</span><span class="p">,</span> <span class="n">typeFloat</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Computes the rotation of a point.</span>
+<span class="sd">    </span>
+<span class="sd">    :param rotMatrix: 3x3 rotation matrix (numpy array)</span>
+<span class="sd">    :param point: coordinates (x,y,z) of the point to rotate</span>
+<span class="sd">    :param typeFloat: type of numpy float to use; &#39;float32&#39; or &#39;float64&#39;</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: The coordinates of the rotated point (x&#39;,y&#39;,z&#39;)</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+      
+      
+    <span class="n">row0</span> <span class="o">=</span> <span class="n">rotMatrix</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+    <span class="n">row1</span> <span class="o">=</span> <span class="n">rotMatrix</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">row2</span> <span class="o">=</span> <span class="n">rotMatrix</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>                    
+
+    <span class="n">rotatedPoint</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">row0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">row0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">row0</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">,</span> \
+                            <span class="n">row1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">row1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">row1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">,</span>\
+                            <span class="n">row2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">row2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">row2</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">point</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">],</span><span class="n">dtype</span><span class="o">=</span> <span class="n">typeFloat</span><span class="p">,</span><span class="n">order</span><span class="o">=</span><span class="s">&#39;C&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">rotatedPoint</span>    
+    </div>
+<div class="viewcode-block" id="distEuclideanP1P2"><a class="viewcode-back" href="../../../mspt.mathTools.html#mspt.mathTools.tools.distEuclideanP1P2">[docs]</a><span class="k">def</span> <span class="nf">distEuclideanP1P2</span><span class="p">(</span> <span class="n">p1</span><span class="p">,</span><span class="n">p2</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Computes the Euclidean distance</span>
+<span class="sd">    </span>
+<span class="sd">    :param p1: Coordinates point1 (x,y,z)</span>
+<span class="sd">    :param p2: Coordinates point2 (x,y,z)</span>
+
+<span class="sd">    :returns: The euclidean distance</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+   
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">p2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">p2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span>\
+                            <span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">p2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">p2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span>\
+                            <span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">p2</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">p2</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+                            </div>
+<div class="viewcode-block" id="rot3D"><a class="viewcode-back" href="../../../mspt.mathTools.html#mspt.mathTools.tools.rot3D">[docs]</a><span class="k">def</span> <span class="nf">rot3D</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">nr</span><span class="p">,</span><span class="n">floatType</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Computes the rotation of the X,Y,Z coordinates.</span>
+<span class="sd">    </span>
+<span class="sd">    :param X: 3D numpy array with x coordinates of each voxel</span>
+<span class="sd">    :param Y: 3D numpy array with y coordinates of each voxel</span>
+<span class="sd">    :param Z: 3D numpy array with z coordinates of each voxel</span>
+<span class="sd">    :param n: unit vectors (1 by column) in the initial coordinate system</span>
+<span class="sd">    :param nr: unit vectors (1 by column) in the new coordinate system</span>
+<span class="sd">    :param floatType: Type of numpy float : &#39;float32&#39; or &#39;float64&#39;</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: (Xr,Yr,Zr) a tuple of 3D arrays corresponding to the rotated coordinates</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c">#extract the unit vectors for each coordinate system</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">n</span><span class="p">[:,</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">n</span><span class="p">[:,</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">n</span><span class="p">[:,</span><span class="mi">2</span><span class="p">];</span>
+
+    <span class="n">ir</span> <span class="o">=</span> <span class="n">nr</span><span class="p">[:,</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">jr</span> <span class="o">=</span> <span class="n">nr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">kr</span> <span class="o">=</span> <span class="n">nr</span><span class="p">[:,</span><span class="mi">2</span><span class="p">];</span>
+    
+    <span class="c"># calculate the transformation matrix</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">ir</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">ir</span><span class="p">)</span> <span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">ir</span><span class="p">)],</span> \
+                    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">jr</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">jr</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">jr</span><span class="p">)],</span> \
+                    <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="n">kr</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">j</span><span class="p">),</span><span class="n">kr</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">k</span><span class="p">),</span><span class="n">kr</span><span class="p">)]</span> <span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">floatType</span><span class="p">)</span>
+    <span class="c">#Warning T created is nr^-1 !!! This is due to the rotation matrix that rotates counter clockwise, i.e opposite direction than gantry</span>
+
+
+    
+    <span class="c">#perform the transformation</span>
+    <span class="n">Xr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">Yr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">Zr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span><span class="n">Z</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">Xr</span><span class="p">,</span><span class="n">Yr</span><span class="p">,</span><span class="n">Zr</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="fromCTToIECFixedCoord"><a class="viewcode-back" href="../../../mspt.mathTools.html#mspt.mathTools.tools.fromCTToIECFixedCoord">[docs]</a><span class="k">def</span> <span class="nf">fromCTToIECFixedCoord</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">,</span><span class="n">isocenter</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Converts coordinates from Dicom Patient coordinate system to IEC fixed coordinate system:</span>
+<span class="sd">    </span>
+<span class="sd">    :param X: matrix of x coordinates for voxels</span>
+<span class="sd">    :param Y: matrix of y coordinates for voxels</span>
+<span class="sd">    :param Z: matrix of z coordinates for voxels</span>
+<span class="sd">    :param isocenter: [x,y,z] coordinates of the isocenter defined in the RP dicom (plan) file </span>
+<span class="sd">    </span>
+<span class="sd">    :returns: A tuple:</span>
+<span class="sd">    </span>
+<span class="sd">        #. X_iec_f = X - x_isocenter </span>
+<span class="sd">        #. Y_iec_f = Y - y_isocenter</span>
+<span class="sd">        #. Z_iec_f = Z - z_isocenter</span>
+<span class="sd">        </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c">#Translation to express the origin of the dicom patient coordinate system in the IEC fixed coordinate system</span>
+    <span class="n">X_translated</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">isocenter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+    <span class="n">Y_translated</span> <span class="o">=</span> <span class="n">Y</span> <span class="o">-</span> <span class="n">isocenter</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">Z_translated</span> <span class="o">=</span> <span class="n">Z</span> <span class="o">-</span> <span class="n">isocenter</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    
+    <span class="c">#Take into account the fact that in IEC fixed coord system, Z is positive when Y is negative in the dicom patient coordinate system. X doesn&#39;t change, and Y in IEC fixed is the same as Z in dicom patient coord systm.</span>
+    <span class="n">X_iec_f</span> <span class="o">=</span> <span class="n">X_translated</span> 
+    <span class="n">Y_iec_f</span> <span class="o">=</span> <span class="n">Z_translated</span>
+    <span class="n">Z_iec_f</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">Y_translated</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">X_iec_f</span><span class="p">,</span><span class="n">Y_iec_f</span><span class="p">,</span><span class="n">Z_iec_f</span><span class="p">)</span>
+    </div>
+<div class="viewcode-block" id="fromIECFixedToCTCoord"><a class="viewcode-back" href="../../../mspt.mathTools.html#mspt.mathTools.tools.fromIECFixedToCTCoord">[docs]</a><span class="k">def</span> <span class="nf">fromIECFixedToCTCoord</span><span class="p">(</span><span class="n">XiecF</span><span class="p">,</span><span class="n">YiecF</span><span class="p">,</span><span class="n">ZiecF</span><span class="p">,</span><span class="n">isocenter</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Converts coordinates from IEC fixed coordinate system to Dicom Patient coordinate system.</span>
+<span class="sd">    </span>
+<span class="sd">    :param XiecF: matrix of x coordinates for voxels</span>
+<span class="sd">    :param YiecF: matrix of y coordinates for voxels</span>
+<span class="sd">    :param ZiecF: matrix of z coordinates for voxels</span>
+<span class="sd">    :param isocenter: [x,y,z] coordinates of the isocenter defined in the RP dicom (plan) file </span>
+<span class="sd">    </span>
+<span class="sd">    :returns: A tuple:</span>
+<span class="sd">    </span>
+<span class="sd">        #. X_iec_f = X - x_isocenter </span>
+<span class="sd">        #. Y_iec_f = Y - y_isocenter</span>
+<span class="sd">        #. Z_iec_f = Z - z_isocenter</span>
+<span class="sd">        </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">XiecF</span> <span class="o">+</span> <span class="n">isocenter</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">ZiecF</span> <span class="o">+</span> <span class="n">isocenter</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">YiecF</span> <span class="o">+</span> <span class="n">isocenter</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span>
+
+
+</div>
+<div class="viewcode-block" id="rotationMatrixForAngle"><a class="viewcode-back" href="../../../mspt.mathTools.html#mspt.mathTools.tools.rotationMatrixForAngle">[docs]</a><span class="k">def</span> <span class="nf">rotationMatrixForAngle</span><span class="p">(</span> <span class="n">angle</span><span class="p">):</span> <span class="c"># angle in degrees</span>
+                                         <span class="c">#Rotation Around y axis clockwise</span>
+    <span class="sd">&#39;&#39;&#39;Computes and returns a rotation matrix for a given angle in degrees.The rotation is arounf the y axis of the </span>
+<span class="sd">    IEC fixed coordinate system.</span>
+<span class="sd">    </span>
+<span class="sd">    :param angle: Angle in degrees</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: A 3x3 array.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mf">180.0</span>
+    <span class="n">rotMatrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span> <span class="o">*</span> <span class="n">C</span><span class="p">)</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span> <span class="o">*</span> <span class="n">C</span><span class="p">)],[</span><span class="mi">0</span> <span class="p">,</span> <span class="mi">1</span> <span class="p">,</span> <span class="mi">0</span><span class="p">],[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span> <span class="o">*</span> <span class="n">C</span><span class="p">)</span> <span class="p">,</span> <span class="mi">0</span> <span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span> <span class="o">*</span> <span class="n">C</span><span class="p">)])</span> <span class="p">)</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">rotMatrix</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="n">rotMatrix</span></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

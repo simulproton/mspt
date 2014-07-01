@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.scanning package &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="index.html"/>
+        <link rel="up" title="mspt package" href="mspt.html"/>
+        <link rel="next" title="mspt.simulator package" href="mspt.simulator.html"/>
+        <link rel="prev" title="mspt.physics package" href="mspt.physics.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="mspt.html">mspt package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="mspt.html">mspt package</a> &raquo;</li>
+      
+    <li>mspt.scanning package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/mspt.scanning.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="mspt-scanning-package">
+<h1>mspt.scanning package<a class="headerlink" href="#mspt-scanning-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-mspt.scanning.deliverySimulation_Static_Dynamic">
+<span id="mspt-scanning-deliverysimulation-static-dynamic-module"></span><h2>mspt.scanning.deliverySimulation_Static_Dynamic module<a class="headerlink" href="#module-mspt.scanning.deliverySimulation_Static_Dynamic" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.beamletSimul">
+<tt class="descclassname">mspt.scanning.deliverySimulation_Static_Dynamic.</tt><tt class="descname">beamletSimul</tt><big>(</big><em>rhomw</em>, <em>Smw</em>, <em>Xr</em>, <em>Yr</em>, <em>Zr</em>, <em>dmax</em>, <em>z_dd</em>, <em>dd</em>, <em>sig0</em>, <em>xrshift</em>, <em>yrshift</em>, <em>sad</em>, <em>ssd0</em>, <em>Deff</em>, <em>indicesRay</em>, <em>x0y0z0_IECF</em>, <em>IECFSpacing</em>, <em>rotMatrixInv</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#beamletSimul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.beamletSimul" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls the C extension: beamletSimulation_PythonExt and returns its result.</p>
+<p>The goal of this function is to simulate a beamlet and get the dose deposited by this beamlet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>rhomw</strong> &#8211; 3D numpy array density ratio to water (i.e. density matrix since water density = 1.0 g.cm-3)</li>
+<li><strong>Smw</strong> &#8211; 3D numpy array of the relative stopping power ratio to water</li>
+<li><strong>Xr</strong> &#8211; 3D matrix representing x coordinates in the IEC Gantry coordinate system (cm).</li>
+<li><strong>Yr</strong> &#8211; 3D matrix representing y coordinates in the IEC Gantry coordinate system (cm).</li>
+<li><strong>Zr</strong> &#8211; 3D matrix representing z coordinates in the IEC Gantry coordinate system (cm).</li>
+<li><strong>dmax</strong> &#8211; Bragg Peak depth (cm).</li>
+<li><strong>z_dd</strong> &#8211; &#8220;depth&#8221; coordinates for the depth dose curve (cm).</li>
+<li><strong>dd</strong> &#8211; &#8220;dose&#8221; coordinates for the depth dose curve. (Gy.cm ^2 )</li>
+<li><strong>sig0</strong> &#8211; beam size (along x and y IEC gantry axis) at patient entrance (cm): [sig0X,sig0Y]</li>
+<li><strong>xrshift</strong> &#8211; x beam shift (from isocenter) used to define target position. Provided in the IEC gantry coordinate system.(cm)</li>
+<li><strong>yrshift</strong> &#8211; y beam shift (from isocenter) used to define target position. Provided in the IEC gantry coordinate system.(cm)</li>
+<li><strong>sad</strong> &#8211; source-axis distance: distance between the source and the isocenter.(cm)</li>
+<li><strong>ssd0</strong> &#8211; source to patient surface distance (cm)</li>
+<li><strong>Deff</strong> &#8211; 3D matrix representing the radiological depth.(cm)</li>
+<li><strong>indicesRay</strong> &#8211; list of indices (frame,row, column) of the voxels encountered by the ray from the source to the target spot (xrshift,yrshift)    located in the isocenter plane. They are sorted by increasing distance from the source.</li>
+<li><strong>x0y0z0_IECF</strong> &#8211; beam target point in the IEC fixed coordinate system.</li>
+<li><strong>spacingIECF</strong> &#8211; voxel spacing in the IEC fixed coord system</li>
+<li><strong>rotMatrixInv</strong> &#8211; 3x3 array (rotation matrix) to convert coordinates from IECG to IECF</li>
+<li><strong>typeFloat</strong> &#8211; the type of numpy float to be used: &#8216;float32&#8217; or &#8216;float64&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The resulting 3D dose distribution in a numpy array.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery">
+<em class="property">class </em><tt class="descclassname">mspt.scanning.deliverySimulation_Static_Dynamic.</tt><tt class="descname">simulatorDelivery</tt><big>(</big><em>patient</em>, <em>ddCurvesData</em>, <em>configData</em>, <em>motion=None</em>, <em>monitor=None</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class simulatorDelivery is the core of the simulation. This where the delivery is actually simulated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>patient</strong> &#8211; Patient object (in patient.patient) containing all the 3D arrays for the CT, density, ...</li>
+<li><strong>ddCurvesData</strong> &#8211; DDcurve object (in physics.ddCurveManager) used to store all the depth-dose curves.</li>
+<li><strong>configData</strong> &#8211; <p>dictionary (globalVariables) storing the data configuring the simulator.     Mandatory keys:</p>
+<ul>
+<li><em>&#8216;mainPath&#8217;</em> : corresponds to the path where any simulation will be saved.</li>
+<li><em>&#8216;nameSimulation&#8217;</em> : corresponds to the path where the current simulation will be saved.</li>
+<li><em>&#8216;typeFloat&#8217;</em> : The type of numpy float to be used: &#8216;float32&#8217; or &#8216;float64&#8217;</li>
+<li><em>&#8216;protPerMU&#8217;</em> : Number of protons per MU to use.</li>
+<li><em>&#8216;MeV&#8217;</em>: Constant to convert 1MeV to Joules: 1MeV = 1.602e-13J</li>
+<li><em>&#8216;displayScanPathUpdates&#8217;</em> : Display the evolution of the current scanning path of the current energy layer. Scanning Paths are        stored in 3D numpy array ( see dicomReader.scanningPath for more information) where each frame is an energy layer. Therefore, if True         the frame corresponding the current energy layer will be displayed to show the remaining beam positions.</li>
+<li><em>&#8216;skipSaveBeamlets&#8217;</em>: False to save an image of the dose distribution of each beamlet simulated, True otherwise.</li>
+<li><em>&#8216;saveBeamletsCPKL&#8217;</em>: True to save the dose distribution of each beamlet (a 3D numpy array) in a cPickle structure.</li>
+<li><em>&#8216;staticDelivery&#8217;</em> : True if the patient is not moving, or False otherwise</li>
+<li><em>&#8216;motionDuringBeam&#8217;</em> (if &#8216;staticDelivery&#8217; is False): True to allow the patient to move while the beam is irradiating, False otherwise.</li>
+<li><em>&#8216;motion3D&#8217;</em> (if &#8216;staticDelivery&#8217; is False): True if the patient motion is in 3D.</li>
+<li><em>&#8216;evaluateDiffStatDyna&#8217;</em> (if &#8216;staticDelivery&#8217; is False) : True to evaluate the difference for each beam position between the static delivery and the dynamic delivery (i.e., moving patient).        False otherwise.</li>
+<li><em>&#8216;storeInterDoseDens&#8217;</em> (if &#8216;staticDelivery&#8217; is False) : True to store the density image of the moving patient and the dose distribution of the beam when the         patient is moving while being irradiated by a pencil beam. False otherwise.</li>
+<li><em>&#8216;listSaveCompDoseAlong&#8217;</em> (if &#8216;staticDelivery&#8217; is False):  list of the axis along which the user wants to save the density and dose images of the moving patient. Possible values are        &#8216;x&#8217; (i.e. the images are stored along the column axis of the dicom image), &#8216;y&#8217; (i.e. the images are stored along the rows axis of the dicom image),         &#8216;z&#8217; (i.e. the images are stored along the frame axis of the dicom image). Examlpes: listSaveCompDoseAlong = [] , or listSaveCompDoseAlong = [&#8216;x&#8217;] or listSaveCompDoseAlong = [&#8216;x&#8217;,&#8217;z&#8217;] ...</li>
+<li><em>&#8216;timeEnergyChange&#8217;</em> (if &#8216;staticDelivery&#8217; is False) : Time to change the energy of the beam in s.</li>
+<li><em>&#8216;lateralScanningSpeed&#8217;</em> (if &#8216;staticDelivery&#8217; is False): Beam lateral scanning speed in cm/s.</li>
+<li><em>&#8216;spotSettlingTime&#8217;</em> (if &#8216;staticDelivery&#8217; is False): Beam vertical scanning speed in cm/s.</li>
+<li><em>&#8216;speedGantryRotation&#8217;</em> (if &#8216;staticDelivery&#8217; is False): Gantry rotational speed in degrees/min.</li>
+<li><em>&#8216;beamIntensity&#8217;</em> (if &#8216;staticDelivery&#8217; is False): Number of protons per seconds being delivered.</li>
+<li><em>&#8216;unitTimeForDelivery&#8217;</em> (if &#8216;staticDelivery&#8217; is False): Unit time for motion simulation in seconde. Every unit time the patient position and radiological depth is updated.</li>
+<li><em>&#8216;synchrotron&#8217;</em> (if &#8216;staticDelivery&#8217; is False): True to simulate a synchrotron ( time energy change, refill the synchrotron). False for a cyclotron.</li>
+<li><em>&#8216;spillLength&#8217;</em> (if &#8216;staticDelivery&#8217; and synchrotron&#8217; are True): Duration of a proton spill in s.</li>
+<li><em>&#8216;compensationDynamic&#8217;</em> (if &#8216;staticDelivery&#8217; is False): True to allow motion compensation, False otherwise.</li>
+<li><em>&#8216;findStartPos&#8217;</em> (if &#8216;compensationDynamic&#8217; is True): Find a good starting position in the energy layer( see dicomReader.scanningPath for more information).</li>
+<li><em>&#8216;timeMeasureDisplacement&#8217;</em> (if &#8216;compensationDynamic&#8217; is True): Time to measure the patient motion is s.</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.compensationFindStartSpotEnerLayer">
+<tt class="descname">compensationFindStartSpotEnerLayer</tt><big>(</big><em>scanPath</em>, <em>ddCurvesData</em>, <em>strEner</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.compensationFindStartSpotEnerLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.compensationFindStartSpotEnerLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>If MSPT global variables compensationDynamic and findStartPos are True, it look for a &#8216;good starting position&#8217;        for delivery of the current the energy layer. See dicomReader.scanningPath method findStartingPointForMotion() for more information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>scanPath</strong> &#8211; scanning path object (dicomReader.scanningPath.ScanningPathSingleBeam)</li>
+<li><strong>ddCurvesData</strong> &#8211; depth dose curves data : physics.ddcurveManager.DDCurves</li>
+<li><strong>strEner</strong> &#8211; String indicating if the energy being used has just been set (&#8216;NewEnergy&#8217;) or has already been set for at least one         beam position (&#8216;SameEnergy&#8217;).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>None if no starting position has been found, otherwise a tuple:</p>
+<ul class="simple">
+<li>index 0: spot weight</li>
+<li>index 1: spot in the 3D matrices : frame, row, column</li>
+<li>index 2: x position</li>
+<li>index 3: y position</li>
+<li>index 4: energy</li>
+<li>index 5: list of 2 elements : spot size along x and along y</li>
+<li>index 6: &#8216;NewEnergy&#8217; if the energy is changing or &#8216;SameEnergy&#8217; otherwise</li>
+<li>index 7: spot type = 1 (native spot) or 2 (spot from added margin)</li>
+<li>index 8: repainting index</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.computeBeamletStatic">
+<tt class="descname">computeBeamletStatic</tt><big>(</big><em>Xr</em>, <em>Yr</em>, <em>Zr</em>, <em>dmax</em>, <em>z_dd</em>, <em>dd</em>, <em>sig0</em>, <em>xrshift</em>, <em>yrshift</em>, <em>sourceLocation</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.computeBeamletStatic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.computeBeamletStatic" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is only used if MSPT global variables &#8216;staticDelivery&#8217; is set to False and &#8216;evaluateDiffStatDyna&#8217; is set to False.</p>
+<p>It simulates the irradiation at a beam position on the static body. This allows to highlight the differences between the beams delivered to         the static and the dynamic body for a same beam position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Xr</strong> &#8211; 3D matrix representing x coordinates in the IEC Gantry coordinate system (cm).</li>
+<li><strong>Yr</strong> &#8211; 3D matrix representing y coordinates in the IEC Gantry coordinate system (cm).</li>
+<li><strong>Zr</strong> &#8211; 3D matrix representing z coordinates in the IEC Gantry coordinate system (cm).</li>
+<li><strong>dmax</strong> &#8211; Bragg Peak depth (cm)</li>
+<li><strong>z_dd</strong> &#8211; &#8220;depth&#8221; coordinates for the depth dose curve (cm).</li>
+<li><strong>dd</strong> &#8211; &#8220;dose&#8221; coordinates for the depth dose curve. (Gy.cm ^2 )</li>
+<li><strong>sig0</strong> &#8211; beam size (along x and y IEC gantry axis) at patient entrance (cm): [sig0X,sig0Y]</li>
+<li><strong>xrshift</strong> &#8211; x beam shift (from isocenter) used to define target position. Provided in the IEC gantry coordinate system.(cm)</li>
+<li><strong>sourceLocation</strong> &#8211; Source location in the IEC Fixed coordinate system(cm).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Apram yrshift:</th><td class="field-body"><p class="first">y beam shift (from isocenter) used to define target position. Provided in the IEC gantry coordinate system.(cm)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The processed dose distribution</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.computeDisplacementVectors">
+<tt class="descname">computeDisplacementVectors</tt><big>(</big><em>useMotionMonitor=False</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.computeDisplacementVectors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.computeDisplacementVectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the displacement vector in the IEC fixed coordinate system from the simulated timer.         Then convert the coordinated into the IEC Gantry coordinate system and into the CT coordinate system.        
+:param useMotionMonitor: True if MSPT is configured to use motion monitoring, False otherwise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">If useMotionMonitor is True:<ul>
+<li>A tuple T with:<blockquote>
+<div><ul class="simple">
+<li>tuple[0] : disp. vector in the IEC Fixed system</li>
+<li>tuple[1] : disp vector in the IEC Gantry</li>
+<li>tuple[2] : disp vector in the CT system</li>
+<li>tuple[3] : disp indices in the CT image (matrix)</li>
+</ul>
+</div></blockquote>
+</li>
+<li>Else, a dictionary with keys:<blockquote>
+<div><ul class="simple">
+<li>&#8216;PatientMotion&#8217; : the tuple T</li>
+<li>&#8216;MeasuredMotion&#8217; : a tuple equivalent to T corresponding to the monitor measurements.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.findBraggPeak">
+<tt class="descname">findBraggPeak</tt><big>(</big><em>compDose</em>, <em>deff</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.findBraggPeak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.findBraggPeak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds and display the Bragg Peak depth in the beam dose distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>compDose</strong> &#8211; Computed 3D dose distribution</li>
+<li><strong>deff</strong> &#8211; 3D numpy array of the radiological depth</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.getCumulDelivDuration">
+<tt class="descname">getCumulDelivDuration</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.getCumulDelivDuration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.getCumulDelivDuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the cumulative time spent at each beam position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The cumulative irradiation time.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.getCurrentTime">
+<tt class="descname">getCurrentTime</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.getCurrentTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.getCurrentTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current value of the timer (dynamic delivery)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Current timer value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.getVectorInDiffCoordSystm">
+<tt class="descname">getVectorInDiffCoordSystm</tt><big>(</big><em>dispVec_IECFixed</em>, <em>info=''</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.getVectorInDiffCoordSystm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.getVectorInDiffCoordSystm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a vector defined in the IEC Fixed coordinate system into the IEC grantry coordinate system and the dicom coordinate system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dispVec_IECFixed</strong> &#8211; Displacement vector in the IEC fixed coordinate system (x,y,z)</li>
+<li><strong>info</strong> &#8211; String for information, to display, about the motion.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A tuple with the displacement vector in different coordinate systems:        ( dispVec_IECFixed ,dispVec_IECG,dispVec_CT,indDispCT ). Note: indDispCT corresponds to the displacement vector as indices        in the CT volume: (frame, row, colum).</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.isPatientInTheVolume">
+<tt class="descname">isPatientInTheVolume</tt><big>(</big><em>shapeVolume</em>, <em>patientIndices</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.isPatientInTheVolume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.isPatientInTheVolume" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to verify that the patient is in the field of view when moving.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>shapeVolume</strong> &#8211; Shape of the field of view volume (nb frames, nb rows, nb columns).</li>
+<li><strong>patientIndices</strong> &#8211; Patient indices in the field of view 3D array.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if the patient is inside, False otherwise</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.numberOfUnitTimeToDeliverWeight">
+<tt class="descname">numberOfUnitTimeToDeliverWeight</tt><big>(</big><em>weight</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.numberOfUnitTimeToDeliverWeight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.numberOfUnitTimeToDeliverWeight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the number of time units needed to deliver a given weight:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>weight</strong> &#8211; Beam weight in MU</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list [ number of time units , weight to be delivered per time unit, remainder to deliver at last time unit]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.processDynamicDoseDistrib">
+<tt class="descname">processDynamicDoseDistrib</tt><big>(</big><em>computedDose</em>, <em>T0_round</em>, <em>dispVec=None</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.processDynamicDoseDistrib"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.processDynamicDoseDistrib" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process the computed dose in dynamic mode:</p>
+<p>The dose received by the patient (located at its dynamic position: self._dynaPatientLoc) is translated toward the &#8220;static position&#8221; (self._staticPatientLoc).         The dose values located at indices self._dynaPatientLoc (body dynamic position) are moved to indices self._staticPatientLoc (body static position).         Then everything outside the patient body is set to zero.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>computedDose</strong> &#8211; 3D numpy array representing the 3D dose distribution of the pencilbeam.</li>
+<li><strong>T0_round</strong> &#8211; Rounded beam energy</li>
+<li><strong>dispVec</strong> &#8211; The displacement vector. By default it is None. It is used if the global variable &#8216;storeInterDoseDens&#8217; is set to True when configuring MSPT.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The processed dose distribution</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.simulateDelivery">
+<tt class="descname">simulateDelivery</tt><big>(</big><em>spotPositions</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.simulateDelivery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.simulateDelivery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulates the delivery of a proton therapy treatment plan to a patient based on the simulator configuration.         It uses the beam scanning method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>spotPosition</strong> &#8211; Treatment plan stored as a scanning path (dicomReader.scanningPath).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None if the delivery is performed for a static patient or a moving patient without compensation. It returns a compensated treatment plan if the patient         is moving and &#8216;compensationDynamic&#8217; is True: dictionary[beam angle][Energy Rounded][ &#8220;ScanSpotPositionMap&#8221; / &#8220;ScanSpotMetersetWeights&#8221;]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.storeDictStatisticsRepaint">
+<tt class="descname">storeDictStatisticsRepaint</tt><big>(</big><em>dictRep</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.storeDictStatisticsRepaint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.storeDictStatisticsRepaint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store statistics about the repainting: the number of compensated beam positions for each repainting index.        It is stored to a csv file in the simulation directory in &#8216;StatisticsRepaintings/&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dictRep</strong> &#8211; Dictionary storing for each repainting index the number of compensated positions:         dictRep[gantry angle][energy][repainting Index].</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.timeDeliverSpotWeight">
+<tt class="descname">timeDeliverSpotWeight</tt><big>(</big><em>weight</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.timeDeliverSpotWeight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.timeDeliverSpotWeight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the time spent at one spot to deliver a given weight (MU), knowing the beam intensity and the number_of_protons/MU.</p>
+<p>Formula : eq. 1 in &#8220;Interplay effects in proton scanning for lung: a 4D Monte Carlo study assessing the impact of tumor and beam delivery parameters.&#8221; Dowdell et al. 2013</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>weight</strong> &#8211; Weight in MU of the beam position.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Time spent at beam position</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.updateTime">
+<tt class="descname">updateTime</tt><big>(</big><em>event</em>, <em>info=None</em><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.updateTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.updateTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>For dynamic delivery: Update the delivery timer (expressed in seconds).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event</strong> &#8211; <p>The type of event that requires a timer update:</p>
+<ul>
+<li>&#8216;Reset&#8217;: Reset the timer</li>
+<li>&#8216;Energy&#8217;: Energy change</li>
+<li>&#8216;MoveToSpot&#8217;: Change beam position</li>
+<li>&#8216;GantryRotation&#8217;: Gantry rotation</li>
+<li>&#8216;Delivery&#8217;: Time spent at a beam position for the delivery</li>
+<li>&#8216;Refill&#8217;: Time to refill the synchrotron ( if the machine setting is set to Synchrotron)</li>
+<li>&#8216;Displacement Measure&#8217;: Time to measure the patient displacement (if Compensation is activated)</li>
+</ul>
+</li>
+<li><strong>info</strong> &#8211; <p>Information regarding the event</p>
+<ul>
+<li>If event &#8216;MoveToSpot&#8217;, &#8216;info&#8217; is the distance between the spots in cm.</li>
+<li>If event &#8216;GantryRotation&#8217;, &#8216;info&#8217; is the rotation angle in degrees.</li>
+<li>If event &#8216;Delivery&#8217;, &#8216;info&#8217; is the weight in MU.</li>
+<li>Otherwise info is None</li>
+</ul>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.weightDeliveredByUnitTime">
+<tt class="descname">weightDeliveredByUnitTime</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/scanning/deliverySimulation_Static_Dynamic.html#simulatorDelivery.weightDeliveredByUnitTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.scanning.deliverySimulation_Static_Dynamic.simulatorDelivery.weightDeliveredByUnitTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the weight delivered per time unit</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The calculated weight</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.scanning">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mspt.scanning" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mspt.simulator.html" class="btn btn-neutral float-right" title="mspt.simulator package"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mspt.physics.html" class="btn btn-neutral" title="mspt.physics package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

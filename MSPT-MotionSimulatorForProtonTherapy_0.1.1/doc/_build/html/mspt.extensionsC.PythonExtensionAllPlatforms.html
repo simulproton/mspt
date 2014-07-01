@@ -1,0 +1,918 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.extensionsC.PythonExtensionAllPlatforms package &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="index.html"/>
+        <link rel="up" title="mspt.extensionsC package" href="mspt.extensionsC.html"/>
+        <link rel="next" title="mspt.mathTools package" href="mspt.mathTools.html"/>
+        <link rel="prev" title="mspt.extensionsC package" href="mspt.extensionsC.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="mspt.html">mspt package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="mspt.html">mspt package</a> &raquo;</li>
+      
+          <li><a href="mspt.extensionsC.html">mspt.extensionsC package</a> &raquo;</li>
+      
+    <li>mspt.extensionsC.PythonExtensionAllPlatforms package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/mspt.extensionsC.PythonExtensionAllPlatforms.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="mspt-extensionsc-pythonextensionallplatforms-package">
+<h1>mspt.extensionsC.PythonExtensionAllPlatforms package<a class="headerlink" href="#mspt-extensionsc-pythonextensionallplatforms-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+<div class="section" id="module-mspt.extensionsC.PythonExtensionAllPlatforms">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mspt.extensionsC.PythonExtensionAllPlatforms" title="Permalink to this headline">¶</a></h2>
+<p>Package containing python extensions in C wrapped in C++ functions:</p>
+<ul>
+<li><p class="first">PythonExtensionBeamletCalc: Extension <strong>_beamletSimulation_PythonExt</strong> to compute the dose distribution of a single pencil beam using float values.</p>
+<blockquote>
+<div><p><strong>static PyObject * beamletSimul(PyObject *self, PyObject *args)</strong> : API Python - C</p>
+<blockquote>
+<div><p>BeamletSimul simulates the effect of a single pencil beam on a 3D volume.</p>
+<p>The simulation is based on Hong et al. paper, &#8220;Pencil beam algorithm for proton dose calculations&#8221;,  Phys. Med. and Biol. 41,1996, and on Szymanowski et al. paper, &#8220;Two-dimensional pencil beam scaling: an improved proton dose algorithm for heterogeneous media&#8221;, Phys. Med. and Biol. 47,2002.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>rhomw : density ratio to water</li>
+<li>Smw :stopping power ratio to water</li>
+<li>Xr : 3D matrix representing x coordinates in the IEC Gantry coordinate system (cm).</li>
+<li>Yr : 3D matrix representing y coordinates in the IEC Gantry coordinate system (cm).</li>
+<li>Zr : 3D matrix representing z coordinates in the IEC Gantry coordinate system (cm).</li>
+<li>dmax : maximal depth in water reached for the beam energy (cm).</li>
+<li>z_dd : &#8220;depth&#8221; coordinates for the depth dose curve (cm).</li>
+<li>dd : &#8220;dose&#8221; coordinates for the depth dose curve. (Gy.cm ^2 )</li>
+<li>sig0 : beam size at patient entrance (cm).</li>
+<li>xrshift, yrshift : x and y beam shifts (from isocenter) used to define target position. Provided in the IEC gantry coordinate system.(cm)</li>
+<li>sad : source-axis distance: distance between the source and the isocenter.(cm)</li>
+<li>Deff : 3D matrix representing the radiological depth.(cm)</li>
+<li>ssd0 : source surface distance</li>
+<li>indicesRay : indices of the voxels along the ray</li>
+<li>x0y0z0IECF: beam target point in the IEC fixed coordinate system.</li>
+<li>spacingIECF : voxel spacing in the IEC fixed coord system</li>
+<li>invRotMat : Matrix to go from the IECG to IECF coordinate system</li>
+</ol>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Output: </dt>
+<dd><p class="first last">3D numpy array dose distribution.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>float radialEmmittance( float deff, float dmax, float sig0)</strong></p>
+<blockquote>
+<div><blockquote>
+<div><p>Computes the radial emittance (beam&#8217;s width):</p>
+<blockquote>
+<div><ul class="simple">
+<li>first part depth dependent: (beam spread with depth) due to multiple scattering inside patient body.</li>
+</ul>
+<p>The beam spread parameter is calculated using these values as:</p>
+<blockquote>
+<div><p>y_t = y_R*(Afit*(t/R)^2 + Bfit*(t/R))</p>
+</div></blockquote>
+<p>where y_R = Cfit*R^2 + Dfit*R, R = dmax (Bragg peak depth)</p>
+<p>This is from the paper by Hong (PMB 1996) - Figure A4.</p>
+<ul class="simple">
+<li>second part: beam spread at patient entrance : sig0.</li>
+</ul>
+<p>Finally:</p>
+<blockquote>
+<div><p>the total radial emittance. See eq (8) in Hong 1996.</p>
+<blockquote>
+<div><p>sigTot = sqrt( sig0^2 + sqrt(y_t)^2)</p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+<p>The function returns sigTot^2</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ul class="simple">
+<li>deff : radiological depth</li>
+<li>dmax : beam range in water</li>
+<li>sig0 : beam&#8217;s spread at the patient entrance</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Output:</p>
+<blockquote>
+<div><p>sigTot^2</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p><strong>float centralAxisTerm(float dd, float ssd0, float deff, float z)</strong>:</p>
+<blockquote>
+<div><p>Compute the central axis term, from Hong 1996, eq (10)</p>
+<p>C(z&#8217;) = DD(deff) * ((ssd0 + deff) / z&#8217;)^2</p>
+<p>zBeV: z coordinate in the beam eye view coordinate system (BEV)</p>
+</div></blockquote>
+<p><strong>float offAxisTerm(float variance, float distPQ)</strong>:</p>
+<blockquote>
+<div><p>Compute the off-axis term, from Hong 1996 eq (12)</p>
+<p>O_xyz = [ 1/(2*pi*sigTot^2) ] * exp( - ((x&#8217; - xbev)^2 + (y&#8217; - ybev)^2 ) / (2*sigTot^2) )</p>
+</div></blockquote>
+<p><strong>float offAxisTerm2Sigmas(float varX,float varY, float xrshift,float yrshift, float xBev, float yBev)</strong></p>
+<blockquote>
+<div><p>Compute the off-axis term, from Hong 1996 eq (12) extended to 2 dimensions:</p>
+<p>O_xyz = [ (1/(4*pi*sigTotX^2)) + 1/(4*pi*sigTotY^2) ] * exp( - ( ((x&#8217; - xbev)^2 / (2*sigTotX^2))  + ((y&#8217; - ybev)^2 ) / (2*sigTotY^2)) )</p>
+<p>Note: Not implemented yet</p>
+</div></blockquote>
+<p><strong>void getRotatedPoint( float * newP , float * P, float * rotMat)</strong>:</p>
+<blockquote>
+<div><p>Rotate a point coordinates based on a rotation matrix</p>
+</div></blockquote>
+<p><strong>void findPointIndicesInGrid( int * ind, float * pointP1, float * spacing, float * x0y0z0,float * rotMat)</strong></p>
+<blockquote>
+<div><p>Convert coordinates of a rotated point to indices in a grid</p>
+</div></blockquote>
+<p><strong>float interp(float xval, float * xList, float * yList, int lenList)</strong>:</p>
+<blockquote>
+<div><p>Piecewise linear interpolation function: interpolates a function defined by (xList,yList)                 and returns &#8216;yval&#8217; corresponding to &#8216;xval&#8217; for the interpolated function.</p>
+</div></blockquote>
+<p><strong>float dotProduct(float * p1,float * p2)</strong>:</p>
+<blockquote>
+<div><p>Computes the dot product between two vectors</p>
+</div></blockquote>
+<p><strong>float distance( float * p1, float *p2)</strong>:</p>
+<blockquote>
+<div><p>Euclidean distance</p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p class="first">PythonExtensionBeamletCalcDouble: Extension <strong>_beamletSimulation_PythonExtDouble</strong> to compute the dose distribution of a single pencil beam using double values.</p>
+<blockquote>
+<div><p>Same as PythonExtensionBeamletCalc for double values.</p>
+</div></blockquote>
+</li>
+<li><p class="first">PythonExtensionBuildSpotSet: 4 extenstions</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Extension <strong>_fillCTArray_PythonExt</strong> to fill the CT array.</li>
+</ol>
+<blockquote>
+<div><p><strong>static PyObject * fillCTGrid(PyObject *self, PyObject *args)</strong> : API Python - C</p>
+<blockquote>
+<div><p>Function to fill the CT grid based on a new grid shape</p>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>ctGrid : 3D numpy array representing the CT</li>
+<li>newShape : grid new shape</li>
+<li>indStart : index in the input CT grid where to start taking values.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Output:</p>
+<blockquote>
+<div><p>3D numpy array representing a new CT grid.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic simple">
+<li>Extension <strong>_fillDensityArray_PythonExt</strong> to fill the Density array.</li>
+</ol>
+<blockquote>
+<div><p><strong>static PyObject * fillDensityGrid(PyObject *self, PyObject *args)</strong> : API Python - C</p>
+<blockquote>
+<div><p>Function to fill the density grid based using the CT grid and a conversion table</p>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>ctGrid : 3D numpy array representing the CT</li>
+<li>conversionTable:(2D Array) 2 rows, n columns: row 0 : CT values, row 1 :density values</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Output:</p>
+<blockquote>
+<div><p>3D numpy array representing a new Density grid.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic simple">
+<li>Extension <strong>_fillDoseArray_PythonExt</strong> to fill the expected dose array.</li>
+</ol>
+<blockquote>
+<div><p><strong>static PyObject * fillDoseGrid(PyObject *self, PyObject *args)</strong> : API Python - C</p>
+<blockquote>
+<div><p>FillDoseGrid aims to fill a 3D array with the planned dose at each voxel. The originalDoseGrid and newDoseGrid don&#8217;t always have the same             size. That is why we need to associate to each coordinate in newDoseGrid with the coordinates in originalDoseGrid and set the voxel value value in newDoseGrid with the voxel value in originalDoseGrid.            A resampling of the dose grid can be performed of the internal variable &#8216;interpol&#8217; is set to 1 in the code.</p>
+<p>The goal of the function is to find in originalDoseGrid the position of each spot in newDoseGrid in order             to set the voxel of newDoseGrid to the corresponding dose value.</p>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>dimNewGrid:Dimensions of the 3D array to fill with the dose contained in originalDoseGrid. Its size is m x n x q</li>
+<li>originalDoseGrid: 3D array containing the planned dose extracted from RD dicom file. Its size can be different than m x n x q, it can be smaller or greater.</li>
+<li>imagePosition: coordinates (in mm) of the top left corner on the first slice of originalDoseGrid</li>
+<li>imageEndPosition: coordinates (in mm) of the bottom right corner on the last slice of originalDoseGrid</li>
+<li>imageOrientation: axis information in orginialDoseGrid : 1D array with 9 elements</li>
+<li>spacingInfoCT : spacing information (mm) in newDoseGrid: x:spacingInfoCT[0] ,y:spacingInfoCT[1] ,z:spacingInfoCT[2] ,</li>
+<li>spacingInfoRD : spacing information (mm) in originalDoseGrid (from RD File) : x:spacingInfoRD[0] ,y:spacingInfoRD[1] ,z:spacingInfoRD[2]</li>
+<li>imagePositionRD : x,y,z coordinates of the first top left voxel of the dose data.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Output:</p>
+<blockquote>
+<div><p>3D numpy array representing a new Dose grid.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>float trilinearInterpolation(float * valNeigh ,  float  pointNeigh[8][3] , float * pointRD)</strong></p>
+<blockquote>
+<div><p>Computes the tri-linear interpolation of the dose value, at pointRD,  between 8 neighbors.</p>
+</div></blockquote>
+<p><strong>float computeBarycenter(float valN1, float valN2, float coordP, float coordN1, float coordN2)</strong></p>
+<blockquote>
+<div><p>Computes the barycenter (dose value) to P between the dose values at N1 and N2.</p>
+</div></blockquote>
+<p><strong>void createTransformationMatrix(float * imagePosition, float * imageOrientation, float * pixelSpacing,float * transformMatrix)</strong></p>
+<blockquote>
+<div><p>Returns the transformation matrix used to go from one coordinates in mm to indices in a Dicom Array</p>
+<blockquote>
+<div><ul class="simple">
+<li>Image Position: refers to coordinates (x0,y0,z0) of the top left corner in the image</li>
+<li>Image Orientation: unit vectors in the 3 directions with respect to the patient coordinate system</li>
+<li>Pixel Spacing: pixel spacing in the 3 directions</li>
+<li>transformMatrix: tha matrix to fill</li>
+</ul>
+</div></blockquote>
+<p>Formula: look at page 410 from <a class="reference external" href="http://medical.nema.org/Dicom/2011/11_03pu.pdf">Dicom Documentation</a>  - conversion between dicom voxel indices and coordinates.</p>
+</div></blockquote>
+<p><strong>void createTransformationMatrixIndToCoord(float * imagePosition, float * imageOrientation, float * pixelSpacing,float * transformMatrix)</strong></p>
+<blockquote>
+<div><p>Returns the transformation matrix used to go from indices to coordinates in mm in a Dicom Array</p>
+</div></blockquote>
+<p><strong>void indexToCoordFromImagePosition( float * point, float * matrix,int *indices)</strong></p>
+<blockquote>
+<div><p>Returns (x, y, z) coordinates (pixel location)for given indices (frame,row,column) provided in an image                  coordinate system (mm).</p>
+</div></blockquote>
+<p><strong>void  coordinatesToIndexFromImagePosition( float * point, float * invMatrix,int *indices)</strong></p>
+<blockquote>
+<div><p>Returns (frame, row, column) indices (pixel location)for a given point (x,y,z) provided in an image                  coordinate system (mm).</p>
+</div></blockquote>
+<p><strong>bool invertMatrix(float m[16], float invOut[16])</strong></p>
+<blockquote>
+<div><p>Functions that inverts a 4x4 matrix</p>
+</div></blockquote>
+<p><strong>float absolute(float val)</strong></p>
+<blockquote>
+<div><p>returns the absolute value.</p>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic">
+<li><p class="first">Extension <strong>_fillStopPwrArray_PythonExt</strong> to fill the relative stopping power array.</p>
+<p><strong>static PyObject * fillStopPwrGrid(PyObject *self, PyObject *args)</strong> : API Python - C</p>
+<blockquote>
+<div><p>Function that converts the density grid into relative stopping power grid, using a conversion table</p>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">densityGrid : 3D numpy array in which each voxel is represented by its density</p>
+</li>
+<li><p class="first">conversionTable : table used for the conversion. Array of 3 rows and n columns:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Row 0 : lowest bound of the density values for each media,</li>
+<li>Row 1 : upper bound of the density values for each madia ,</li>
+<li>Row 3: corresponding relative mass Stopping Power value.</li>
+<li>Each column corresponds to 1 type of medium: &#8216;air&#8217;,&#8217;adipose,&#8217;,&#8217;muscle&#8217;,&#8217;bone&#8217; ...                        sorted by increasing density</li>
+</ul>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>tableCorrectionFactor <span class="classifier-delimiter">:</span> <span class="classifier">Table used to correct the mass stopping power.</span></dt>
+<dd><p class="first last">Row 0: Densities
+Row 1: Correction factor</p>
+</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Output:</p>
+<blockquote>
+<div><p>3D numpy array in which the relative stopping power is stored.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>float scalingFactor(float density, float * factCorrecTable, int * tableShape )</strong></p>
+<blockquote>
+<div><p>Returns the stopping power scaling factor. It is calculated from a static table.</p>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">PythonExtensionBuildSpotSetDouble</p>
+<blockquote>
+<div><p>Same as PythonExtensionBuildSpotSet for double values.</p>
+</div></blockquote>
+</li>
+<li><p class="first">PythonExtensionCalcDeff: 3 extenstions and 2 utility files</p>
+<blockquote>
+<div><blockquote>
+<div><ol class="arabic simple">
+<li>Extension <strong>_calcRadiolDepth_PythonExt</strong> to fill the  entire radiological depth array.</li>
+</ol>
+<blockquote>
+<div><p><strong>static PyObject * calcRadDeff(PyObject *self, PyObject *args)</strong> : API Python - C</p>
+<blockquote>
+<div><p>This function is the python extension. It calculates the radiological depth of all the voxels in a volume.</p>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>densityGrid : 3D numpy array representing the volume: density or relative stopping power (depending if this is photons or protons)</li>
+<li>startVec : numpy array (1,3) : Coordinates of the first voxel (0,0,0)</li>
+<li>incVec : numpy array (1,3): Increment vector (spacing) when incrementing (+1,+1,+1) the voxels indices.</li>
+<li>sourceVec : numpy array (1,3): Coordinates of the source of the ray</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Output:</p>
+<blockquote>
+<div><p>Numpy array (3D) in which voxels are represented by their radiological depth</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic">
+<li><p class="first">Extension <strong>_fewRays_RadDepth_PythonExt</strong> to fill the radiological depth array only along few rays. Therefore         only some voxels will be filled.</p>
+<p><strong>static PyObject * calcRadDeff(PyObject *self, PyObject *args)</strong> : API Python - C</p>
+<blockquote>
+<div><p>This function is the python extension. It finds the voxels of a volume encountered by a ray and their radiological depth                 for few target spots:</p>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>grid : 3D numpy array representing the volume: density or relative stopping power (depending if this is photons or protons)</li>
+<li>startVec : numpy array (1,3) : Coordinates of the first voxel (0,0,0)</li>
+<li>incVec : numpy array (1,3): Increment vector (spacing) when incrementing (+1,+1,+1) the voxels indices.</li>
+<li>sourceVec : numpy array (1,3): Coordinates of the source of the ray</li>
+<li>targetVec : numpy array (1,3): Coordinates of the target of the ray // This should be the &#8220;central&#8221; target</li>
+<li>auxilaryTargetVecs : numpy array (nbTargets,3): Coordinates of the targets around the &#8220;central&#8221; target</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Output:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Numpy array (3D) in which voxels encountered by the ray have a value of radiological depth, and -1 otherwise</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Extension <strong>_singleRay_PythonExt</strong> to fill the radiological depth array only along a single ray.</p>
+</li>
+</ol>
+</div></blockquote>
+<p><strong>static PyObject * calcRadDeff(PyObject *self, PyObject *args)</strong> : API Python - C</p>
+<blockquote>
+<div><blockquote>
+<div><p>This function is the python extension. It calculates the voxels of a volume encountered by a ray:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>grid : 3D numpy array representing the volume</li>
+<li>startVec : numpy array (1,3) : Coordinates of the first voxel (0,0,0)</li>
+<li>incVec : numpy array (1,3): Increment vector (spacing) when incrementing (+1,+1,+1) the voxels indices.</li>
+<li>sourceVec : numpy array (1,3): Coordinates of the source of the ray</li>
+<li>targetVec : numpy array (1,3): Coordinates of the target of the ray</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Output:</p>
+<blockquote>
+<div><p>Numpy array (nbVoxels,4) in which is stored a list of voxel: for each voxel (frame,row,column) 
+indices are stored along with the length of the ray going through the voxel.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic">
+<li><p class="first">Utility <strong>calcRadiolDepth</strong></p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first"><strong>int calcRadiolDepth(VOLUME *stpPwr_grid,VOLUME *radiological_depth_grid, POINTXYZ point1,POINTXYZ point2 , int * tabCount)</strong></p>
+<blockquote>
+<div><p>Main function of the process</p>
+<p>This code is an implementation of the method described by Robert L. Siddon in &#8220;Fast calculation of                 the exact radiological path for three-dimensionnal CT array&#8221;, Am. Assoc. Phys. Med. 1985.                It traces a ray from point1 (start) to point2 (end) and assign to all the voxel crossed their                 radiological depth.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>stpPwr_grid : grid (VOLUME) storing the electron density (radiol. depth. for X-Rays) or                         relative stopping power(for protons).It should be initialized with 0 when radiological depth has                         not been computed. If a value other than 0 is already present it means the user will have                         to divide each value by the number of rays traced.</li>
+<li>radiological_depth_grid : grid (VOLUME) that will be filled with the radiological depths.</li>
+<li>point1 : source of the ray</li>
+<li>point2 : target of the ray</li>
+<li>tabCount : count how many rays are going through each voxels in order to perform an average afterwards.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Output:</p>
+<blockquote>
+<div><p>Returns Success or Failure.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>float coordPlane(int idx, float coordPlane1, float spacing)</strong>:</p>
+<blockquote>
+<div><p>Function that computes and return the coordinate of a plane for a given index (idx)
+For instance X_plane(i) = X_plane(1) + (i-1)dx
+Y_plane(j) = Y_plane(1) + (j-1)dy
+Z_plane(k) = Z_plane(1) + (k-1)dz</p>
+<p>see eq(3) in Siddon 1985</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Inputs:</dt>
+<dd><ol class="first last arabic simple">
+<li>idx: given index</li>
+<li>coordPlane1 : coordinate of the first plane</li>
+<li>spacing : spacing between planes</li>
+</ol>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>void sortAlphaMinMax(float * alphasMinMax)</strong></p>
+<blockquote>
+<div><p>Function that makes sure that alpha min is the smallest value et alpha max the highest</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>int computeAlpha(int idx, float coord1, float coord2,float coordPlane1, float spacing , float * ptAlpha)</strong></p>
+<blockquote>
+<div><p>Function that computes alpha value for a given index (idx).</p>
+<p>For instance:
+if X2 - X1 != 0:                      alpha_x(1) = [ X_plane(1) - X1] / [X2 - X1]                      else:                          alpha_x(1) is undefined</p>
+<p>see eq(4) in Siddon 1985</p>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>idx: given index</li>
+<li>coord1: coordinate of the first point (x or y or z value)</li>
+<li>coord2: coordinate of the second point (x or y or z value)</li>
+<li>coordPlane1: coordinate of the first plane</li>
+<li>spacing: spacing between planes for which we compute alpha values</li>
+<li>ptAlpha: pointer where we will store computed alpha</li>
+</ol>
+<p>Note: for undefined alpha values we will set alpha to FLT_MAX, and return -1,
+return 0 if alpha is not undefined</p>
+<p>Computes alpha value for intersection between ray and the idx_th plan in the given direction (X, Y or Z). The direction is given by the function call in the calling function.</p>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>void findAlphaMinMax(float * alphasX, float * alphasY, float * alphasZ, float * alphaMinMax)</strong></p>
+<blockquote>
+<div><p>Function that finds alpha_min and alpha_max from alpha values. See eq(5) in Siddon 1985.</p>
+<p>alpha_min = max{ 0 , min[ alpha_x(1) , alpha_x(Nx)],min[ alpha_y(1) , alpha_y(Ny)],min[ alpha_z(1) , alpha_z(Nz)]   }</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Inputs:</dt>
+<dd><ol class="first last arabic simple">
+<li>alpha_max = min{ 1 , max[ alpha_x(1) , alpha_x(Nx)],max[ alpha_y(1) , alpha_y(Ny)],max[ alpha_z(1) , alpha_z(Nz)]   }</li>
+<li>alphasX : [alpha_x(1) , alpha_x(Nx) ] : array of alpha values fo x coord</li>
+<li>alphasY : [ alpha_y(1) , alpha_y(Ny)] : array of alpha values fo y coord</li>
+<li>alphasZ : [ alpha_z(1) , alpha_z(Nz)] : array of alpha values fo z coord</li>
+<li>alphaMinMax : [ alpha_min , alpha_max] : array to fill will alpha min and max</li>
+</ol>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>void findIndMinMax(float coordPlane1,float coordPlaneN,float spacing,float coord1, float coord2, int nbPlanes, float * alphaMinMax , int * indMinMax)</strong></p>
+<blockquote>
+<div><p>Finds minimum index of intersected planes for given coordinate planes. see eq(6) in Siddon 1985</p>
+<ul>
+<li><p class="first">if (X2 - X1) &gt;= 0:</p>
+<blockquote>
+<div><ul class="simple">
+<li>i_min = N_x - [Xplane(N_x) - alpha_min (X2 - X1) - X1] / dx</li>
+<li>i_max = 1 + [X1 + alpha_max (X2 - X1) - Xplane(1)] / dx</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">if (X2 - X1) &lt;= 0:</p>
+<blockquote>
+<div><ul class="simple">
+<li>i_min = N_x - [Xplane(N_x) - alpha_max (X2 - X1) - X1] / dx</li>
+<li>i_max = 1 + [X1 + alpha_min (X2 - X1) - Xplane(1)] / dx</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>coordPlane1: coord first plane.</li>
+<li>coordPlaneN: coord last plane.</li>
+<li>spacing: plane spacing.</li>
+<li>coord1: coord P1.</li>
+<li>coord2: coord P2.</li>
+<li>nbPlanes: number of planes.</li>
+<li>alphaMinMax: overall alpha min and max.</li>
+<li>indMinMax: table[2] to fill with index min index max.</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>int calculateParametricSets(int * indMinMax , float coord1, float coord2, float coordPlane1, float spacing, float * alphaSet, float *alphaMinMax)</strong></p>
+<blockquote>
+<div><p>Calculate parametric sets (intersection points of the ray and parallel planes).</p>
+<blockquote>
+<div><p>As explained in eq(8) in Siddon 1985:</p>
+<blockquote>
+<div><p>alpah_x = {alpha_x(imin) , ... , alpha_x(imax)}  if (X2-X1)&gt; 0
+alpah_x = {alpha_x(imax) , ... , alpha_x(imin)}  if (X2-X1)&lt; 0
+alpha_x(i)=[Xplane(i) - X1]/(X2 - X1)</p>
+<blockquote>
+<div><p>= alpha_x(i-1) + [dx / (X2-X1)]</p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+<p>similar for Y and Z</p>
+<p>Note the function will return 0 if (X2-X1) != 0, -1 otherwise</p>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>indMinMax : index min , index max</li>
+<li>coord1 : coord P1</li>
+<li>coord2 : coord P2</li>
+<li>coordPlane1 :coord first plane</li>
+<li>spacing : plane spacing</li>
+<li>alphaSet : set of alpha values to be filled: it should be allocated before the function is called. Its length should be : abs(indMinMax[1]-indMinMax[0])+1</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt><strong>void mergeSets(float * alphaMinMax, float * alphaX, int lenAlphaX, float * alphaY, int lenAlphaY , float * alphaZ, int lenAlphaZ, float * alpha, float d12, float spacing)</strong></dt>
+<dd><blockquote class="first">
+<div><p>Merge alpha sets, such that : alpha = { alphaMin, merge_by_ascending_order                   {alphaX,alphaY,alphaZ}, alphaMax} = {alpha(0), ... , alpha(n)}                     see eq(8) in Siddon 1985.</p>
+</div></blockquote>
+<ul class="last">
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>alphaMinMax : alpha min and alpha max values</li>
+<li>alphaX : alpha X values</li>
+<li>lenAlphaX : number of alpha X values</li>
+<li>alphaY : alpha Y values</li>
+<li>lenAlphaY : number of alpha Y values</li>
+<li>alphaZ : alpha Z values</li>
+<li>lenAlphaZ : number of alpha Z values</li>
+<li>alpha: table to fill with alpha values merged: it should be allocated with (lenAlphaX+lenAlphaY+lenAlphaZ+2) float values</li>
+<li>d12 : distance P1 P2 : this is only used at the end when we verify that the set is in acsending order.</li>
+<li>spacing : grid average spacing.this is only used at the end when we verify that the set is in acsending order.</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first"><strong>void merge2Arrays(float * dest, float * array1, int lenArray1, float * array2, int lenArray2)</strong></p>
+<blockquote>
+<div><p>Function used to merge and sort 2 arrays in increasing order.</p>
+<ul>
+<li><dl class="first docutils">
+<dt>Inputs:</dt>
+<dd><ol class="first last arabic simple">
+<li>dest: array to be filled. It should be allocated priori to the call with a length of lenArray1 + lenArray2</li>
+<li>array1 : first array</li>
+<li>lenArray1: length of the first array</li>
+<li>array2: second array</li>
+<li>lenArray2: length of the second array</li>
+</ol>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>void computeVoxelsLengths(float * alpha, int lenAlpha, float * lengthsVoxels, float d12)</strong></p>
+<blockquote>
+<div><blockquote>
+<div><p>2 adjacent terms in alpha list correspond to the intersection of a particular voxel and the ray.                  There are  lenAlpha-1 voxels intersected. For m = 1 , ... ,lenAlpha,                  l(m) = d12 * [ alpha(m) - alpha(m-1) ] , where d12 is the euclidean distance between P1 and P2.                  See eq(10 and 11) in Siddon 1985</p>
+</div></blockquote>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>alpha: alpha values</li>
+<li>lenAlpha: number of alpha values</li>
+<li>lengthsVoxels: table where lengths will be stored. It should be allocated with a (lenAlpha-1) float values</li>
+<li>d12: distance between P1 and P2</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>float euclideanDistance( POINTXYZ p1, POINTXYZ p2)</strong></p>
+<blockquote>
+<div><p>Computes  and returns the euclidean distance between 2 points P1 and P2</p>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>void calculateVoxelIndices(POINTXYZ p1, POINTXYZ p2, POINTXYZ plane1, POINTXYZ spacing, float * alpha, int lenAlpha, int</strong> indList, int** indMinMax)**</p>
+<blockquote>
+<div><p>Calculates voxel indices (for 1 coordinate, i.e. x or y or z depending on input parameters).                i(m) = 1 + [X1 + alpha_mid(X2-X1) - Xplane(1)] / dx                 alpha_mid = ( alpha(m) + alpha(m-1)) / 2              m in [1 , lenAlpha-1]                 see eq(13 and 12) in Siddon 1985</p>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>p1: coordinates P1</li>
+<li>p2: coordinates P2</li>
+<li>plane1: coordinates first planes</li>
+<li>spacing: spacing between planes</li>
+<li>alpha: list of alpha values</li>
+<li>lenAlpha: length of alpha list</li>
+<li>indList: list of indices</li>
+<li>indMinMax: list of indMin and indMax</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>float calculateRadiologicalPath(VOLUME * densGrid, VOLUME * radGrid, int</strong> listInd, float * listAlpha,int  lenAlpha,float d12, int * countPtr)**</p>
+<blockquote>
+<div><p>Function that calculates the radiological path along the ray. See eq(14) in Siddon 1985</p>
+<ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>densGrid: 3D grid of density</li>
+<li>radGrid: 3D grid of radiological depth</li>
+<li>indList : list of indices 2D array</li>
+<li>alpha: alpha values</li>
+<li>lenAlpha: length of alpha</li>
+<li>d12: distance P1 - P2</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Structures:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Struct. POINTXYZ:</p>
+<blockquote>
+<div><ul class="simple">
+<li>float x</li>
+<li>float y</li>
+<li>float z</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Struct. VOLUME:</p>
+<blockquote>
+<div><ul class="simple">
+<li>POINTXYZ start</li>
+<li>POINTXYZ inc</li>
+<li>int nbCols</li>
+<li>int nbRows</li>
+<li>int nbFrames</li>
+<li>float <a href="#id1"><span class="problematic" id="id2">*</span></a>matrix</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Utility <strong>singleRay</strong></p>
+<blockquote>
+<div><p><strong>int singleRaytrace(VOLUME * grid, POINTXYZ point1,POINTXYZ point2 , INDICES * indRay)</strong></p>
+<blockquote>
+<div><ul>
+<li><p class="first">Inputs:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>stpPwr_grid : grid (VOLUME) storing the electron density (radiol. depth. for X-Rays) or relative stopping power(for protons)</li>
+<li>radiological_depth_grid : grid (VOLUME) that will be filled with the radiological depths.</li>
+<li>point1 : source of the ray</li>
+<li>point2 : target of the ray</li>
+<li>indRay : list of indices encountered by the ray</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p class="first">PythonExtensionCalcDeffDouble: 3 extenstions and 2 utility files</p>
+<blockquote>
+<div><p>Same as PythonExtensionCalcDeff for double  values</p>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mspt.mathTools.html" class="btn btn-neutral float-right" title="mspt.mathTools package"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mspt.extensionsC.html" class="btn btn-neutral" title="mspt.extensionsC package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

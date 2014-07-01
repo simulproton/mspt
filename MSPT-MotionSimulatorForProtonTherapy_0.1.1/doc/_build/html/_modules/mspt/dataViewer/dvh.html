@@ -1,0 +1,959 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.dataViewer.dvh &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.dataViewer.dvh</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.dataViewer.dvh</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># dvh.py</span>
+<span class="c"># Proton Therapy Simulator Project</span>
+<span class="c"># Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee</span>
+<span class="c"># July 2013</span>
+<span class="c">#</span>
+<span class="c"># Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France</span>
+<span class="c">#</span>
+<span class="c"># This file is part of MSPT- Motion Simulator for Proton Therapy.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator for Proton Therapy is free software: you can redistribute it and/or modify</span>
+<span class="c">#    it under the terms of the GNU General Public License as published by</span>
+<span class="c">#    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c">#    (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator for Proton Therapy is distributed in the hope that it will be useful,</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c">#    GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c">#    You should have received a copy of the GNU General Public License</span>
+<span class="c">#    along with MSPT- Motion Simulator for Proton Therapy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c"># </span>
+<span class="c">#</span>
+<span class="c">########################################################################</span>
+
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">plotDataGraphs</span> <span class="kn">as</span> <span class="nn">pltGraph</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">csv</span>
+
+<span class="n">pathToSave</span> <span class="o">=</span>  <span class="bp">None</span>  
+
+<div class="viewcode-block" id="DVH"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH">[docs]</a><span class="k">class</span> <span class="nc">DVH</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Class DVH is used to build and draw/save a Dose Volume Histogram (DVH)</span>
+<span class="sd">    </span>
+<span class="sd">    :param configData: configuration dictionary (*globalVariables*) for the simulator loaded in *simulator.simulatorMSPT*. It should contain\</span>
+<span class="sd">    the keys: </span>
+<span class="sd">    </span>
+<span class="sd">        * &#39;mainPath&#39; : The path where the simulation directory will be saved.</span>
+<span class="sd">        * &#39;nameSimulation&#39; : The simulation name.</span>
+<span class="sd">        * &#39;dvhRelativeVolume&#39; : True or False: True to plot the DVH using a relative volume (0-100%), False to \</span>
+<span class="sd">        plot with real volumes.</span>
+<span class="sd">        </span>
+<span class="sd">    :param dose: 3D dose distribution (in Gy) stored in a numpy array.</span>
+<span class="sd">    :param listVOIs: List of the volumes of interest (VOIs). List of tuples:  ( mask 3D Numpy array , ROI name, ROI observation, ROI index, Type).\</span>
+<span class="sd">    See the function *getMasksForAssociatedDicomImage()* in the module *dicomReader.dicomRSReader.* for more details.</span>
+<span class="sd">    </span>
+<span class="sd">    .. note::</span>
+<span class="sd">        </span>
+<span class="sd">            Output dose in cGy.</span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">configData</span><span class="p">,</span><span class="n">dose</span><span class="p">,</span><span class="n">listVOIs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span> <span class="o">=</span> <span class="bp">None</span> <span class="c">#Dictionnary: 1 key / VOI:  self._dictDVH[key] = [xData , yData]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_figure</span> <span class="o">=</span> <span class="bp">None</span> <span class="c"># figure used to display the DVHs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span> <span class="o">=</span> <span class="bp">None</span> <span class="c"># Dictionnary containing the Dv data for each VOI: self._dictDv[voi] = list[ [dose1,vol1],[dose2,vol2]  .....]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span> <span class="o">=</span> <span class="bp">None</span> <span class="c"># Dictionnary containing the Dv data for each VOI: self._dictVd[voi] = list[ [dose1,vol1],[dose2,vol2]  .....]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span> <span class="o">=</span> <span class="n">configData</span>
+        <span class="k">global</span> <span class="n">pathToSave</span>
+        <span class="n">pathToSave</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">mainPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">nameSimulation</span> <span class="o">+</span> <span class="s">&quot;DVH_Data/&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildDVHForVOIs</span><span class="p">(</span><span class="n">dose</span> <span class="p">,</span> <span class="n">listVOIs</span><span class="p">)</span>
+         
+        
+        
+        
+<div class="viewcode-block" id="DVH.getDVHForVOI"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.getDVHForVOI">[docs]</a>    <span class="k">def</span> <span class="nf">getDVHForVOI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voi</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the DVH for a given VOI name. </span>
+<span class="sd">        </span>
+<span class="sd">        :param voi: Name of the voi. If voi=&#39;all&#39; returns a dictonary with all the DVHs.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: The DVH as a dictionary: dictDVH[voi]= [dose bins array , volume data array].</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">        </span>
+<span class="sd">            Dose in cGy.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">voi</span> <span class="o">==</span> <span class="s">&#39;all&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span>
+        <span class="k">elif</span> <span class="n">voi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Unknown voi </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;VOI unknown in getDVHForVOI&quot;</span><span class="p">)</span>
+        </div>
+<div class="viewcode-block" id="DVH.getDvDataForVOI"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.getDvDataForVOI">[docs]</a>    <span class="k">def</span> <span class="nf">getDvDataForVOI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voi</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the Dv (Dose received by a given volume) data  for a given VOI name. For example D50, would be the dose received \</span>
+<span class="sd">        by 50% of the VOI volume.</span>
+<span class="sd">        </span>
+<span class="sd">        :param voi: Name of the voi. If voi=&#39;all&#39; return a dictonary with all the DVHs.</span>
+
+<span class="sd">        :returns: The Dv as a dictionary: dictDv[voi]= [ [dose1,vol1], [dose2,vol2], ... [dosen,voln] ].</span>
+<span class="sd">      </span>
+<span class="sd">        .. note::</span>
+<span class="sd">        </span>
+<span class="sd">            Dose in cGy.</span>
+<span class="sd">            </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">voi</span> <span class="o">==</span> <span class="s">&#39;all&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span>
+        <span class="k">elif</span> <span class="n">voi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Unknown voi </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;VOI unknown in getDvDataForVOI&quot;</span><span class="p">)</span>  
+        
+        </div>
+<div class="viewcode-block" id="DVH.getVdDataForVOI"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.getVdDataForVOI">[docs]</a>    <span class="k">def</span> <span class="nf">getVdDataForVOI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voi</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Get the Vd (portion of the volume receiving a given dose) Data for a given VOI name. For example V10: volume of VOI receiving \</span>
+<span class="sd">        10 dose units.</span>
+
+<span class="sd">        :param voi: Name of the voi. If voi=&#39;all&#39; return a dictonary with all the DVHs.</span>
+
+<span class="sd">        :returns: The Vd as a dictionary: dictVd[voi]= [ [dose1,vol1], [dose2,vol2], ... [dosen,voln] ].</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">        </span>
+<span class="sd">            Dose in cGy.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">voi</span> <span class="o">==</span> <span class="s">&#39;all&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span>
+        <span class="k">elif</span> <span class="n">voi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Unknown voi </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;VOI unknown in getVdDataForVOI&quot;</span><span class="p">)</span>  
+    
+   </div>
+<div class="viewcode-block" id="DVH.buildDVHForVOIs"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.buildDVHForVOIs">[docs]</a>    <span class="k">def</span> <span class="nf">buildDVHForVOIs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doseDistr</span><span class="p">,</span> <span class="n">listVOIs</span><span class="p">,</span> <span class="n">spacing</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Function that receives a list of VOI and build DVH for each of these VOIs.</span>
+<span class="sd">        </span>
+<span class="sd">        :param doseDistr: 3D dose distribution (3D array) in Gy.</span>
+<span class="sd">        :param listVOIs: List of VOIs : each VOI in the list should be stored in the shape provided by *dicomRSReader*: \</span>
+<span class="sd">        [  ( mask 3D Numpy array , ROI name, ROI observation, ROI index) ,   ( ... )...   ]</span>
+<span class="sd">        :param spacing: Voxels spacing: used if relativeVolume is False. If spacing is None and relativeVolume is False, \</span>
+<span class="sd">        then it will be considered that voxel spacing is {&#39;frames&#39;:10,&#39;rows&#39;:10&#39;cols&#39;:10}. Spacing is in mm.</span>
+<span class="sd">        </span>
+<span class="sd">        .. note::</span>
+<span class="sd">            </span>
+<span class="sd">            A **Dose Volume Histogram** (DVH) is a cumulative histogram for a specified volume of interest (VOI). It \</span>
+<span class="sd">            represents the cumulative volume irradiated as a function of the dose. See ICRU report: `5 Geometric Terms, and Dose \</span>
+<span class="sd">            and Dose-Volume Definitions &lt;http://jicru.oxfordjournals.org/content/7/2/83.extract&gt;`_  for more details.\</span>
+<span class="sd">            To compute it:</span>
+<span class="sd">        </span>
+<span class="sd">                #. build the histogram nb voxels vs received dose</span>
+<span class="sd">                #. build the cumulative histogram from 1): this represents the number of voxels receiving a dose &lt;= tp the given dose</span>
+<span class="sd">                #. build the DVH from 2): DVH = nb_tot_voxels_in_VOI - cumulative_histogram: this represent the number of voxels receiving  at least the given dose</span>
+<span class="sd">    </span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c">#Convert dose distribution in Gy into cGy</span>
+        <span class="n">doseDistr</span> <span class="o">=</span> <span class="mf">100.0</span> <span class="o">*</span> <span class="n">doseDistr</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="s">&#39;relativeVolume&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">dvhRelativeVolume</span>
+        <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="n">listVOIs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">voi</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;CLOSED_PLANAR&#39;</span> <span class="p">:</span><span class="c"># i.e. if not &#39;POINT&#39;     </span>
+                <span class="n">doseVOI</span> <span class="p">,</span> <span class="n">indMask</span> <span class="o">=</span> <span class="n">getSubDoseDataForMask</span><span class="p">(</span> <span class="n">doseDistr</span> <span class="p">,</span> <span class="n">voi</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">cumSum</span> <span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">buildCumulHisto</span><span class="p">(</span><span class="n">doseVOI</span><span class="p">,</span> <span class="n">indMask</span> <span class="o">=</span> <span class="n">indMask</span><span class="p">)</span>
+                <span class="n">xData</span> <span class="o">=</span>  <span class="n">bins</span>
+                <span class="n">yData</span> <span class="o">=</span> <span class="n">cumSum</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="n">xData</span> <span class="p">,</span> <span class="n">yData</span><span class="p">]</span>   
+                
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizeDVH</span><span class="p">(</span><span class="n">listVOIs</span><span class="p">,</span> <span class="n">spacing</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;DVHs built&quot;</span>
+    </div>
+<div class="viewcode-block" id="DVH.normalizeDVH"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.normalizeDVH">[docs]</a>    <span class="k">def</span> <span class="nf">normalizeDVH</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">listVOIs</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Normalizes the DVH such that the volumes of each VOI is set in the range 0% - 100%.</span>
+
+<span class="sd">        :param listVOIs: List of VOIs : each VOI in the list should be stored in the shape provided by\</span>
+<span class="sd">        DicomRSReader: [  ( mask 3D Numpy array , ROI name, ROI observation, ROI index, Type) ,   ( ... )...   ]</span>
+<span class="sd">        :param spacing: Voxels spacing: used if relativeVolume is False. If spacing is None and relativeVolume is False, \</span>
+<span class="sd">        then it will be considered that voxel spacing is {&#39;frames&#39;:10,&#39;rows&#39;:10&#39;cols&#39;:10}. spacing in mm</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="n">listVOIs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">voi</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;CLOSED_PLANAR&#39;</span> <span class="p">:</span><span class="c"># i.e. if not &#39;POINT&#39;       </span>
+
+                <span class="n">xData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">yData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">maxY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">yData</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="s">&#39;relativeVolume&#39;</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">maxY</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">yData</span> <span class="o">=</span> <span class="n">yData</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">maxY</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">spacing</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                        <span class="n">spacing</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;frames&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="s">&#39;rows&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="s">&#39;cols&#39;</span><span class="p">:</span><span class="mi">10</span><span class="p">}</span>
+                    <span class="n">yData</span> <span class="o">=</span> <span class="n">yData</span> <span class="o">*</span> <span class="p">(</span><span class="n">spacing</span><span class="p">[</span><span class="s">&#39;frames&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">10.0</span> <span class="p">)</span><span class="o">*</span> <span class="p">(</span><span class="n">spacing</span><span class="p">[</span><span class="s">&#39;rows&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">spacing</span><span class="p">[</span><span class="s">&#39;cols&#39;</span><span class="p">]</span><span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">yData</span> 
+
+    
+    </div>
+<div class="viewcode-block" id="DVH.computeDvData"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.computeDvData">[docs]</a>    <span class="k">def</span> <span class="nf">computeDvData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">listVolumes</span><span class="p">,</span> <span class="n">voiName</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Computes Dv (Dv indicates that a volume V of VOI receives at least a dose equal to Dv.\</span>
+<span class="sd">        See ICRU report: `5 Geometric Terms, and Dose and Dose-Volume Definitions &lt;http://jicru.oxfordjournals.org/content/7/2/83.extract&gt;`_ \</span>
+<span class="sd">        for more details.</span>
+
+<span class="sd">        :param listVolumes: List of volume values to consider for Dv data.</span>
+<span class="sd">        :param voiName: Name of the VOI. If voiName is None, it will be computed for all the VOIs.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">listVolumes</span><span class="p">,(</span><span class="nb">float</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">listVolumes</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+            <span class="n">listVolumes</span> <span class="o">=</span> <span class="p">[</span><span class="n">listVolumes</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">listVolumes</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">allVOIs</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">voiName</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">print</span> <span class="s">&quot;VOI </span><span class="si">%s</span><span class="s"> not found in : </span><span class="si">%s</span><span class="s">.</span><span class="se">\n</span><span class="s"> Dv data will be computed for all the VOIs.&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voiName</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="k">elif</span> <span class="n">voiName</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">allVOIs</span> <span class="o">=</span> <span class="bp">False</span>
+                
+            <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">voi</span> <span class="o">!=</span> <span class="s">&#39;relativeVolume&#39;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+                    <span class="n">dvhData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">vol</span> <span class="ow">in</span> <span class="n">listVolumes</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">vol</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">dose</span> <span class="o">=</span> <span class="n">getDoseForVolume</span><span class="p">(</span>  <span class="n">dvhData</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dvhData</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span><span class="n">vol</span> <span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">dose</span><span class="p">,</span> <span class="n">vol</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">allVOIs</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="o">==</span> <span class="n">voi</span><span class="p">:</span>
+                        <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;listVolumes in computeDvData is not a list or a float or an int&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Wrong type for listVolumes in computeDvData&#39;</span><span class="p">)</span>
+       
+       </div>
+<div class="viewcode-block" id="DVH.computeVdData"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.computeVdData">[docs]</a>    <span class="k">def</span> <span class="nf">computeVdData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">listDoses</span><span class="p">,</span> <span class="n">voiName</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Computes Vd (Vd indicates that the volume Vd of VOI that received at least D) values. \</span>
+<span class="sd">        See ICRU report: `5 Geometric Terms, and Dose and Dose-Volume Definitions &lt;http://jicru.oxfordjournals.org/content/7/2/83.extract&gt;`_  \</span>
+<span class="sd">        for more details.</span>
+<span class="sd">        </span>
+<span class="sd">        :param listDoses: List of dose values to consider for Vd data.</span>
+<span class="sd">        :param voiName: Name of the VOI. If voiName is None, it will be computed for all the VOIs.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">listDoses</span><span class="p">,(</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span> <span class="p">:</span>
+            <span class="n">listDoses</span> <span class="o">=</span> <span class="p">[</span><span class="n">listDoses</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">listDoses</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">allVOIs</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">voiName</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">print</span> <span class="s">&quot;VOI </span><span class="si">%s</span><span class="s"> not found in : </span><span class="si">%s</span><span class="s">.</span><span class="se">\n</span><span class="s"> Vd data will be computed for all the VOIs.&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voiName</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="k">elif</span> <span class="n">voiName</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">allVOIs</span> <span class="o">=</span> <span class="bp">False</span>
+                
+            <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">voi</span> <span class="o">!=</span> <span class="s">&#39;relativeVolume&#39;</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+                    <span class="n">dvhData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">dose</span> <span class="ow">in</span> <span class="n">listDoses</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">dose</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">vol</span> <span class="o">=</span> <span class="n">getVolumeForDose</span><span class="p">(</span>  <span class="n">dvhData</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dvhData</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span><span class="n">dose</span> <span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">dose</span><span class="p">,</span> <span class="n">vol</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">allVOIs</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="o">==</span> <span class="n">voi</span><span class="p">:</span>
+                        <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;listDoses in computeVdData is not a list or a float or an int&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Wrong type for listDoses in computeVdData&#39;</span><span class="p">)</span>
+    
+    </div>
+<div class="viewcode-block" id="DVH.drawDVHs"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.drawDVHs">[docs]</a>    <span class="k">def</span> <span class="nf">drawDVHs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voiName</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Draws the DVH in a pyplot figure.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        :praram voiName:  None by default in order to display DVH for all VOIs. If not none it should contain the name of the VOI to display.\</span>
+<span class="sd">        If the name is unknown it will display the DVH for all the VOIs.</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;DVH: nothing to draw...&quot;</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_figure</span> <span class="o">=</span> <span class="n">pltGraph</span><span class="o">.</span><span class="n">getCurrentFigure</span><span class="p">()</span>
+            
+            <span class="n">allVOIs</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">if</span> <span class="n">voiName</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">print</span> <span class="s">&quot;VOI </span><span class="si">%s</span><span class="s"> not found in : </span><span class="si">%s</span><span class="s">.</span><span class="se">\n</span><span class="s"> All the DVHs will be plotted.&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voiName</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="k">elif</span> <span class="n">voiName</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">allVOIs</span> <span class="o">=</span> <span class="bp">False</span>
+    
+            <span class="n">supTitle</span> <span class="o">=</span> <span class="s">&#39;DVH for volumes&#39;</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span> <span class="o">=</span> <span class="n">pltGraph</span><span class="o">.</span><span class="n">newSubplot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_figure</span> <span class="p">)</span>
+            <span class="n">xMax</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">voi</span> <span class="o">!=</span> <span class="s">&#39;relativeVolume&#39;</span><span class="p">:</span>
+                    <span class="n">dvhData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span>
+                    <span class="n">maxi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dvhData</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">xMax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">maxi</span> <span class="o">&gt;</span> <span class="n">xMax</span><span class="p">:</span>
+                        <span class="n">xMax</span> <span class="o">=</span> <span class="n">maxi</span>
+            
+            <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">voi</span> <span class="o">!=</span> <span class="s">&#39;relativeVolume&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">allVOIs</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="o">==</span> <span class="n">voi</span><span class="p">:</span>
+                        <span class="n">pltGraph</span><span class="o">.</span><span class="n">clearSubplot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span><span class="p">)</span>
+                        <span class="n">supTitle</span> <span class="o">=</span> <span class="s">&#39;DVH &#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">)</span>
+                    <span class="n">dvhData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="s">&#39;relativeVolume&#39;</span><span class="p">]:</span>
+                        <span class="n">yMax</span> <span class="o">=</span> <span class="mi">100</span>
+                        <span class="n">yLabel</span> <span class="o">=</span> <span class="s">&#39;Relative Volume %&#39;</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">yMax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span> <span class="n">dvhData</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">10</span>
+                        <span class="n">yLabel</span> <span class="o">=</span> <span class="s">&#39;Volume (cm3)&#39;</span>
+                    <span class="n">pltGraph</span><span class="o">.</span><span class="n">drawPlot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span> <span class="p">,</span> <span class="n">dvhData</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dvhData</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">xmin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">xMax</span><span class="p">,</span> <span class="n">ymin</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span><span class="n">yMax</span><span class="p">,</span><span class="n">xlabel</span> <span class="o">=</span> <span class="s">&#39;Dose (cGy)&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="n">yLabel</span><span class="p">,</span> <span class="n">titlePlot</span> <span class="o">=</span> <span class="s">&#39;DVH &#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">),</span> <span class="n">singlePlot</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">nameSinglePlot</span> <span class="o">=</span> <span class="n">supTitle</span><span class="p">,</span> <span class="n">grid</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+                    <span class="n">supTitle</span> <span class="o">=</span> <span class="bp">None</span>
+                    <span class="n">pltGraph</span><span class="o">.</span><span class="n">displayPlot</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">allVOIs</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="o">==</span> <span class="n">voi</span><span class="p">:</span>
+                        <span class="k">break</span>
+                    
+            <span class="n">pltGraph</span><span class="o">.</span><span class="n">makePlotLegend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_figure</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span><span class="p">)</span>
+            <span class="n">pltGraph</span><span class="o">.</span><span class="n">displayPlot</span><span class="p">()</span>
+    </div>
+<div class="viewcode-block" id="DVH.drawDvData"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.drawDvData">[docs]</a>    <span class="k">def</span> <span class="nf">drawDvData</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">voiName</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Displays Dv Data in the pyplot figure.</span>
+<span class="sd">        </span>
+
+<span class="sd">        :praram voiName:  None by default in order to display DVH for all VOIs. If not none it should contain the name of the VOI to display.\</span>
+<span class="sd">        If the name is unknown it will display the DVH for all the VOIs.</span>
+
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Nothing to draw for Dv data&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_figure</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;No dvh has been drawn yet. No Dv data will be displayed.&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pltGraph</span><span class="o">.</span><span class="n">displayPlot</span><span class="p">()</span>
+            
+                <span class="n">allVOIs</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">if</span>  <span class="n">voiName</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">print</span> <span class="s">&quot;VOI </span><span class="si">%s</span><span class="s"> not found in : </span><span class="si">%s</span><span class="s">.</span><span class="se">\n</span><span class="s"> All Dv data will be plotted.&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voiName</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                <span class="k">elif</span> <span class="n">voiName</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">allVOIs</span> <span class="o">=</span> <span class="bp">False</span>           
+                <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">dvData</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span><span class="p">[</span><span class="n">voi</span><span class="p">]:</span> 
+                        <span class="n">pltGraph</span><span class="o">.</span><span class="n">plotHorizontalLine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span><span class="p">,</span> <span class="n">dvData</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">xEnd</span> <span class="o">=</span> <span class="n">dvData</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;b&#39;</span><span class="p">)</span>
+                        <span class="n">pltGraph</span><span class="o">.</span><span class="n">plotVerticalLine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span><span class="p">,</span> <span class="n">dvData</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">yEnd</span> <span class="o">=</span>  <span class="n">dvData</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$D_{</span><span class="si">%i</span><span class="s">}$&#39;</span><span class="o">%</span><span class="nb">int</span><span class="p">(</span><span class="n">dvData</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">font</span> <span class="o">=</span> <span class="n">globalFont</span><span class="p">)</span>
+                        <span class="n">pltGraph</span><span class="o">.</span><span class="n">displayPlot</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">allVOIs</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="o">==</span> <span class="n">voi</span><span class="p">:</span>
+                        <span class="k">break</span>        
+            </div>
+<div class="viewcode-block" id="DVH.drawVdData"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.drawVdData">[docs]</a>    <span class="k">def</span> <span class="nf">drawVdData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voiName</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Displays Vd Data in the pyplot figure.</span>
+<span class="sd">        </span>
+<span class="sd">        :praram voiName  None by default in order to display DVH for all VOIs. If not none it should contain the name of the VOI to display.\</span>
+<span class="sd">        If the name is unknown it will display the DVH for all the VOIs.</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Nothing to draw for Vd data&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_figure</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;No dvh has been drawn yet. No Vd data will be displayed.&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pltGraph</span><span class="o">.</span><span class="n">displayPlot</span><span class="p">()</span>
+            
+                <span class="n">allVOIs</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">if</span> <span class="n">voiName</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="k">print</span> <span class="s">&quot;VOI </span><span class="si">%s</span><span class="s"> not found in : </span><span class="si">%s</span><span class="s">.</span><span class="se">\n</span><span class="s"> All Dv data will be plotted.&quot;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voiName</span><span class="p">),</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                <span class="k">elif</span> <span class="n">voiName</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">allVOIs</span> <span class="o">=</span> <span class="bp">False</span>           
+                <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">vdData</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span><span class="p">[</span><span class="n">voi</span><span class="p">]:</span> 
+                        <span class="n">pltGraph</span><span class="o">.</span><span class="n">plotHorizontalLine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span><span class="p">,</span> <span class="n">vdData</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">xEnd</span> <span class="o">=</span> <span class="n">vdData</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#39;r&#39;</span><span class="p">,</span><span class="n">label</span> <span class="o">=</span> <span class="s">r&#39;$V_{</span><span class="si">%i</span><span class="s">}$&#39;</span><span class="o">%</span><span class="nb">int</span><span class="p">(</span><span class="n">vdData</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">font</span> <span class="o">=</span> <span class="n">globalFont</span><span class="p">)</span>
+                        <span class="n">pltGraph</span><span class="o">.</span><span class="n">plotVerticalLine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_subplot</span><span class="p">,</span> <span class="n">vdData</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">yEnd</span> <span class="o">=</span>  <span class="n">vdData</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#39;r&#39;</span> <span class="p">)</span>
+                        <span class="n">pltGraph</span><span class="o">.</span><span class="n">displayPlot</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">allVOIs</span> <span class="ow">and</span> <span class="n">voiName</span> <span class="o">==</span> <span class="n">voi</span><span class="p">:</span>
+                        <span class="k">break</span>      
+        </div>
+<div class="viewcode-block" id="DVH.saveDVHAsImage"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.saveDVHAsImage">[docs]</a>    <span class="k">def</span> <span class="nf">saveDVHAsImage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Saves the current DVH (in a pyplot figure) as an image.</span>
+<span class="sd">        </span>
+<span class="sd">        :param filename: Name of the image file to save.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_figure</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">pltGraph</span><span class="o">.</span><span class="n">savePlotImage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_figure</span><span class="p">,</span> <span class="s">&#39;DVH_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span> <span class="p">,</span> <span class="n">dirPath</span> <span class="o">=</span> <span class="n">pathToSave</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="s">&#39;png&#39;</span><span class="p">,</span> <span class="n">subplot</span> <span class="o">=</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Plot as not been drawn yet&quot;</span>
+        </div>
+<div class="viewcode-block" id="DVH.saveDVHAsCSV"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.saveDVHAsCSV">[docs]</a>    <span class="k">def</span> <span class="nf">saveDVHAsCSV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Saves DVH data to CSV files: 1 per VOI.</span>
+<span class="sd">        </span>
+<span class="sd">        :param filename: Basis name of the CSV files to save.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">exportDVHToCSVFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;DVHs has not been computed yet, so they cannot be exported to CSV files&quot;</span>
+     
+     </div>
+<div class="viewcode-block" id="DVH.saveEntireDVHAsCSV"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.saveEntireDVHAsCSV">[docs]</a>    <span class="k">def</span> <span class="nf">saveEntireDVHAsCSV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Saves an entire DVH data to a CSV file.</span>
+<span class="sd">        </span>
+<span class="sd">        :param filename: Filename basis of the CSV file to save.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">exportAllDVHToCSV</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;DVHs has not been computed yet, so they cannot be exported to CSV files&quot;</span>
+     
+     
+     </div>
+<div class="viewcode-block" id="DVH.saveDvAsCSV"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.saveDvAsCSV">[docs]</a>    <span class="k">def</span> <span class="nf">saveDvAsCSV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Saves Dv data to CSV files: 1 per VOI</span>
+<span class="sd">        </span>
+<span class="sd">        :param filename: Filename basis of the CSV files to save.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">volumeType</span> <span class="o">=</span> <span class="s">&#39;Absolute_cm3&#39;</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="s">&#39;relativeVolume&#39;</span><span class="p">]:</span>
+                <span class="n">volumeType</span> <span class="o">=</span> <span class="s">&#39;Relative_%&#39;</span>
+            <span class="n">exportDvDataToCSVFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictDv</span><span class="p">,</span> <span class="n">volumeType</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Dv data has not been computed yet, so it cannot be exported to CSV files&quot;</span>   
+            </div>
+<div class="viewcode-block" id="DVH.saveVdAsCSV"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.saveVdAsCSV">[docs]</a>    <span class="k">def</span> <span class="nf">saveVdAsCSV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Saves Dv data to CSV files: 1 per VOI.</span>
+<span class="sd">        </span>
+<span class="sd">        :param filename: Basis name of the CSV files to save.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">volumeType</span> <span class="o">=</span> <span class="s">&#39;Absolute_cm^3&#39;</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dictDVH</span><span class="p">[</span><span class="s">&#39;relativeVolume&#39;</span><span class="p">]:</span>
+                <span class="n">volumeType</span> <span class="o">=</span> <span class="s">&#39;Relative_%&#39;</span>
+            <span class="n">exportVdDataToCSVFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dictVd</span><span class="p">,</span> <span class="n">volumeType</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Vd data has not been computed yet, so it cannot be exported to CSV files&quot;</span>   
+            </div>
+<div class="viewcode-block" id="DVH.closeDVH"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.DVH.closeDVH">[docs]</a>    <span class="k">def</span> <span class="nf">closeDVH</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Closes pyplot figure.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">pltGraph</span><span class="o">.</span><span class="n">closePlot</span><span class="p">()</span>
+    
+
+<span class="c">#######################################################</span>
+<span class="c">##                  Utilities: save data DVH</span>
+<span class="c">#######################################################</span>
+</div></div>
+<div class="viewcode-block" id="exportDVHToCSVFile"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.exportDVHToCSVFile">[docs]</a><span class="k">def</span> <span class="nf">exportDVHToCSVFile</span><span class="p">(</span><span class="n">dictDVH</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Saves a DVH dictionary to csv files. One file per VOI.</span>
+<span class="sd">    </span>
+<span class="sd">    :param dictDVH: DVH dictionary to save.</span>
+<span class="sd">    :param name: Name of the DVH. Used as the filename basis.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">volumeType</span> <span class="o">=</span> <span class="s">&#39;Absolute_cm^3&#39;</span>
+    <span class="k">if</span> <span class="n">dictDVH</span><span class="p">[</span><span class="s">&#39;relativeVolume&#39;</span><span class="p">]:</span>
+        <span class="n">volumeType</span> <span class="o">=</span> <span class="s">&#39;Relative_%&#39;</span>
+    <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="n">dictDVH</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">voi</span> <span class="o">!=</span> <span class="s">&#39;relativeVolume&#39;</span><span class="p">:</span>
+            <span class="n">tmpListDose</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="n">tmpListDose</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">][</span><span class="mi">0</span><span class="p">][:]</span>
+            <span class="n">tmpListDose</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">_Dose_cGy&#39;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">))</span>
+            <span class="n">tmpListVol</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="n">tmpListVol</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">dictDVH</span><span class="p">[</span><span class="n">voi</span><span class="p">][</span><span class="mi">1</span><span class="p">][:]</span>
+            <span class="n">tmpListVol</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">_Volume_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">),</span><span class="n">volumeType</span><span class="p">))</span>
+            <span class="n">dataList</span> <span class="o">=</span> <span class="p">[</span><span class="n">tmpListDose</span> <span class="p">,</span> <span class="n">tmpListVol</span><span class="p">]</span>
+            <span class="n">save2DListToCSV</span><span class="p">(</span><span class="n">dataList</span><span class="p">,</span> <span class="s">&#39;DVH_</span><span class="si">%s</span><span class="s">_Vol_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="s">&quot;_&quot;</span><span class="p">)),</span><span class="n">volumeType</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+
+
+</div>
+<div class="viewcode-block" id="exportAllDVHToCSV"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.exportAllDVHToCSV">[docs]</a><span class="k">def</span> <span class="nf">exportAllDVHToCSV</span><span class="p">(</span><span class="n">dictDVH</span> <span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Saves a DVH dictionary to a csv files. One file for all the VOIs.</span>
+<span class="sd">    </span>
+<span class="sd">    :param dictDVH: DVH dictionary to save.</span>
+<span class="sd">    :param name: Name of the DVH. Used as the filename.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;.csv&quot;</span><span class="p">):</span>
+        <span class="n">nane</span> <span class="o">=</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">dataToExport</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;DVH </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">name</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="s">&quot;_&quot;</span><span class="p">)</span>
+    <span class="n">xLabel</span> <span class="o">=</span> <span class="s">&quot;Dose-cGy_&quot;</span>
+    <span class="n">yLabel</span> <span class="o">=</span> <span class="s">&quot;Volume-%_&quot;</span>
+
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">roi</span> <span class="ow">in</span> <span class="n">dictDVH</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">roi</span> <span class="o">!=</span> <span class="s">&#39;relativeVolume&#39;</span><span class="p">:</span>
+            <span class="n">listDataDose</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="n">listDataDose</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">dictDVH</span><span class="p">[</span><span class="n">roi</span><span class="p">][</span><span class="mi">0</span><span class="p">][:]</span>
+            <span class="n">listDataVol</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="n">listDataVol</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">dictDVH</span><span class="p">[</span><span class="n">roi</span><span class="p">][</span><span class="mi">1</span><span class="p">][:]</span>
+            <span class="n">listDataDose</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">xLabel</span><span class="o">+</span><span class="n">roi</span><span class="p">))</span>
+            <span class="n">listDataVol</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">yLabel</span><span class="o">+</span><span class="n">roi</span><span class="p">))</span>
+            <span class="n">dataToExport</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">listDataDose</span><span class="p">)</span>
+            <span class="n">dataToExport</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">listDataVol</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pathToSave</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">pathToSave</span><span class="p">)</span>             
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pathToSave</span> <span class="o">+</span><span class="n">title</span><span class="o">+</span><span class="s">&#39;.csv&#39;</span><span class="p">,</span><span class="s">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">dataToExport</span><span class="p">))</span>
+    
+    <span class="k">return</span>   <span class="n">pathToSave</span> <span class="o">+</span><span class="n">title</span><span class="o">+</span><span class="s">&#39;.csv&#39;</span>
+    
+
+
+</div>
+<div class="viewcode-block" id="exportDvDataToCSVFile"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.exportDvDataToCSVFile">[docs]</a><span class="k">def</span> <span class="nf">exportDvDataToCSVFile</span><span class="p">(</span><span class="n">dictDv</span><span class="p">,</span> <span class="n">volumeType</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Saves Dv data to csv files. One file per VOI.</span>
+<span class="sd">    </span>
+<span class="sd">    :param dictDV: Dictionary containing the (Dv, Volume) tuples for each VOI.</span>
+<span class="sd">    :param volumeType: &#39;Relative_%&#39; or &#39;Absolute_cm^3&#39;</span>
+<span class="sd">    :param name: Filename basis.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="n">dictDv</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">voi</span> <span class="o">!=</span> <span class="s">&#39;relativeVolume&#39;</span><span class="p">:</span>
+            <span class="n">tmpList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="n">tmpList</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">dictDv</span><span class="p">[</span><span class="n">voi</span><span class="p">][:]</span>
+            <span class="n">tmpList</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,[</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">_Dose_cGy&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">))</span> <span class="p">,</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">_Volume_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">),</span><span class="n">volumeType</span><span class="p">)</span> <span class="p">])</span>
+            <span class="n">save2DListToCSV</span><span class="p">(</span><span class="n">tmpList</span><span class="p">,</span><span class="s">&#39;DvData_</span><span class="si">%s</span><span class="s">_Vol_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">),</span><span class="n">volumeType</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+            </div>
+<div class="viewcode-block" id="exportVdDataToCSVFile"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.exportVdDataToCSVFile">[docs]</a><span class="k">def</span> <span class="nf">exportVdDataToCSVFile</span><span class="p">(</span><span class="n">dictVd</span><span class="p">,</span><span class="n">volumeType</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Saves Vd data to csv files. One file per VOI.</span>
+<span class="sd">    </span>
+<span class="sd">    :param dictDV: Dictionary containing the (Dv, Volume) tuples for each VOI.</span>
+<span class="sd">    :param volumeType: &#39;Relative_%&#39; or &#39;Absolute_cm^3&#39;</span>
+<span class="sd">    :param name: Filename basis.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">voi</span> <span class="ow">in</span> <span class="n">dictVd</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">voi</span> <span class="o">!=</span> <span class="s">&#39;relativeVolume&#39;</span><span class="p">:</span>
+            <span class="n">tmpList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="n">tmpList</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">dictVd</span><span class="p">[</span><span class="n">voi</span><span class="p">][:]</span>
+            <span class="n">tmpList</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,[</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">_Dose_cGy&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">))</span> <span class="p">,</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s">_Volume_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">),</span><span class="n">volumeType</span><span class="p">)</span> <span class="p">])</span>
+            <span class="n">save2DListToCSV</span><span class="p">(</span><span class="n">tmpList</span><span class="p">,</span><span class="s">&#39;VdData_</span><span class="si">%s</span><span class="s">_Vol_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">voi</span><span class="p">),</span><span class="n">volumeType</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)))</span>
+
+</div>
+<div class="viewcode-block" id="save2DListToCSV"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.save2DListToCSV">[docs]</a><span class="k">def</span> <span class="nf">save2DListToCSV</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Saves a 2D list to a CSV file.</span>
+<span class="sd">    </span>
+<span class="sd">    :param data: 2D list of values.</span>
+<span class="sd">    :param filename: CSV filename.</span>
+<span class="sd">        </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c">#Save a 2D python list to csv file</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pathToSave</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">pathToSave</span><span class="p">)</span>             
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&#39;.csv&#39;</span><span class="p">):</span>    
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span> <span class="o">+</span> <span class="s">&quot;.csv&quot;</span>
+    <span class="n">myFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">pathToSave</span><span class="o">+</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;wb&#39;</span><span class="p">)</span>
+    <span class="n">wr</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">myFile</span><span class="p">,</span> <span class="n">quoting</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_ALL</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">wr</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="n">myFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        
+
+    
+
+
+
+<span class="c">#######################################################</span>
+<span class="c">##                  Utilities: data histogram</span>
+<span class="c">#######################################################</span></div>
+<div class="viewcode-block" id="getSubDoseDataForMask"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.getSubDoseDataForMask">[docs]</a><span class="k">def</span> <span class="nf">getSubDoseDataForMask</span><span class="p">(</span> <span class="n">doseData</span> <span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Get the dose distribution in the volume defined by the mask.</span>
+<span class="sd">    </span>
+<span class="sd">    :param doseData: 3D dose distribution (3D numpy array).</span>
+<span class="sd">    :param mask: 3D numpy binary array (1 in the VOI, 0 itherwise).</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: A tuple with:</span>
+<span class="sd">    </span>
+<span class="sd">        #. A 3D volume where doseData is preserved in the VOI (using mask) and is set to 0 outside.</span>
+<span class="sd">        #. Indices where the mask is 1 (VOI).</span>
+<span class="sd"> </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">newDoseData</span> <span class="o">=</span> <span class="n">doseData</span> <span class="o">*</span> <span class="n">mask</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">newDoseData</span> <span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
+    
+    </div>
+<div class="viewcode-block" id="buildHistogram"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.buildHistogram">[docs]</a><span class="k">def</span> <span class="nf">buildHistogram</span><span class="p">(</span><span class="n">data3D</span> <span class="p">,</span> <span class="n">indMask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">maxValue</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Builds an histogram for data3D. </span>
+<span class="sd">    </span>
+<span class="sd">    :param data3D: 3D array for which we want to build a histogram.</span>
+<span class="sd">    :param indMask: Indices where the VOI is located. If indMask is not None, the histogram is built only for the voxels \</span>
+<span class="sd">    specified by indMask, otherwise it builds an histogram for the entire array.</span>
+<span class="sd">    :param maxValue: If maxValue is None a maxValue is defined as the maximum value of the 3D volume used ( limited to indMask \</span>
+<span class="sd">    if indMask is not None), otherwise the value provided is used. </span>
+<span class="sd">    </span>
+<span class="sd">    </span>
+<span class="sd">    The histogram is built with bins ranging from 0 to maxValue with a step of 0.5</span>
+
+<span class="sd">    :returns: A tuple with:</span>
+<span class="sd">    </span>
+<span class="sd">        #. y values of the histogram (array)</span>
+<span class="sd">        #. x values (bins) of the histogram (array)</span>
+
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">indMask</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data3D</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data3D</span><span class="p">[</span><span class="n">indMask</span><span class="p">]</span>
+        
+    <span class="c"># Extend range for values in order to make sure that count will reach 0    </span>
+    <span class="k">if</span> <span class="n">maxValue</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">maxVal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span> 
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">maxVal</span> <span class="o">=</span> <span class="n">maxValue</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">hist</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">stop</span> <span class="o">=</span> <span class="n">maxVal</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">hist</span><span class="p">,</span><span class="n">bins</span><span class="p">)</span>
+    
+    
+    </div>
+<div class="viewcode-block" id="buildCumulHisto"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.buildCumulHisto">[docs]</a><span class="k">def</span> <span class="nf">buildCumulHisto</span><span class="p">(</span> <span class="n">data3D</span> <span class="p">,</span> <span class="n">indMask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">maxValue</span> <span class="o">=</span> <span class="bp">None</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Builds a cumulative histogram for data3D.</span>
+<span class="sd">    </span>
+<span class="sd">    :param data3D: 3D array for which we want to build a histogram.</span>
+<span class="sd">    :param indMask: Indices where the VOI is located. If indMask is not None, the histogram is built only for the voxels \</span>
+<span class="sd">    specified by indMask, otherwise it builds an histogram for the entire array.</span>
+<span class="sd">    :param maxValue: If maxValue is None a maxValue is defined as the maximum value of the 3D volume used ( limited to indMask \</span>
+<span class="sd">    if indMask is not None), otherwise the value provided is used.</span>
+
+<span class="sd">    The histogram is built with bin ranging from 0 to maxValue with a step of 0.5.\</span>
+<span class="sd">    To build the cumulative histogram the function *buildHistogram()* is called.</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: A tuple with:</span>
+<span class="sd">    </span>
+<span class="sd">        #. y values of the histogram (array)</span>
+<span class="sd">        #. x values (bins) of the histogram (array)</span>
+<span class="sd">        </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">indMask</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data3D</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data3D</span><span class="p">[</span><span class="n">indMask</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="n">maxValue</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="nb">max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">max</span> <span class="o">=</span> <span class="n">maxValue</span>        
+    <span class="n">hist</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">buildHistogram</span><span class="p">(</span><span class="n">data3D</span> <span class="p">,</span> <span class="n">indMask</span> <span class="o">=</span> <span class="n">indMask</span> <span class="p">,</span><span class="n">maxValue</span> <span class="o">=</span> <span class="nb">max</span><span class="p">)</span>
+    
+    <span class="n">doseBins</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">cumSumHist</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">dose</span> <span class="ow">in</span> <span class="n">bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">doseBins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dose</span><span class="p">)</span>
+        <span class="n">cumSum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">hist</span><span class="p">[</span><span class="n">count</span><span class="p">:])</span> 
+        <span class="n">cumSumHist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cumSum</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cumSumHist</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">doseBins</span><span class="p">))</span>
+    
+    </div>
+<div class="viewcode-block" id="getDoseForVolume"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.getDoseForVolume">[docs]</a><span class="k">def</span> <span class="nf">getDoseForVolume</span><span class="p">(</span> <span class="n">doseData</span><span class="p">,</span> <span class="n">volData</span> <span class="p">,</span><span class="n">vol</span> <span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calculate the Dv (Dose received by a given volume) Data  for a given VOI name. For example D50, would be the dose received by 50% \</span>
+<span class="sd">    of the VOI volume. </span>
+<span class="sd">    </span>
+<span class="sd">    See ICRU report: `5 Geometric Terms, and Dose and Dose-Volume Definitions &lt;http://jicru.oxfordjournals.org/content/7/2/83.extract&gt;`_  \</span>
+<span class="sd">    for more details. </span>
+<span class="sd">    </span>
+<span class="sd">    This function is called by computeDvData(). </span>
+<span class="sd">    </span>
+<span class="sd">    :param doseData: 1D array with dose values of the DVH. It should be in inscreasing order.</span>
+<span class="sd">    :param volData: 1D array with volume values of the DVH. It should be in decreasing order.</span>
+<span class="sd">    :param vol: Value of the volume considered.</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: Dv value calculated.</span>
+<span class="sd">   </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="c">#volData should be decreasing and dose data inscreasing</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">doseData</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">volData</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span> <span class="s">&quot;volData and doseData don&#39;t have the same size&quot;</span><span class="p">)</span>
+    
+    <span class="c">#Invert data so that volData is in increasing order</span>
+    <span class="n">volData</span> <span class="o">=</span> <span class="n">volData</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">doseData</span> <span class="o">=</span>  <span class="n">doseData</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+    
+    <span class="k">if</span> <span class="n">volData</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">volData</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">doseData</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+    
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">v</span> <span class="p">,</span> <span class="n">vp1</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">volData</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">volData</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="k">if</span> <span class="n">vol</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="n">vol</span> <span class="o">&lt;=</span> <span class="n">vp1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">doseData</span><span class="p">[</span><span class="n">count</span><span class="p">]</span><span class="o">-</span><span class="n">doseData</span><span class="p">[</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">doseData</span><span class="p">[</span><span class="n">count</span><span class="p">]</span><span class="o">-</span><span class="n">doseData</span><span class="p">[</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">v</span> <span class="o">-</span> <span class="n">vp1</span><span class="p">)</span>
+                    <span class="n">intersect</span> <span class="o">=</span> <span class="n">doseData</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">-</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">v</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">slope</span> <span class="o">*</span> <span class="n">vol</span> <span class="o">+</span> <span class="n">intersect</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mf">1e-5</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">return</span> <span class="n">value</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">doseData</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c"># vol == 0</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">vol</span> <span class="ow">and</span> <span class="n">vp1</span> <span class="o">&gt;</span> <span class="n">vol</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">doseData</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">0</span>
+    
+    </div>
+<div class="viewcode-block" id="getVolumeForDose"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.getVolumeForDose">[docs]</a><span class="k">def</span> <span class="nf">getVolumeForDose</span><span class="p">(</span><span class="n">doseData</span><span class="p">,</span> <span class="n">volData</span> <span class="p">,</span><span class="n">dose</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Computes Vd (Vd indicates that the volume Vd of VOI that received at least D) values.</span>
+<span class="sd">     </span>
+<span class="sd">    See ICRU report: `5 Geometric Terms, and Dose and Dose-Volume Definitions &lt;http://jicru.oxfordjournals.org/content/7/2/83.extract&gt;`_  \</span>
+<span class="sd">    for more details. </span>
+<span class="sd">    </span>
+<span class="sd">    This function is called by computeVdData(). </span>
+<span class="sd">    </span>
+<span class="sd">    :param doseData: 1D array with dose values of the DVH. It should be in inscreasing order.</span>
+<span class="sd">    :param volData: 1D array with volume values of the DVH. It should be in decreasing order.</span>
+<span class="sd">    :param dose: Value of the dose considered.</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: Vd value calculated.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c">#doseData should be inscreasing and volData decreasing</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">doseData</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">volData</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span> <span class="s">&quot;volData and doseData don&#39;t have the same size&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">doseData</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">doseData</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">volData</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+        
+    <span class="k">if</span> <span class="n">dose</span> <span class="o">==</span> <span class="n">doseData</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">volData</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">d</span> <span class="p">,</span> <span class="n">dp1</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">doseData</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">doseData</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="o">&lt;=</span> <span class="n">dose</span> <span class="o">&lt;</span> <span class="n">dp1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">volData</span><span class="p">[</span><span class="n">count</span><span class="p">]</span><span class="o">-</span><span class="n">volData</span><span class="p">[</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="n">volData</span><span class="p">[</span><span class="n">count</span><span class="p">]</span><span class="o">-</span><span class="n">volData</span><span class="p">[</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">d</span> <span class="o">-</span> <span class="n">dp1</span><span class="p">)</span>
+                <span class="n">intersect</span> <span class="o">=</span> <span class="n">volData</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">-</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">d</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="p">(</span><span class="n">slope</span> <span class="o">*</span> <span class="n">dose</span> <span class="o">+</span> <span class="n">intersect</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mf">1e-5</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">return</span> <span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">volData</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">0</span>  
+
+        
+<span class="c">#######################################################</span>
+<span class="c">##                  Utilities: external call to build easily a DVH </span>
+<span class="c">#######################################################        </span>
+        </div>
+<div class="viewcode-block" id="processDVHForDoseDistribution"><a class="viewcode-back" href="../../../mspt.dataViewer.html#mspt.dataViewer.dvh.processDVHForDoseDistribution">[docs]</a><span class="k">def</span> <span class="nf">processDVHForDoseDistribution</span><span class="p">(</span><span class="n">dose</span><span class="p">,</span> <span class="n">listVOIs</span> <span class="p">,</span> <span class="n">listDv</span><span class="p">,</span> <span class="n">listVd</span><span class="p">,</span> <span class="n">nameDVH</span><span class="p">,</span> <span class="n">dataConfig</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Builds the DVH for a dose distribution and save the data computed: DVH, Dv, Vd in an image and in CSV files for each VOIs. </span>
+<span class="sd">        </span>
+<span class="sd">        :param listVOIs: List of the volumes of interest (VOIs). List of tuples:  ( mask 3D Numpy array , ROI name, ROI observation, ROI index, type).\</span>
+<span class="sd">        See *dicomReader.dicomRSReader.getMasksForAssociatedDicomImage()* for more details. </span>
+<span class="sd">        :param dose: 3D dose distribution (3D numpy array).</span>
+<span class="sd">        :param listDv: List of volume values for which to compute the Dv value.</span>
+<span class="sd">        :param listVd: List of dose values for which to compute the Vd value.</span>
+<span class="sd">        :param nameDVH: Name for the files to save.</span>
+<span class="sd">        :param dataConfig: configuration dictionary (*globalVariables*) for the simulator loaded in *simulator.simulatorMSPT*. It should contain\</span>
+<span class="sd">    the keys: </span>
+<span class="sd">    </span>
+<span class="sd">        * &#39;mainPath&#39; : The path where the simulation directory will be saved.</span>
+<span class="sd">        * &#39;nameSimulation&#39; : The simulation name.</span>
+<span class="sd">        * &#39;dvhRelativeVolume&#39; : True or False: True to plot the DVH using a relative volume (0-100%), False to \</span>
+<span class="sd">        plot with real volumes.</span>
+<span class="sd">    </span>
+<span class="sd">        :returns: (Dv data, Vd data)</span>
+<span class="sd">    </span>
+<span class="sd">            </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">print</span> <span class="s">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Processing DVH </span><span class="si">%s</span><span class="s"> &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">nameDVH</span><span class="p">)</span>
+        <span class="n">newDVH</span> <span class="o">=</span> <span class="n">DVH</span><span class="p">(</span><span class="n">dataConfig</span><span class="p">,</span><span class="n">dose</span> <span class="p">,</span> <span class="n">listVOIs</span><span class="p">)</span>
+        <span class="n">newDVH</span><span class="o">.</span><span class="n">computeDvData</span><span class="p">(</span><span class="n">listDv</span><span class="p">)</span>
+        <span class="n">dvData</span> <span class="o">=</span> <span class="n">newDVH</span><span class="o">.</span><span class="n">getDvDataForVOI</span><span class="p">(</span><span class="s">&#39;all&#39;</span><span class="p">)</span>        
+        <span class="n">newDVH</span><span class="o">.</span><span class="n">saveEntireDVHAsCSV</span><span class="p">(</span><span class="n">nameDVH</span><span class="p">)</span>
+        <span class="n">newDVH</span><span class="o">.</span><span class="n">saveDVHAsCSV</span><span class="p">(</span><span class="n">nameDVH</span><span class="p">)</span>
+        <span class="n">newDVH</span><span class="o">.</span><span class="n">saveDvAsCSV</span><span class="p">(</span><span class="n">nameDVH</span><span class="p">)</span>
+        <span class="n">newDVH</span><span class="o">.</span><span class="n">saveVdAsCSV</span><span class="p">(</span><span class="n">nameDVH</span><span class="p">)</span>
+        <span class="n">newDVH</span><span class="o">.</span><span class="n">computeVdData</span><span class="p">(</span><span class="n">listVd</span><span class="p">)</span>
+        <span class="n">vdData</span> <span class="o">=</span> <span class="n">newDVH</span><span class="o">.</span><span class="n">getVdDataForVOI</span><span class="p">(</span><span class="s">&#39;all&#39;</span><span class="p">)</span>
+        <span class="n">newDVH</span><span class="o">.</span><span class="n">drawDVHs</span><span class="p">()</span>
+        <span class="c">#newDVH.drawDvData()</span>
+        <span class="c">#newDVH.drawVdData()</span>
+        <span class="n">newDVH</span><span class="o">.</span><span class="n">saveDVHAsImage</span><span class="p">(</span><span class="n">nameDVH</span><span class="p">)</span>
+        <span class="n">newDVH</span><span class="o">.</span><span class="n">closeDVH</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; End Processing DVH </span><span class="si">%s</span><span class="s"> &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">nameDVH</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">dvData</span> <span class="p">,</span> <span class="n">vdData</span><span class="p">)</span>
+        
+        </div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

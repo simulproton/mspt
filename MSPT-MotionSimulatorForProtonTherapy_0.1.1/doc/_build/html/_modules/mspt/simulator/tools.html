@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.simulator.tools &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.simulator.tools</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.simulator.tools</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># tools.py</span>
+<span class="c"># Proton Therapy Simulator Project</span>
+<span class="c"># Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee</span>
+<span class="c"># On 07/11/2012</span>
+<span class="c">#</span>
+<span class="c"># Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France</span>
+<span class="c">#</span>
+<span class="c"># This file is part of MSPT- Motion Simulator for Proton Therapy.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator for Proton Therapy is free software: you can redistribute it and/or modify</span>
+<span class="c">#    it under the terms of the GNU General Public License as published by</span>
+<span class="c">#    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c">#    (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator for Proton Therapy is distributed in the hope that it will be useful,</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c">#    GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c">#    You should have received a copy of the GNU General Public License</span>
+<span class="c">#    along with MSPT- Motion Simulator for Proton Therapy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">##</span>
+<span class="c">########################################################################</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">dicom</span>
+<span class="kn">from</span> <span class="nn">..dataViewer</span> <span class="kn">import</span> <span class="n">array2DViewer</span> <span class="k">as</span> <span class="n">viewer2D</span> 
+
+<div class="viewcode-block" id="Tools"><a class="viewcode-back" href="../../../mspt.simulator.html#mspt.simulator.tools.Tools">[docs]</a><span class="k">class</span> <span class="nc">Tools</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Class Tools aims at providing utilities to the simulator.</span>
+<span class="sd">    </span>
+<span class="sd">    :param configData: Dictionary storing the MSPT configuration. Mandatory key is &#39;typeFloat&#39; : &#39;float32&#39; or &#39;float64&#39;.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configData</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span> <span class="o">=</span> <span class="n">configData</span>
+        <span class="k">return</span>
+
+
+        
+<div class="viewcode-block" id="Tools.evaluateDifference"><a class="viewcode-back" href="../../../mspt.simulator.html#mspt.simulator.tools.Tools.evaluateDifference">[docs]</a>    <span class="k">def</span> <span class="nf">evaluateDifference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">vol1</span><span class="p">,</span> <span class="n">vol2</span><span class="p">):</span> 
+        <span class="sd">&quot;&quot;&quot;!Function that computes the difference between two 3D numpy arrays and calculate statistics: absDiff = abs( vol1 - vol2).\</span>
+<span class="sd">        It also saves the results into a text file (EvalDiffDoseDistrib.txt) in the simulation directory.</span>
+<span class="sd">        </span>
+<span class="sd">        :param vol1: First 3D numpy array</span>
+<span class="sd">        :param vol2: second 3D numpy array</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Dictionary with keys:</span>
+<span class="sd">        </span>
+<span class="sd">            * &#39;vol1&#39;: Dictionary with keys:</span>
+<span class="sd">                </span>
+<span class="sd">                * &quot;min&quot; : minimum value of vol1</span>
+<span class="sd">                * &quot;max&quot; : maximum value of vol1</span>
+<span class="sd">                * &quot;std&quot; : standard deviation value of vol1 </span>
+<span class="sd">                * &quot;avg&quot; : average value of vol1</span>
+
+<span class="sd">            * &#39;vol2&#39;: Dictionary with keys:</span>
+<span class="sd">                </span>
+<span class="sd">                * &quot;min&quot; : minimum value of vol2</span>
+<span class="sd">                * &quot;max&quot; : maximum value of vol2</span>
+<span class="sd">                * &quot;std&quot; : standard deviation value of vol2</span>
+<span class="sd">                * &quot;avg&quot; : average value of vol2</span>
+
+<span class="sd">            * &#39;absDiff&#39;: Dictionary with keys:</span>
+<span class="sd">                </span>
+<span class="sd">                * &quot;min&quot; : minimum value of absDiff</span>
+<span class="sd">                * &quot;max&quot; : maximum value of absDiff</span>
+<span class="sd">                * &quot;std&quot; : standard deviation value of absDiff</span>
+<span class="sd">                * &quot;avg&quot; : average value of absDiff</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#Comparision planned dose and computed dose</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">vol1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">vol2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;In differences one of the volumes is entirely null.&quot;</span>
+            <span class="k">return</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">vol1</span> <span class="o">-</span> <span class="n">vol2</span><span class="p">)</span>
+        
+        <span class="n">minVol1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">vol1</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">vol1</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)])</span>
+        <span class="n">maxVol1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">vol1</span><span class="p">)</span>
+        <span class="n">avgVol1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vol1</span><span class="p">)</span>
+        <span class="n">stdVol1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">vol1</span><span class="p">)</span>
+        
+        <span class="n">minVol2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">vol2</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">vol2</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)])</span>
+        <span class="n">maxVol2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">vol2</span><span class="p">)</span>
+        <span class="n">avgVol2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vol2</span><span class="p">)</span>
+        <span class="n">stdVol2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">vol2</span><span class="p">)</span>
+        
+        <span class="n">minDiff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+        <span class="n">maxDiff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+        <span class="n">avgDiff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+        <span class="n">stdDiff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+        
+        <span class="k">print</span> <span class="s">&quot;Evaluate differences:&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;</span><span class="se">\t\t</span><span class="s">min</span><span class="se">\t\t</span><span class="s">max</span><span class="se">\t\t</span><span class="s">mean</span><span class="se">\t\t</span><span class="s">std&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;Truth set</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">minVol1</span><span class="p">,</span><span class="n">maxVol1</span><span class="p">,</span><span class="n">avgVol1</span><span class="p">,</span><span class="n">stdVol1</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Comput. set</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">vol2</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">vol2</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)]),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">vol2</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vol2</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">vol2</span><span class="p">))</span>
+        <span class="k">print</span> <span class="s">&quot;Abs. Diff.</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">minDiff</span><span class="p">,</span><span class="n">maxDiff</span><span class="p">,</span><span class="n">avgDiff</span><span class="p">,</span><span class="n">stdDiff</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+        
+
+        <span class="n">pathToSave</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">mainPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">nameSimulation</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">pathToSave</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">pathToSave</span><span class="p">)</span>
+
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pathToSave</span> <span class="o">+</span> <span class="s">&#39;EvalDiffDoseDistrib.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">myFile</span><span class="p">:</span>
+                <span class="n">myFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Evaluate differences:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+                <span class="n">myFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Truth set: Expected dose distribution</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+                <span class="n">myFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Comput. set: Computed dose distribution</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+                <span class="n">myFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\t\t\t</span><span class="s">min</span><span class="se">\t\t\t\t</span><span class="s">max</span><span class="se">\t\t\t\t</span><span class="s">mean</span><span class="se">\t\t\t</span><span class="s">std</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+                <span class="n">myFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Truth set</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">minVol1</span><span class="p">,</span><span class="n">maxVol1</span><span class="p">,</span><span class="n">avgVol1</span><span class="p">,</span><span class="n">stdVol1</span><span class="p">))</span>
+                <span class="n">myFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Comput. set</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">vol2</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">vol2</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)]),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">vol2</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vol2</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">vol2</span><span class="p">)))</span>
+                <span class="n">myFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;Abs. Diff.</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\t</span><span class="si">%e</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">minDiff</span><span class="p">,</span><span class="n">maxDiff</span><span class="p">,</span><span class="n">avgDiff</span><span class="p">,</span><span class="n">stdDiff</span><span class="p">))</span>
+                
+
+
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;vol1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;min&quot;</span><span class="p">:</span> <span class="n">minVol1</span><span class="p">,</span> \
+                        <span class="s">&quot;max&quot;</span><span class="p">:</span> <span class="n">maxVol1</span><span class="p">,</span> \
+                        <span class="s">&quot;avg&quot;</span><span class="p">:</span> <span class="n">avgVol1</span><span class="p">,</span> \
+                        <span class="s">&quot;std&quot;</span><span class="p">:</span> <span class="n">stdVol1</span><span class="p">}</span>
+                
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;vol2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;min&quot;</span><span class="p">:</span> <span class="n">minVol2</span><span class="p">,</span> \
+                        <span class="s">&quot;max&quot;</span><span class="p">:</span> <span class="n">maxVol2</span><span class="p">,</span> \
+                        <span class="s">&quot;avg&quot;</span><span class="p">:</span> <span class="n">avgVol2</span><span class="p">,</span> \
+                        <span class="s">&quot;std&quot;</span><span class="p">:</span> <span class="n">stdVol2</span><span class="p">}</span>
+        <span class="n">res</span><span class="p">[</span><span class="s">&#39;absDiff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>  <span class="s">&quot;min&quot;</span><span class="p">:</span> <span class="n">minDiff</span><span class="p">,</span> \
+                            <span class="s">&quot;max&quot;</span><span class="p">:</span> <span class="n">maxDiff</span><span class="p">,</span> \
+                            <span class="s">&quot;avg&quot;</span><span class="p">:</span> <span class="n">avgDiff</span><span class="p">,</span> \
+                            <span class="s">&quot;std&quot;</span><span class="p">:</span> <span class="n">stdDiff</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+</div>
+<div class="viewcode-block" id="Tools.getMatrixHotAndColdSpot"><a class="viewcode-back" href="../../../mspt.simulator.html#mspt.simulator.tools.Tools.getMatrixHotAndColdSpot">[docs]</a>    <span class="k">def</span> <span class="nf">getMatrixHotAndColdSpot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">volRef</span><span class="p">,</span> <span class="n">volTest</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Function that computes the 3D array of hot and cold spots as: diff = volTest - volRef</span>
+<span class="sd">        </span>
+<span class="sd">        :param volRef: 3D array of reference</span>
+<span class="sd">        :param volTest: 3D array tested</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: 3D array diff.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">volTest</span> <span class="o">-</span> <span class="n">volRef</span>
+        <span class="k">return</span> <span class="n">diff</span>
+</div>
+<div class="viewcode-block" id="Tools.showHotColdSpots"><a class="viewcode-back" href="../../../mspt.simulator.html#mspt.simulator.tools.Tools.showHotColdSpots">[docs]</a>    <span class="k">def</span> <span class="nf">showHotColdSpots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">volRef</span><span class="p">,</span> <span class="n">volTest</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="bp">None</span> <span class="p">,</span> <span class="n">pathToSaveImg</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Function that display the hot and cold spots on a frame located at the &quot;middle&quot; of the dose distribution.</span>
+<span class="sd">        </span>
+<span class="sd">        :param volRef: 3D array of reference</span>
+<span class="sd">        :param volTest: 3D array tested</span>
+<span class="sd">        :param title: Title for the figure. Default: None</span>
+<span class="sd">        :param pathToSaveImg: Path where to save the figure. Default: None</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="n">diff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMatrixHotAndColdSpot</span><span class="p">(</span><span class="n">volRef</span><span class="p">,</span> <span class="n">volTest</span><span class="p">)</span>
+        <span class="n">slope</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">diff</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">diff</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">))))</span>
+        <span class="n">intercept</span> <span class="o">=</span> <span class="o">-</span><span class="n">slope</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">diff</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">))</span>
+        <span class="n">diffScaled</span> <span class="o">=</span>  <span class="n">diff</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_globalVar</span><span class="o">.</span><span class="n">typeFloat</span><span class="p">)</span> <span class="o">*</span> <span class="n">slope</span> <span class="o">+</span> <span class="n">intercept</span>
+        <span class="n">indImg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span> <span class="n">diffScaled</span> <span class="o">!=</span> <span class="n">intercept</span><span class="p">)</span>
+        <span class="n">frameImg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(((</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">indImg</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">indImg</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">/</span><span class="mf">2.0</span><span class="p">))</span>    
+        <span class="n">viewer2D</span><span class="o">.</span><span class="n">displayImageFromArray</span><span class="p">(</span><span class="n">diffScaled</span><span class="p">[</span><span class="n">frameImg</span><span class="p">],</span> <span class="n">title</span><span class="o">+</span><span class="s">&#39; -frame </span><span class="si">%i</span><span class="s">&#39;</span><span class="o">%</span><span class="n">frameImg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pathToSaveImg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">path</span><span class="p">,</span> <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">pathToSaveImg</span><span class="p">)</span>
+            <span class="n">viewer2D</span><span class="o">.</span><span class="n">saveFigure</span><span class="p">(</span> <span class="n">path</span><span class="o">+</span><span class="s">&#39;/&#39;</span><span class="p">,</span><span class="n">filename</span> <span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="s">&#39;png&#39;</span><span class="p">,</span> <span class="n">subplotIdx</span> <span class="o">=</span> <span class="mi">111</span><span class="p">)</span>
+        <span class="n">viewer2D</span><span class="o">.</span><span class="n">closePlot</span><span class="p">()</span>
+           
+        </div>
+<div class="viewcode-block" id="Tools.saveCompensatedRTPlan"><a class="viewcode-back" href="../../../mspt.simulator.html#mspt.simulator.tools.Tools.saveCompensatedRTPlan">[docs]</a>    <span class="k">def</span> <span class="nf">saveCompensatedRTPlan</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span><span class="n">rtPlanPath</span><span class="p">,</span> <span class="n">newRTPlanPath</span><span class="p">,</span> <span class="n">dictPlan</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Function that save a dictionary storing a treatment plan to a RP dicom file.</span>
+<span class="sd">        </span>
+<span class="sd">        :param rtPlanPath: Path to the input RP dicom file.</span>
+<span class="sd">        :param newRTPlanPath: Path to the new RP dicom file.</span>
+<span class="sd">        :param dictPlan: Dictionary storing the new treatment plan : dictionary[beam angle][Energy Rounded][ &quot;ScanSpotPositionMap&quot; / &quot;ScanSpotMetersetWeights&quot;]</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">rp</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">rtPlanPath</span><span class="p">)</span>
+        <span class="n">nbBeams</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rp</span><span class="o">.</span><span class="n">IonBeamSequence</span><span class="p">)</span>
+        <span class="n">beamsToDel</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idxBeam</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nbBeams</span><span class="p">):</span>
+            <span class="n">angle</span> <span class="o">=</span> <span class="n">rp</span><span class="o">.</span><span class="n">IonBeamSequence</span><span class="p">[</span><span class="n">idxBeam</span><span class="p">]</span><span class="o">.</span><span class="n">IonControlPointSequence</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">GantryAngle</span>
+            <span class="k">if</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">dictPlan</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">newDataANgle</span> <span class="o">=</span> <span class="n">dictPlan</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span>
+                <span class="n">isocenter</span><span class="o">=</span><span class="n">rp</span><span class="o">.</span><span class="n">IonBeamSequence</span><span class="p">[</span><span class="n">idxBeam</span><span class="p">]</span><span class="o">.</span><span class="n">IonControlPointSequence</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">IsocenterPosition</span>
+                <span class="n">listLayersToRm</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">idxLayer</span><span class="p">,</span><span class="n">enerLayer</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rp</span><span class="o">.</span><span class="n">IonBeamSequence</span><span class="p">[</span><span class="n">idxBeam</span><span class="p">]</span><span class="o">.</span><span class="n">IonControlPointSequence</span><span class="p">[::</span><span class="mi">2</span><span class="p">]):</span>
+                    <span class="n">ener</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">enerLayer</span><span class="o">.</span><span class="n">NominalBeamEnergy</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">ener</span> <span class="ow">in</span> <span class="n">dictPlan</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">enerLayer</span><span class="o">.</span><span class="n">ScanSpotPositionMap</span> <span class="o">=</span> <span class="n">dictPlan</span><span class="p">[</span><span class="n">angle</span><span class="p">][</span><span class="n">ener</span><span class="p">][</span><span class="s">&quot;ScanSpotPositionMap&quot;</span><span class="p">]</span>
+                        <span class="n">enerLayer</span><span class="o">.</span><span class="n">ScanSpotMetersetWeights</span> <span class="o">=</span> <span class="n">dictPlan</span><span class="p">[</span><span class="n">angle</span><span class="p">][</span><span class="n">ener</span><span class="p">][</span><span class="s">&quot;ScanSpotMetersetWeights&quot;</span><span class="p">]</span>
+                        <span class="n">nbWeights</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span> <span class="n">dictPlan</span><span class="p">[</span><span class="n">angle</span><span class="p">][</span><span class="n">ener</span><span class="p">][</span><span class="s">&quot;ScanSpotMetersetWeights&quot;</span><span class="p">])</span>
+                        <span class="n">rp</span><span class="o">.</span><span class="n">IonBeamSequence</span><span class="p">[</span><span class="n">idxBeam</span><span class="p">]</span><span class="o">.</span><span class="n">IonControlPointSequence</span><span class="p">[</span><span class="n">idxLayer</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ScanSpotPositionMap</span> <span class="o">=</span> <span class="n">dictPlan</span><span class="p">[</span><span class="n">angle</span><span class="p">][</span><span class="n">ener</span><span class="p">][</span><span class="s">&quot;ScanSpotPositionMap&quot;</span><span class="p">]</span>
+                        <span class="n">rp</span><span class="o">.</span><span class="n">IonBeamSequence</span><span class="p">[</span><span class="n">idxBeam</span><span class="p">]</span><span class="o">.</span><span class="n">IonControlPointSequence</span><span class="p">[</span><span class="n">idxLayer</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ScanSpotMetersetWeights</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nbWeights</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">print</span> <span class="s">&quot;Energy layer </span><span class="si">%s</span><span class="s"> not in new plan&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">ener</span><span class="p">)</span>
+                        <span class="n">listLayersToRm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idxLayer</span><span class="p">)</span>
+                        <span class="n">listLayersToRm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idxLayer</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>     
+                <span class="n">listLayersToRm</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">idxLayer</span> <span class="ow">in</span> <span class="n">listLayersToRm</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">rp</span><span class="o">.</span><span class="n">IonBeamSequence</span><span class="p">[</span><span class="n">idxBeam</span><span class="p">]</span><span class="o">.</span><span class="n">IonControlPointSequence</span><span class="p">[</span><span class="n">idxLayer</span><span class="o">-</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+                    
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;Beam </span><span class="si">%s</span><span class="s"> degree not in new plan&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+                <span class="n">beamsToDel</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idxBeam</span><span class="p">)</span>
+    
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">beamsToDel</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">rp</span><span class="o">.</span><span class="n">IonBeamSequence</span><span class="p">[</span><span class="n">idx</span> <span class="o">-</span> <span class="n">i</span><span class="p">]</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+
+        <span class="n">rp</span><span class="o">.</span><span class="n">save_as</span><span class="p">(</span><span class="n">newRTPlanPath</span><span class="p">)</span>
+        
+        
+        </div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

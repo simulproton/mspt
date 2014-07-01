@@ -1,0 +1,22 @@
+mspt.scanning package
+=====================
+
+Submodules
+----------
+
+mspt.scanning.deliverySimulation_Static_Dynamic module
+------------------------------------------------------
+
+.. automodule:: mspt.scanning.deliverySimulation_Static_Dynamic
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: mspt.scanning
+    :members:
+    :undoc-members:
+    :show-inheritance:

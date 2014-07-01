@@ -1,0 +1,22 @@
+mspt.email package
+==================
+
+Submodules
+----------
+
+mspt.email.Email module
+-----------------------
+
+.. automodule:: mspt.email.Email
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: mspt.email
+    :members:
+    :undoc-members:
+    :show-inheritance:

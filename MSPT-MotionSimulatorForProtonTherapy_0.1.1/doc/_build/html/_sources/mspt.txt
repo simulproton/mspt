@@ -1,0 +1,27 @@
+mspt package
+============
+
+Subpackages
+-----------
+
+.. toctree::
+
+    mspt.dataViewer
+    mspt.dicomReader
+    mspt.email
+    mspt.extensionsC
+    mspt.mathTools
+    mspt.motion
+    mspt.patient
+    mspt.physics
+    mspt.scanning
+    mspt.simulator
+    mspt.zip
+
+Module contents
+---------------
+
+.. automodule:: mspt
+    :members:
+    :undoc-members:
+    :show-inheritance:

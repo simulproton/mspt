@@ -1,0 +1,2060 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.dicomReader package &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="index.html"/>
+        <link rel="up" title="mspt package" href="mspt.html"/>
+        <link rel="next" title="mspt.email package" href="mspt.email.html"/>
+        <link rel="prev" title="mspt.dataViewer package" href="mspt.dataViewer.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="mspt.html">mspt package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="mspt.html">mspt package</a> &raquo;</li>
+      
+    <li>mspt.dicomReader package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/mspt.dicomReader.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="mspt-dicomreader-package">
+<h1>mspt.dicomReader package<a class="headerlink" href="#mspt-dicomreader-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-mspt.dicomReader.ctToDensityConv">
+<span id="mspt-dicomreader-cttodensityconv-module"></span><h2>mspt.dicomReader.ctToDensityConv module<a class="headerlink" href="#module-mspt.dicomReader.ctToDensityConv" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mspt.dicomReader.ctToDensityConv.getConversionTableCTToMassDens">
+<tt class="descclassname">mspt.dicomReader.ctToDensityConv.</tt><tt class="descname">getConversionTableCTToMassDens</tt><big>(</big><em>name='MSPT'</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/ctToDensityConv.html#getConversionTableCTToMassDens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.ctToDensityConv.getConversionTableCTToMassDens" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the data (text file) used to convert CT numbers to mass density.     Then creates a list as: [(CT Num0, mass dens0 ) , (CT Num1, mass dens1 ) ,...]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> &#8211; Name of the file where is contained the CT to density conversion data. It must be stored in     the folder &#8216;/RefData/CTToDensData/&#8217;. By default it is &#8216;MSPT&#8217;.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The CT to density file name must follow this pattern &#8216;ct_to_density_NAMEDATA.txt&#8217; where NAMEDATA is the name         chosen by the user. For example by default in MSPT, NAMEDATA is &#8216;MSPT&#8217; the default variable provided to         this function. To create this file proceed as follows:</p>
+<blockquote class="last">
+<div><ol class="arabic simple">
+<li>Create a new tab delimited text file named &#8216;ct_to_density_NAMEDATA.txt&#8217;</li>
+<li>In the first line, enter: 1st column: &#8216;CT_Number&#8217; , 2nd column: &#8216;Mass_Density_g.cm3&#8217;</li>
+<li>Then for each row enter: 1st column: the CT number (in increasing order) , 2nd column: the corresponding mass density.</li>
+<li>Place the file in the folder &#8216;/RefData/CTToDensData/&#8217;</li>
+<li>Set the MSPT configuration &#8216;nameCTToDensTable&#8217; variable</li>
+</ol>
+</div></blockquote>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The created list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.dicomReader.dicomCTReader">
+<span id="mspt-dicomreader-dicomctreader-module"></span><h2>mspt.dicomReader.dicomCTReader module<a class="headerlink" href="#module-mspt.dicomReader.dicomCTReader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader">
+<em class="property">class </em><tt class="descclassname">mspt.dicomReader.dicomCTReader.</tt><tt class="descname">DicomCTReader</tt><big>(</big><em>path</em>, <em>typeFloat='float32'</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mspt.dicomReader.dicomReader.DicomReader" title="mspt.dicomReader.dicomReader.DicomReader"><tt class="xref py py-class docutils literal"><span class="pre">mspt.dicomReader.dicomReader.DicomReader</span></tt></a></p>
+<p>Dicom reader for dicom series :CT images contained in the directory located at &#8220;path&#8221;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> &#8211; Path to a directory where the CT slices are stored.</li>
+<li><strong>typeFloat</strong> &#8211; The type of numpy float to use. It should  be either &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.dataForAttribute">
+<tt class="descname">dataForAttribute</tt><big>(</big><em>attr</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.dataForAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.dataForAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data for an attribute.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attr</strong> &#8211; <p>String corresponding to the attibute. Attributes are either those defined in the dicom documentation of specific attributes:</p>
+<ul class="simple">
+<li><strong>Shape</strong>: shape of the volume represented in the CT series (-&gt; returns: Dictionary with keys &#8216;Frames&#8217;, &#8216;Rows&#8217;, &#8216;Cols&#8217;)</li>
+<li><strong>PixelArray</strong>: get the 3D numpy array. (-&gt; returns: 3D pixel array where the voxel values are scaled to be in the units defined in the dicom files.)</li>
+<li><strong>FrameOfReferenceUID</strong>: returns the frame of reference UID of the series.</li>
+<li><strong>SpacingInfo</strong>: return the voxel spacing as a dictionary ( &#8216;units&#8217; , spacing between &#8216;rows&#8217;, &#8216;cols&#8217; and &#8216;frames&#8217; ).</li>
+<li><strong>EndImagePositionPatient</strong>: Coordinates of the center of the last voxel of the volume. For example if the volume shape is (m,n,p), it returns the coordinates if the voxel (m-1,n-1,p-1) in the units defined in the spacing information.</li>
+<li><strong>ImageOrientationPatient</strong>: Orientation of the X,Y,Z axis in the dicom image expressed according to the columns,rows,frames.             For example: [1,0,0,0,1,0,0,0,1] for X from left to right, Y from top to bottom and Z from front to back. This represents the unit vectors of the 3D volume in the numpy array.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Value for the attribute if this is a dicom series, None otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.dcmType">
+<tt class="descname">dcmType</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.dcmType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.dcmType" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The type of dicom reader: &#8216;CT Image Storage&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.get3DPixelArray">
+<tt class="descname">get3DPixelArray</tt><big>(</big><em>rescale=True</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.get3DPixelArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.get3DPixelArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a 3D pixel array from the series if slices are sorted and from one same series</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rescale</strong> &#8211; True if one wants to use the &#8216;rescale&#8217; &#8216;intercept&#8217; attributes of the dicom files to obtain the intensity on Hounsfield Units. False otherwise.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The 3D numpy array created.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.getAttributeForSlice">
+<tt class="descname">getAttributeForSlice</tt><big>(</big><em>attribute</em>, <em>sliceIdx=0</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.getAttributeForSlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.getAttributeForSlice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a given attribute ( attribute should be a string,e.g. &#8216;SliceLocation&#8217;) for a slice in the dicom series.
+The attributes are the &#8220;tags&#8221; defined in the dicom documentation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>attribute</strong> &#8211; String corresponding to the desired attribute.</li>
+<li><strong>sliceIdx</strong> &#8211; slice index</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the attribute.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.getAttributeInSeries">
+<tt class="descname">getAttributeInSeries</tt><big>(</big><em>attribute</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.getAttributeInSeries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.getAttributeInSeries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a given attribute ( attribute should be a string,e.g. &#8216;SliceLocation&#8217;) for each slice in the dicom series.
+The attributes are the &#8220;tags&#8221; defined in the dicom documentation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attribute</strong> &#8211; String corresponding to the desired attribute.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list of values corresponding to the attribute for each slice in the series</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.getFrameOfReferenceUID">
+<tt class="descname">getFrameOfReferenceUID</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.getFrameOfReferenceUID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.getFrameOfReferenceUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get and return the Frame Of Reference UID for each slice or for the series</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Frame of Reference UID if all the dicom slices loaded belong to the same dicom series. Otherwise returns a list  of all the frame of reference UIDs.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.getRescalingPixelInfoSeries">
+<tt class="descname">getRescalingPixelInfoSeries</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.getRescalingPixelInfoSeries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.getRescalingPixelInfoSeries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get rescaling information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a dictionary with &#8216;units&#8217; (HU: Hounsfield Units, OD: optical Density and SU: unspecified) &#8216;slope&#8217; for rescaling slope and &#8216;intercept&#8217; for rescaling intercept.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.getSpacingSeries">
+<tt class="descname">getSpacingSeries</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.getSpacingSeries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.getSpacingSeries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get spacing information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with &#8216;units&#8217; , spacing between &#8216;rows&#8217;, &#8216;cols&#8217; and &#8216;frames&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.loadDicomSeriesFromDirectory">
+<tt class="descname">loadDicomSeriesFromDirectory</tt><big>(</big><em>path</em>, <em>sort=True</em>, <em>checkSeries=True</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.loadDicomSeriesFromDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.loadDicomSeriesFromDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a Dicom series (A DICOM Series is a set of images with the same Series UID) from a given directory. It initializes all the attributes of the class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> &#8211; Path the directory where the CT slices are stored.</li>
+<li><strong>sort</strong> &#8211; (True /False) sort the slices according to the slice location in the volume when loading the data.</li>
+<li><strong>checkSeries</strong> &#8211; (True /False) check if all the slices belong to the same series</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.numberOfCols">
+<tt class="descname">numberOfCols</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.numberOfCols"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.numberOfCols" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of columns</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of columns if the slices correspond to a series otherwise -1</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.numberOfFrames">
+<tt class="descname">numberOfFrames</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.numberOfFrames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.numberOfFrames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of frames (i.e. number of slices)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of frames if the slices correspond to a series otherwise -1</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.numberOfRows">
+<tt class="descname">numberOfRows</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.numberOfRows"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.numberOfRows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of rows</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of rows if the slices correspond to a series otherwise -1</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.printAttributeInSeries">
+<tt class="descname">printAttributeInSeries</tt><big>(</big><em>attribute</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.printAttributeInSeries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.printAttributeInSeries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a given attribute ( attribute should be a string,e.g. &#8216;SliceLocation&#8217;) for each slice in the dicom series and print it.
+The attributes are the &#8220;tags&#8221; defined in the dicom documentation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attribute</strong> &#8211; String corresponding to the desired attribute.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomCTReader.DicomCTReader.sortDcmSlicesInSeries">
+<tt class="descname">sortDcmSlicesInSeries</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomCTReader.html#DicomCTReader.sortDcmSlicesInSeries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomCTReader.DicomCTReader.sortDcmSlicesInSeries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort slices in a series by slice location.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.dicomReader.dicomGeneralReader">
+<span id="mspt-dicomreader-dicomgeneralreader-module"></span><h2>mspt.dicomReader.dicomGeneralReader module<a class="headerlink" href="#module-mspt.dicomReader.dicomGeneralReader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.dicomReader.dicomGeneralReader.DicomGeneralReader">
+<em class="property">class </em><tt class="descclassname">mspt.dicomReader.dicomGeneralReader.</tt><tt class="descname">DicomGeneralReader</tt><big>(</big><em>path=None</em>, <em>typeFloat='float32'</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomGeneralReader.html#DicomGeneralReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomGeneralReader.DicomGeneralReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mspt.dicomReader.dicomReader.DicomReader" title="mspt.dicomReader.dicomReader.DicomReader"><tt class="xref py py-class docutils literal"><span class="pre">mspt.dicomReader.dicomReader.DicomReader</span></tt></a></p>
+<p>A general dicom reader.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> &#8211; Path to a directory where the CT slices are stored.</li>
+<li><strong>typeFloat</strong> &#8211; The type of numpy float to use. It should  be either &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.dicomReader.dicomGeneralReader.DicomGeneralReader.dataForAttribute">
+<tt class="descname">dataForAttribute</tt><big>(</big><em>attribute</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomGeneralReader.html#DicomGeneralReader.dataForAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomGeneralReader.DicomGeneralReader.dataForAttribute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomGeneralReader.DicomGeneralReader.dcmType">
+<tt class="descname">dcmType</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomGeneralReader.html#DicomGeneralReader.dcmType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomGeneralReader.DicomGeneralReader.dcmType" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The type of dicom reader.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomGeneralReader.DicomGeneralReader.getFrameOfReferenceUID">
+<tt class="descname">getFrameOfReferenceUID</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomGeneralReader.html#DicomGeneralReader.getFrameOfReferenceUID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomGeneralReader.DicomGeneralReader.getFrameOfReferenceUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access the field providing the Frame of reference UID.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.dicomReader.dicomManager">
+<span id="mspt-dicomreader-dicommanager-module"></span><h2>mspt.dicomReader.dicomManager module<a class="headerlink" href="#module-mspt.dicomReader.dicomManager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.dicomReader.dicomManager.DicomManager">
+<em class="property">class </em><tt class="descclassname">mspt.dicomReader.dicomManager.</tt><tt class="descname">DicomManager</tt><big>(</big><em>paths</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomManager.html#DicomManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomManager.DicomManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Dicom manager manage many DicomReaders which link to different types of dicom files. The dicom manager initialization creates a dicom reader for each path provided.</p>
+<blockquote>
+<div>More information on dicom standards can be found at Dicom <a class="reference external" href="http://medical.nema.org/standard.html">NEMA</a></div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>paths</strong> &#8211; A list of paths to the dicom files to open.</li>
+<li><strong>typeFloat</strong> &#8211; The type of numpy float to use. It should  be either &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.dicomReader.dicomManager.DicomManager.checkFrameOfReferenceUID">
+<tt class="descname">checkFrameOfReferenceUID</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomManager.html#DicomManager.checkFrameOfReferenceUID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomManager.DicomManager.checkFrameOfReferenceUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if all dicom files of the dicom manager have the same Frame Of Reference UID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the dicom files all have the same Frame Of Reference UID, False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomManager.DicomManager.checkFullRTPlan">
+<tt class="descname">checkFullRTPlan</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomManager.html#DicomManager.checkFullRTPlan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomManager.DicomManager.checkFullRTPlan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the dicom files of the dicom manager correspond to an entire RT plan: 1 CT image, 1 RS file, 1 RP file, 1 RD file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the dicom files correspond to an entire RT Plan, False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomManager.DicomManager.checkSameStudyInstanceUID">
+<tt class="descname">checkSameStudyInstanceUID</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomManager.html#DicomManager.checkSameStudyInstanceUID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomManager.DicomManager.checkSameStudyInstanceUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if all dicom files of the dicom manager have the same Study Instance UID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the dicom files all have the same Study Instance UID, False otherwise</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomManager.DicomManager.fullPlan">
+<tt class="descname">fullPlan</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomManager.html#DicomManager.fullPlan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomManager.DicomManager.fullPlan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the full RT plan dicom readers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None if the dicom manager do not have a full RT plan (CT, RS, RP, RD dicom files) or if only RD is missing.        Otherwise returns a dictionary with keys : &#8216;CT Image Storage&#8217;, &#8216;RT Structure Set Storage&#8217;, &#8216;RT Ion Plan Storage&#8217;, &#8216;RT Dose Storage&#8217;.         The values are the dicom readers.        If RD is missing the value for &#8216;RT Dose Storage&#8217; is None.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomManager.DicomManager.getDicomReaderForScanningPath">
+<tt class="descname">getDicomReaderForScanningPath</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomManager.html#DicomManager.getDicomReaderForScanningPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomManager.DicomManager.getDicomReaderForScanningPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dicom reader needed to build the scanning path, i.e. RP dicom file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None if the dicom manager do not have a full RT plan (CT, RS, RP, RD dicom files)or if only RD is missing.        Otherwise returns dicom reader corresponding to the RP dicom file (&#8216;RT Ion Plan Storage&#8217;).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomManager.DicomManager.getDicomReaders">
+<tt class="descname">getDicomReaders</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomManager.html#DicomManager.getDicomReaders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomManager.DicomManager.getDicomReaders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of the dicom readers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of dicom readers.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomManager.DicomManager.getDicomReadersForPatient">
+<tt class="descname">getDicomReadersForPatient</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomManager.html#DicomManager.getDicomReadersForPatient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomManager.DicomManager.getDicomReadersForPatient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dicom readers needed to represent the patient, i.e. CT,RS,RD dicom files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None if the dicom manager do not have a full RT plan (CT, RS, RP, RD dicom files) or if only RD is missing.        Otherwise returns a dictionary with keys : &#8216;CT Image Storage&#8217;, &#8216;RT Structure Set Storage&#8217;, &#8216;RT Dose Storage&#8217;. The values are the dicom readers.        If RD is missing the value for &#8216;RT Dose Storage&#8217; is None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.dicomReader.dicomRDReader">
+<span id="mspt-dicomreader-dicomrdreader-module"></span><h2>mspt.dicomReader.dicomRDReader module<a class="headerlink" href="#module-mspt.dicomReader.dicomRDReader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.dicomReader.dicomRDReader.DicomRDReader">
+<em class="property">class </em><tt class="descclassname">mspt.dicomReader.dicomRDReader.</tt><tt class="descname">DicomRDReader</tt><big>(</big><em>path=None</em>, <em>typeFloat='float32'</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRDReader.html#DicomRDReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRDReader.DicomRDReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mspt.dicomReader.dicomReader.DicomReader" title="mspt.dicomReader.dicomReader.DicomReader"><tt class="xref py py-class docutils literal"><span class="pre">mspt.dicomReader.dicomReader.DicomReader</span></tt></a></p>
+<p>Dicom reader for dicom dose grids (RD dicom file). It represents a 3D dose distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> &#8211; Path to the RD dicom file.</li>
+<li><strong>typeFloat</strong> &#8211; The type of numpy float to use. It should  be either &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomRDReader.DicomRDReader.DoseUnits">
+<tt class="descname">DoseUnits</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomRDReader.html#DicomRDReader.DoseUnits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRDReader.DicomRDReader.DoseUnits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the dose units of the dose distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The value for the attribute &#8216;DoseUnits&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomRDReader.DicomRDReader.PixelArray">
+<tt class="descname">PixelArray</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomRDReader.html#DicomRDReader.PixelArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRDReader.DicomRDReader.PixelArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the 3D numpy array of the dose distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">3D numpy array.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomRDReader.DicomRDReader.SpacingInfo">
+<tt class="descname">SpacingInfo</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomRDReader.html#DicomRDReader.SpacingInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRDReader.DicomRDReader.SpacingInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the spacing information of the dose grid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary with keys: &#8216;rows&#8217;, &#8216;cols&#8217;,&#8217;frames&#8217; and values the spacings defined in the units defined in the dicom file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRDReader.DicomRDReader.dataForAttribute">
+<tt class="descname">dataForAttribute</tt><big>(</big><em>attribute</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRDReader.html#DicomRDReader.dataForAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRDReader.DicomRDReader.dataForAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of a given attribute ( attribute should be a string,e.g. &#8216;DoseUnits&#8217;) for the dose planned and
+returns the value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attribute</strong> &#8211; <p>The attribute is a string defined in the dicom documentation (data loaded with pydicom) or specific strings:</p>
+<ul class="simple">
+<li><strong>PixelArray</strong>: returns the 3D numpy array of the dose distribution.</li>
+<li><strong>DoseUnits</strong>: returns the dose units used in the dose distributions.</li>
+<li><strong>SpacingInfo</strong>: returns the voxel spacing as a dictionary (spacing between &#8216;rows&#8217;, &#8216;cols&#8217; and &#8216;frames&#8217;).</li>
+<li><strong>EndImagePositionPatient</strong>: Coordinates of the center of the last voxel of the volume. For example if the volume shape is (m,n,p), it returns the coordinates if the voxel (m-1,n-1,p-1) in the units defined in the spacing information.</li>
+<li><strong>ImageOrientation</strong>: Orientation of the X,Y,Z axis in the dicom image expressed according to the columns,rows,frames.             For example: [1,0,0,0,1,0,0,0,1] for X from left to right, Y from top to bottom and Z from front to back. This represents the unit vectors of the 3D volume in the numpy array.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Attribute value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomRDReader.DicomRDReader.dcmType">
+<tt class="descname">dcmType</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomRDReader.html#DicomRDReader.dcmType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRDReader.DicomRDReader.dcmType" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The type of dicom reader: &#8216;RT Dose Storage&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomRDReader.DicomRDReader.dicomData">
+<tt class="descname">dicomData</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomRDReader.html#DicomRDReader.dicomData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRDReader.DicomRDReader.dicomData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get direct access to the dicom data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The dicom data loaded using the package pydicom.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRDReader.DicomRDReader.getPath">
+<tt class="descname">getPath</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRDReader.html#DicomRDReader.getPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRDReader.DicomRDReader.getPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the path to the RD dicom file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Path where the dicom RD file is located.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRDReader.DicomRDReader.loadRTDosePlanFile">
+<tt class="descname">loadRTDosePlanFile</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRDReader.html#DicomRDReader.loadRTDosePlanFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRDReader.DicomRDReader.loadRTDosePlanFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a RT Plan Dose from a Dicom file located at &#8220;path&#8221;. It initialize all the attributes of the class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> &#8211; Path where the dicom RD file is located.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.dicomReader.dicomRPReader">
+<span id="mspt-dicomreader-dicomrpreader-module"></span><h2>mspt.dicomReader.dicomRPReader module<a class="headerlink" href="#module-mspt.dicomReader.dicomRPReader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.dicomReader.dicomRPReader.DicomRPReader">
+<em class="property">class </em><tt class="descclassname">mspt.dicomReader.dicomRPReader.</tt><tt class="descname">DicomRPReader</tt><big>(</big><em>path=None</em>, <em>typeFloat='float32'</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRPReader.html#DicomRPReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRPReader.DicomRPReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mspt.dicomReader.dicomReader.DicomReader" title="mspt.dicomReader.dicomReader.DicomReader"><tt class="xref py py-class docutils literal"><span class="pre">mspt.dicomReader.dicomReader.DicomReader</span></tt></a></p>
+<p>Dicom reader for dicom RT plans (RP dicom file).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> &#8211; Path to the RP dicom file.</li>
+<li><strong>typeFloat</strong> &#8211; The type of numpy float to use. It should  be either &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRPReader.DicomRPReader.dataForAttribute">
+<tt class="descname">dataForAttribute</tt><big>(</big><em>attr</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRPReader.html#DicomRPReader.dataForAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRPReader.DicomRPReader.dataForAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of a given attribute  for the RT plan and
+returns the value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attribute</strong> &#8211; <p>The attribute is a string defined in the dicom documentation (data loaded with pydicom) or specific strings:</p>
+<ul class="simple">
+<li><strong>FractionGroupSequence</strong>: Fraction Group Sequence dicom data from pydicom.</li>
+<li><strong>NumberOfFractionsPlanned</strong>: Number of fractions used in the plan.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Attribute value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomRPReader.DicomRPReader.dcmType">
+<tt class="descname">dcmType</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomRPReader.html#DicomRPReader.dcmType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRPReader.DicomRPReader.dcmType" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The type of dicom reader: &#8216;RT Ion Plan Storage&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomRPReader.DicomRPReader.fractionGroupSequence">
+<tt class="descname">fractionGroupSequence</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomRPReader.html#DicomRPReader.fractionGroupSequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRPReader.DicomRPReader.fractionGroupSequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get access to the Fraction Group Sequence of the RP dicom file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Fraction Group Sequence dicom data from pydicom.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRPReader.DicomRPReader.getScanningPath">
+<tt class="descname">getScanningPath</tt><big>(</big><em>dictSettings</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRPReader.html#DicomRPReader.getScanningPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRPReader.DicomRPReader.getScanningPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ScanningPathMultipleBeams instance created with the RP file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dictSettings</strong> &#8211; Dictionary of settings for the scanning path</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRPReader.DicomRPReader.loadRTPlanFile">
+<tt class="descname">loadRTPlanFile</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRPReader.html#DicomRPReader.loadRTPlanFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRPReader.DicomRPReader.loadRTPlanFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a RT Plan from a Dicom file located at &#8220;path&#8221;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> &#8211; Path where is located the dicom RP file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomRPReader.DicomRPReader.rtPlanPath">
+<tt class="descname">rtPlanPath</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomRPReader.html#DicomRPReader.rtPlanPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRPReader.DicomRPReader.rtPlanPath" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The RP dicom file loaded with pydicom</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.dicomReader.dicomRSReader">
+<span id="mspt-dicomreader-dicomrsreader-module"></span><h2>mspt.dicomReader.dicomRSReader module<a class="headerlink" href="#module-mspt.dicomReader.dicomRSReader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.dicomReader.dicomRSReader.DicomRSReader">
+<em class="property">class </em><tt class="descclassname">mspt.dicomReader.dicomRSReader.</tt><tt class="descname">DicomRSReader</tt><big>(</big><em>path=None</em>, <em>typeFloat='float32'</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRSReader.html#DicomRSReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRSReader.DicomRSReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mspt.dicomReader.dicomReader.DicomReader" title="mspt.dicomReader.dicomReader.DicomReader"><tt class="xref py py-class docutils literal"><span class="pre">mspt.dicomReader.dicomReader.DicomReader</span></tt></a></p>
+<p>Dicom reader for dicom Structure Sets (RS dicom file).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> &#8211; Path to the RS dicom file.</li>
+<li><strong>typeFloat</strong> &#8211; The type of numpy float to use. It should  be either &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRSReader.DicomRSReader.dataForAttribute">
+<tt class="descname">dataForAttribute</tt><big>(</big><em>attribute</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRSReader.html#DicomRSReader.dataForAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRSReader.DicomRSReader.dataForAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of a given attribute for the structure set and
+returns the value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attribute</strong> &#8211; <p>The attribute is a string defined in the dicom documentation (data loaded with pydicom) or specific strings:</p>
+<ul class="simple">
+<li><strong>FrameOfReferenceUID</strong>: Frame Of Reference UID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Attribute value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomRSReader.DicomRSReader.dcmType">
+<tt class="descname">dcmType</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomRSReader.html#DicomRSReader.dcmType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRSReader.DicomRSReader.dcmType" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The type of dicom reader: &#8216;RT Structure Set Storage&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRSReader.DicomRSReader.getFrameOfReferenceUID">
+<tt class="descname">getFrameOfReferenceUID</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRSReader.html#DicomRSReader.getFrameOfReferenceUID"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRSReader.DicomRSReader.getFrameOfReferenceUID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access the field providing the Frame of reference UID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Frame of reference UID defined for the first region of interest (ROI).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRSReader.DicomRSReader.getMasksForAssociatedDicomImage">
+<tt class="descname">getMasksForAssociatedDicomImage</tt><big>(</big><em>imagePosition</em>, <em>imageOrientation</em>, <em>pixelSpacing</em>, <em>imageShape</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRSReader.html#DicomRSReader.getMasksForAssociatedDicomImage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRSReader.DicomRSReader.getMasksForAssociatedDicomImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>The goal of this function is to create a 3D mask for each ROI contained in the RS file.</p>
+<p>It is assumed the current RS file is assiciated to a dicom image whose information is received by this function.</p>
+<p>For each ROI :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>First create an empty mask</li>
+<li>Then go through each contour defined in ContourSequence.ContourData</li>
+</ol>
+<p>For each contour:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Convert each of these contour coordinates into indices in the final volume.</li>
+<li>Send thes indices to the function tools.getMaskForContour()</li>
+<li>Receive a mask from tools.getMaskForContour() and set the slice (according to slice index) of the 3D mask to the value of the one received by the function.</li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>imagePosition</strong> &#8211; Coordinates of the first voxel (top left corner of the first slice) of the dicom image</li>
+<li><strong>imageOrientation</strong> &#8211; axis orientation of the dicom image</li>
+<li><strong>pixelSpacing</strong> &#8211; spacing between frames, cols and rows in the image</li>
+<li><strong>imageShape</strong> &#8211; 3D shape of the dicom image(frames, rows, columns)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of tuple in which are stored as: ( mask 3D Numpy array , ROI name, ROI observation, ROI index, ROI type)  - Type = &#8216;CLOSED_PLANAR&#8217; or &#8216;POINT&#8217;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRSReader.DicomRSReader.getNumberOfROIs">
+<tt class="descname">getNumberOfROIs</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRSReader.html#DicomRSReader.getNumberOfROIs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRSReader.DicomRSReader.getNumberOfROIs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access and return</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of regions of interest (ROIs) defined in the dicom file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRSReader.DicomRSReader.getROINameForRefROINumber">
+<tt class="descname">getROINameForRefROINumber</tt><big>(</big><em>index</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRSReader.html#DicomRSReader.getROINameForRefROINumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRSReader.DicomRSReader.getROINameForRefROINumber" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> &#8211; Index of an ROI</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The ROI name from the given ROI index</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRSReader.DicomRSReader.getROIObservationForRefROINumber">
+<tt class="descname">getROIObservationForRefROINumber</tt><big>(</big><em>index</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRSReader.html#DicomRSReader.getROIObservationForRefROINumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRSReader.DicomRSReader.getROIObservationForRefROINumber" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> &#8211; Index of an ROI</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The ROI observation from the given ROI index</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.dicomRSReader.DicomRSReader.loadRTStrucSetFile">
+<tt class="descname">loadRTStrucSetFile</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomRSReader.html#DicomRSReader.loadRTStrucSetFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomRSReader.DicomRSReader.loadRTStrucSetFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a Structure Set from a Dicom file located at &#8220;path&#8221;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> &#8211; Path where the dicom RS file is located.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.dicomReader.dicomReader">
+<span id="mspt-dicomreader-dicomreader-module"></span><h2>mspt.dicomReader.dicomReader module<a class="headerlink" href="#module-mspt.dicomReader.dicomReader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.dicomReader.dicomReader.DicomReader">
+<em class="property">class </em><tt class="descclassname">mspt.dicomReader.dicomReader.</tt><tt class="descname">DicomReader</tt><big>(</big><em>path</em>, <em>typeFloat='float32'</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomReader.html#DicomReader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomReader.DicomReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Dicom reader: general class to read dicom files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> &#8211; Path to the dicom file or dicom directory (if CT series).</li>
+<li><strong>typeFloat</strong> &#8211; The type of numpy float to use. It should  be either &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mspt.dicomReader.dicomReader.DicomReader.dataForAttribute">
+<tt class="descname">dataForAttribute</tt><big>(</big><em>attribute</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/dicomReader.html#DicomReader.dataForAttribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomReader.DicomReader.dataForAttribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the data for an attribute.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>attribute</strong> &#8211; String corresponding to the attibute. Attributes are either those defined in the dicom documentation of specific attributes defined by each specific class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Value for the attribute if this is a dicom series, None otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.dicomReader.DicomReader.dcmType">
+<tt class="descname">dcmType</tt><a class="reference internal" href="_modules/mspt/dicomReader/dicomReader.html#DicomReader.dcmType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.dicomReader.DicomReader.dcmType" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The type of dicom reader: &#8216;RT Dose Storage&#8217;, &#8216;RT Ion Plan Storage&#8217;, &#8216;RT Structure Set Storage&#8217; and &#8216;CT Image Storage&#8217; or &#8216;General Dicom Storage&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.dicomReader.scanningPath">
+<span id="mspt-dicomreader-scanningpath-module"></span><h2>mspt.dicomReader.scanningPath module<a class="headerlink" href="#module-mspt.dicomReader.scanningPath" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathMultipleBeams">
+<em class="property">class </em><tt class="descclassname">mspt.dicomReader.scanningPath.</tt><tt class="descname">ScanningPathMultipleBeams</tt><big>(</big><em>rpData</em>, <em>dictSettings</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathMultipleBeams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathMultipleBeams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Scanning path defining gantry angles: for each gantry angle a ScanningPathSingleBeam is created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rpData</strong> &#8211; Dicom data from pydicom for the RP dicom file.</li>
+<li><strong>dictSettings</strong> &#8211; Dictionary of settings defining the behavior of the scanning path. It is explained in the class ScanningPathSingleBeam.</li>
+<li><strong>typeFloat</strong> &#8211; The type of numpy float to use. It should  be either &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>__iter__( )</strong>:</p>
+<p>Iterate through each beam and build the ScanningPathSingleBeam structure for each beams: <em>Ion Beam Sequence</em> tag in dicom documentation (i.e. each gantry angle).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple (the current scanning path:ScanningPathSingleBeam, the angle, the isocenter, virtual source axis distances, strAngle). strAngle = &#8216;NewAngle&#8217; if the gantry angle stored in the previous <em>Ion Beam Sequence</em> is different from the current gantry angle.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>__len__( )</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Number of <em>Ion Beam Sequence</em>, i.e. number of beams.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam">
+<em class="property">class </em><tt class="descclassname">mspt.dicomReader.scanningPath.</tt><tt class="descname">ScanningPathSingleBeam</tt><big>(</big><em>dictSettings</em>, <em>typeFloat</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Scanning path defining the energies, spots positions and spots weights for each gantry angle. The key idea of this class is to represent the    scanning path of a gantry angle as a set of 3D matrices where each frame corresponds to an energy layer. Then each pixel in a frame (or each voxel     if we consider the 3D matrix entirely) represent spatially a possible scan spot position. The information contained in the set of 3D matrices will tell if the scan spot positions    are part of the treatment plan (i.e., the proton beam should irradiate what is along the pencil beam).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dictSettings</strong> &#8211; Dictionary of settings defining the behavior of the scanning path. It is explained below.</li>
+<li><strong>typeFloat</strong> &#8211; The type of numpy float to use. It should  be either &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The set of 3D matrices representing a scanning path is composed of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>1 matrix storing the <strong>X positions</strong> of the scan spots. If a voxel (frame0,row0,column0) has a value of 0, it means that this voxel does not         belong to the treatment plan. If the value is non-null then it is part of the plan. Spatially, moving of 1 frame means changing energy, and moving of        1 row (resp. column) means moving the pencil beam of row_spacing mm (resp. column_spacing mm). The spacing is the smallest y (resp. x) difference between        two consecutive scan spots.</li>
+<li>1 matrix storing the <strong>Y positions</strong> of the scan spots. Similar to the previous matrix.</li>
+<li>1 matrix storing the <strong>planned weight</strong> for each spot position. The weight is set to 0 for scan spots that do not belong to the plan.</li>
+<li>1 matrix storing the <strong>planned weight for each spot position at the time of the delivery</strong>. Therefore the weight is set to 0 for scan spots that do not         belong to the plan or that have already been delivered. This matrix is updated during the delivery.</li>
+<li>1 matrix storing the <strong>type of scan spot position</strong>. If the type is &#8216;0&#8217;, the pencil beam will never stop at this position. If the &#8216;type&#8217; is &#8216;1&#8217;, it means        that the pencil beam will stop at this position and that this spot is part of the treatment plan. If the &#8216;type&#8217; is &#8216;2&#8217;, it means that under certain circumstances        (i.e. if &#8216;AddMapMargins&#8217; if dictSettings is True - see below) the pencil beam will go by this position, but the weight affected to it is null. This         allow to have more spot positions. This is especially used if the delivery is compensated.</li>
+<li>1 matrix storing the <strong>number of repainting</strong> of each scan spot: &#8216;0&#8217; if the pencil beam will not go by a specific scan position, a positive integer otherwise.        This matrix is updated during the delivery.</li>
+</ul>
+</div></blockquote>
+<p><strong>dictSettings</strong>:</p>
+<p>dictSettings is a dictionary with mandatory keys and optional keys that depend on the desired behavior of the scanning path. Keys and values are defined here:</p>
+<blockquote>
+<div><blockquote>
+<div><ul>
+<li><p class="first"><strong>&#8216;TypeScanning&#8217;</strong> (mandatory):  values:  &#8216;Random&#8217; or  &#8216;Regular&#8217;.  &#8216;Random&#8217;: the spot positions are chosen randomly both for the energy and the position. &#8216;Regular&#8217;: the spot positions are chosen from the highest energy to the smallest and in the order provided by the RP dicom file.</p>
+</li>
+<li><p class="first"><strong>&#8216;Repainting&#8217;</strong> (mandatory):  values:  True, if one wants to deliver the treatment plan using the repainting technique, False otherwise.</p>
+</li>
+<li><dl class="first docutils">
+<dt><strong>&#8216;SliceRepaint&#8217;</strong> (mandatory if &#8216;Repainting&#8217; is True): method to use to repaint an energy layer.  values: [&#8216;IsolayerRepaint&#8217;,&#8217;ScaledRepaint&#8217;, &#8216;FullWeightRepainting&#8217;] :</dt>
+<dd><ul class="first last simple">
+<li><em>&#8216;IsolayerRepaint&#8217;</em>: a maximum weight will be calculated as the minimum weight of all the weight defined in the treatment plan.</li>
+<li><em>&#8216;ScaledRepaint&#8217;</em> : a fixed number of repaintings is defined.</li>
+<li><em>&#8216;FullWeightRepainting&#8217;</em> : used for compensation: we deliver the full weight instead of a maximum weight or a scaled weight. If not used with the compensation it is equivalent to no repainting. It can also bee seen as a scaled repainting of repainting factor 1.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><strong>&#8216;VolumeRepainting&#8217;</strong> (mandatory if &#8216;Repainting&#8217; is True): method used to repaint the entire volume. Values: [&#8216;Volumetric&#8217;,&#8217;NonVolumetric&#8217;]:</dt>
+<dd><ul class="first last simple">
+<li><em>&#8216;Volumetric&#8217;</em>: Scan energy layer by energy layer to paint the volume a first time then repaint the volume layer by layer and so on.</li>
+<li><em>&#8216;NonVolumetric&#8217;</em>: Repaint each layer the number of time desired before moving to the next energy layer.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first"><strong>&#8216;UnlimitedRescan&#8217;</strong> (mandatory if &#8216;ScaledRepaint&#8217; or  &#8216;FullWeightRepainting&#8217; and if &#8216;RepaintFactor&#8217; is not present): values:         True if one wants to allow an unlimited number of repainting, i.e. not controlled by an maximum number of repaintings.        However, to avoid infinite loops, a maximum number of repainting is however set to 32767 (max value of an int16).         One must note that if &#8216;RepaintFactor&#8217; is present, the value of &#8216;UnlimitedRescan&#8217; will have a higher priority.</p>
+</li>
+<li><p class="first"><strong>&#8216;RepaintFactor&#8217;</strong> (mandatory if &#8216;ScaledRepaint&#8217; or  &#8216;FullWeightRepainting&#8217; and if &#8216;UnlimitedRescan&#8217; is not present):         value: integer value (1-127) defining the number of repaintings desired.        One must note that if &#8216;UnlimitedRescan&#8217; is present, the value of &#8216;UnlimitedRescan&#8217; will have a higher priority.</p>
+</li>
+<li><p class="first"><strong>&#8216;AddMapMargins&#8217;</strong> (optional): One has to note that we call &#8220;map&#8221; the set of spot positions within an energy layer (name used in Dicom documentation Scan Spot Position Map).        Values: True if one wants to add &#8220;margins&#8221; (i.e. spot positions of weight 0) around the native maps defined in the energy layers of the RP dicom file. This option is more dedicated to the compensation technique.         False (default value): if one do not want to add margins to the map. The margin is created using a maximum thickness of expansion (defined by &#8216;Margin Params&#8217;) and by performing a dilation. Each spot of the scanning path is viewed as        a voxel in a 3D binary matrix, the dilation is applied to the volume represented by these non-null voxels.</p>
+</li>
+<li><p class="first"><strong>&#8216;MarginParams&#8217;</strong> (mandatory if &#8216;AddMapMargins&#8217; is True): value: an iterable of positive real values. It represents the width of the margin in mm along the [x,y,z] axis in the IEC Gantry coordinate system (i.e. coordinate system in which spot positions are defined).</p>
+</li>
+<li><p class="first"><strong>&#8216;3DMargins&#8217;</strong> (mandatory if &#8216;AddMapMargins&#8217; is True): values: True if the the map is also extended along the z axis of the IEC gantry coordinate system. In other words, this adds energy layers in addition to spot positions.         False, if one do not want to extend the map in 3D. In this case the 3rd element of &#8216;MarginParams&#8217; is discarded.</p>
+</li>
+<li><p class="first"><strong>&#8216;UpdateMargins&#8217;</strong> (mandatory if &#8216;AddMapMargins&#8217; is True): controls whether the map with the margins are updated between repaintings. From one repainting to another the map of an energy layer can change depending on the spots that have been entirely deliverd.         Values: True or False.</p>
+</li>
+<li><p class="first"><strong>&#8216;FindStartPos&#8217;</strong> (optional): True or False. It is used for the compensation. If set to True, it will find the first spot, of an energy layer, that could be delivered in a map for a given motion vector.</p>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>__len__( )</strong>:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body">The number of energy layers.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>__iter__( )</strong>:</p>
+<p>Iterates through the spots following the order defined in dictSettings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">returns:</th><td class="field-body"><p class="first">A tuple:</p>
+<ul class="last simple">
+<li>index 0: spot weight</li>
+<li>index 1: spot in the 3D matrices : frame, row, column</li>
+<li>index 2: x position</li>
+<li>index 3: y position</li>
+<li>index 4: energy</li>
+<li>index 5: list of 2 elements : spot size along x and along y</li>
+<li>index 6: &#8216;NewEnergy&#8217; if the energy is changing or &#8216;SameEnergy&#8217; otherwise</li>
+<li>index 7: spot type = 1 (native spot) or 2 (spot from added margin)</li>
+<li>index 8: repainting index</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="attribute">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.arraySpots">
+<tt class="descname">arraySpots</tt><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.arraySpots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.arraySpots" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">3D numpy array containing the planned weights of scan spot positions. Each frame of the matrix correspond to an energy layer.         Weight value is set to 0 in the matrix if the spot is not a scan spot position or if it has already been delivered.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.arrayX">
+<tt class="descname">arrayX</tt><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.arrayX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.arrayX" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">3D numpy array containing X coordinate of scan spot positions. Each frame of the matrix correspond to an energy layer.         X value is set to 0 in the matrix if the spot is not a scan spot position.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.arrayY">
+<tt class="descname">arrayY</tt><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.arrayY"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.arrayY" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">3D numpy array containing Y coordinate of scan spot positions. Each frame of the matrix correspond to an energy layer.         Y value is set to 0 in the matrix if the spot is not a scan spot position.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.buildDataSpotToReturn">
+<tt class="descname">buildDataSpotToReturn</tt><big>(</big><em>ind</em>, <em>strEnergy</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.buildDataSpotToReturn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.buildDataSpotToReturn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the spot data to return for &#8220;regular&#8221; delivery.
+It should return a tuple with:</p>
+<p>Inputs:
+ind: spot indices
+strEnergy: string saying if the is a new energy or not</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.buildScanningPath">
+<tt class="descname">buildScanningPath</tt><big>(</big><em>rpData</em>, <em>beamIdx=0</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.buildScanningPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.buildScanningPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that build the scanning path and creates initialize all the attributes (including the set of matrices) of this class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rpData</strong> &#8211; RP dicom data from pydicom</li>
+<li><strong>beamIdx</strong> &#8211; Beam index (i.e. gantry angle index)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.buildSliceScanningOrder">
+<tt class="descname">buildSliceScanningOrder</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.buildSliceScanningOrder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.buildSliceScanningOrder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build the spot scanning order within the current energy slice. It sets the class attribute &#8216;self._sliceScanningOrder&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.decrementRepaint">
+<tt class="descname">decrementRepaint</tt><big>(</big><em>indices</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.decrementRepaint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.decrementRepaint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrement the repainting index of the spot stored at &#8216;indices&#8217; in the matrix storing the repainting factor of each spot.</p>
+<p>param indices: 3D indices: (frame, row, column) defined in the 3D matrices representing the scanning path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.extendBoundingBox">
+<tt class="descname">extendBoundingBox</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.extendBoundingBox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.extendBoundingBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method extends the bounding box of the initial scanning path if &#8216;AddMapMargins&#8217; (in dictSettings) is True.         If &#8216;MarginParams&#8217; = [dx,dy,dz], it is extended of dx at the left and the right and dy at        the top and bottom of the initial bounding box</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.extendMap">
+<tt class="descname">extendMap</tt><big>(</big><em>shape</em>, <em>updateXYAndNbRepatings=True</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.extendMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.extendMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extend scan spot position maps in the case of margins added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>shape</strong> &#8211; tuple (number of frames, number of rows, number of columns). Shape of the 3D matrices.</li>
+<li><strong>updateXYAndNbRepatings</strong> &#8211; True / False to update the 3D matrices stroring X and Y coordinates and the number of repaintings.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.fillArraysScanningPath">
+<tt class="descname">fillArraysScanningPath</tt><big>(</big><em>rpData</em>, <em>beamIdx</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.fillArraysScanningPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.fillArraysScanningPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that fills the matrices storing X and Y coordinates and the weights from the treatment plan.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rpData</strong> &#8211; RP dicom data from pydicom</li>
+<li><strong>beamIdx</strong> &#8211; Beam index (i.e. gantry angle index)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.fillListEnergies">
+<tt class="descname">fillListEnergies</tt><big>(</big><em>rpData</em>, <em>beamIdx</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.fillListEnergies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.fillListEnergies" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function fills the list of energies (attribute of the class).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rpData</strong> &#8211; RP dicom data from pydicom</li>
+<li><strong>beamIdx</strong> &#8211; Beam index (i.e. gantry angle index)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.fillRepaintingArray">
+<tt class="descname">fillRepaintingArray</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.fillRepaintingArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.fillRepaintingArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that fills the matrice storing the repainting factor for each scan spot.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.fillSpotSizeList">
+<tt class="descname">fillSpotSizeList</tt><big>(</big><em>rpData</em>, <em>beamIdx</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.fillSpotSizeList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.fillSpotSizeList" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function fills the list of spot sizes (attribute of the class).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rpData</strong> &#8211; RP dicom data from pydicom</li>
+<li><strong>beamIdx</strong> &#8211; Beam index (i.e. gantry angle index)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.fillSpotTypeArray">
+<tt class="descname">fillSpotTypeArray</tt><big>(</big><em>shape</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.fillSpotTypeArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.fillSpotTypeArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the 3D array of spot types:</p>
+<blockquote>
+<div><ul class="simple">
+<li>typeOutside = 0</li>
+<li>typeOrigin = 1</li>
+<li>typeAdded = 2</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shape</strong> &#8211; tuple (number of frames, number of rows, number of columns). Shape of the 3D matrix.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.findBoundingBoxScanningPath">
+<tt class="descname">findBoundingBoxScanningPath</tt><big>(</big><em>rpData</em>, <em>beamIdx</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.findBoundingBoxScanningPath"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.findBoundingBoxScanningPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>The goal of this function to find the number of energy layers, 
+and find xmin, xmax ymin ymax of the scan spots, i.e. a bounding box</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rpData</strong> &#8211; RP dicom data from pydicom</li>
+<li><strong>beamIdx</strong> &#8211; Beam index (i.e. gantry angle index)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.findCorrespondingEnergy">
+<tt class="descname">findCorrespondingEnergy</tt><big>(</big><em>newEnergy</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.findCorrespondingEnergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.findCorrespondingEnergy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find in the scanning path the closest energy to newEnergy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>newEnergy</strong> &#8211; input energy</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None if no energy has been found, return the found energy otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.findShape3DArray">
+<tt class="descname">findShape3DArray</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.findShape3DArray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.findShape3DArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that finds the shape of the 3D matrices that are created to represent the scanning path.        It is based on the number of energy layers, the spacing and the bounding box.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.findSpacing">
+<tt class="descname">findSpacing</tt><big>(</big><em>rpData</em>, <em>beamIdx</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.findSpacing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.findSpacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function finds the spacing to use to represent the scanning path spatially in a 3D matrix. The spacing is the smallest y (resp. x) difference between        two consecutive scan spots.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>rpData</strong> &#8211; RP dicom data from pydicom</li>
+<li><strong>beamIdx</strong> &#8211; Beam index (i.e. gantry angle index)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.findStartingPointForMotion">
+<tt class="descname">findStartingPointForMotion</tt><big>(</big><em>dispVec_IECG</em>, <em>ddCurvesData</em>, <em>strEnergy</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.findStartingPointForMotion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.findStartingPointForMotion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a starting point for the delivery of the current energy slice, i.e. find a point that could be compensated as soon as the delivery        of the current energy slice start.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Compensation principle</strong> :</p>
+<blockquote class="last">
+<div>We assume the current pencil beam position being (x_cur,y_cur). This spot can be compensated                if, for a given displacement vector ( dx,dy) , there exists a scan spot position whose weight is &gt;0 in the neighborhood (+/- 1 voxel in                the 2D matrices representing a scanning path of the current energy layer) of the position                 ( x_cur - dx , y_cur - dy) of the current energy layer.</div></blockquote>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dispVec_IECG</strong> &#8211; displacement vector in the IEC gantry coordinate system in mm.</li>
+<li><strong>ddCurvesData</strong> &#8211; depth dose curves data (dose profiles as a function of depth) for all the energies available.         (To be used for further implementation of 3D compensation)</li>
+<li><strong>strEnergy</strong> &#8211; &#8216;NewEnergy&#8217; or &#8216;SameEnergy&#8217; depending if this is a repainting of the first painting of the energy layer. This is used to return        all the needed information to the calling function.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>None if no starting position has been found, otherwise a tuple:</p>
+<ul class="simple">
+<li>index 0: spot weight</li>
+<li>index 1: spot in the 3D matrices : frame, row, column</li>
+<li>index 2: x position</li>
+<li>index 3: y position</li>
+<li>index 4: energy</li>
+<li>index 5: list of 2 elements : spot size along x and along y</li>
+<li>index 6: &#8216;NewEnergy&#8217; if the energy is changing or &#8216;SameEnergy&#8217; otherwise</li>
+<li>index 7: spot type = 1 (native spot) or 2 (spot from added margin)</li>
+<li>index 8: repainting index</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getEnergySliceWeights">
+<tt class="descname">getEnergySliceWeights</tt><big>(</big><em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.getEnergySliceWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getEnergySliceWeights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the frame in which is stored all the spots positions for the energy layer &#8216;energy&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>energy</strong> &#8211; energy</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">2D numpy array containing the weights of all the spots positions. If the weight is 0, either the spot has been delivered or it was not         a spot position.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getListEnergies">
+<tt class="descname">getListEnergies</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.getListEnergies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getListEnergies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the list of energies used in the scanning path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getMapWithEnhancedSpot">
+<tt class="descname">getMapWithEnhancedSpot</tt><big>(</big><em>ind</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.getMapWithEnhancedSpot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getMapWithEnhancedSpot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a 2D array representing all the spot position of a energy layer where a given spot, defined by its 3D indices         in  the matrices representing the scanning path, is &#8220;highlighted&#8221;.         This method is used to visually locate a spot by displaying the array afterwards.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ind</strong> &#8211; indices (frame,row,column) of the spot of interest.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A 2D numpy array where value = 0 if this is not a spot positions, value = 1 if this is a spot position in the energy layer and value = 2        for the spot of interest.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getMapWithMargin">
+<tt class="descname">getMapWithMargin</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.getMapWithMargin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getMapWithMargin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a 2D array representing the positions added to the original scan spot position (margins added) and the original positions.        This method is used to visually locate the different regions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A 2D numpy array with 3 different areas depending on the spot types.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getNumberOfRepaintingsPerSlice">
+<tt class="descname">getNumberOfRepaintingsPerSlice</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.getNumberOfRepaintingsPerSlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getNumberOfRepaintingsPerSlice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of time each energy slice hase been repaint</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getPlannedWeightForSpotInd">
+<tt class="descname">getPlannedWeightForSpotInd</tt><big>(</big><em>ind3D</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.getPlannedWeightForSpotInd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getPlannedWeightForSpotInd" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ind3D</strong> &#8211; 3D indices: (frame, row, column) defined in the 3D matrices representing the scanning path.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The planned weight of the spot stored at (frame, row, column) of the weight matrix.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getRepaintingFactor">
+<tt class="descname">getRepaintingFactor</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.getRepaintingFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getRepaintingFactor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">If a repainting factor exists, it returns it, otherwise it returns None.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getSliceOrderFromPlan">
+<tt class="descname">getSliceOrderFromPlan</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.getSliceOrderFromPlan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getSliceOrderFromPlan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the regular scanning order (order provided in the dicom file) for the current energy slice.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">tuple of 2 numpy arrays containing respectively the row index and the column index of each spot.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getWeightForSpotInd">
+<tt class="descname">getWeightForSpotInd</tt><big>(</big><em>ind3D</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.getWeightForSpotInd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.getWeightForSpotInd" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ind3D</strong> &#8211; 3D indices: (frame, row, column) defined in the 3D matrices representing the scanning path.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The weight to be delivered of the spot stored at (frame, row, column) of the weight matrix. It takes into account the repainting index.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.isPointNearOtherSpot">
+<tt class="descname">isPointNearOtherSpot</tt><big>(</big><em>energy</em>, <em>xShift</em>, <em>yShift</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.isPointNearOtherSpot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.isPointNearOtherSpot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find wether a point (x,y coordinates in the IEC Gantry coordinate system) has a scan spot position in its vicinity ( +/- 1 voxel in x and y directions) in the 3D matrices representing the scanning path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>energy</strong> &#8211; beam energy</li>
+<li><strong>xShift</strong> &#8211; x spot position in mm</li>
+<li><strong>yShift</strong> &#8211; y spot position in mm</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>Wether there is a scan spot in the neighborhood of +/- 1 voxel in an energy layer. If there is no scan spot, it returns tuple([False]), otherwise it returns a tuple:</p>
+<ul class="simple">
+<li>index 0: True</li>
+<li>index 1: 3D indices of the scan spot found</li>
+<li>index 2: (x,y) coordinates of the scan spot found</li>
+<li>index 3: the euclidean distance between the 2 spots</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.listEnergies">
+<tt class="descname">listEnergies</tt><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.listEnergies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.listEnergies" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of energies used. The order is from higher energy to lowest.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.locateSpots">
+<tt class="descname">locateSpots</tt><big>(</big><em>listCoord</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.locateSpots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.locateSpots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a 2D array where spots defined in listCoord are set to a non-null value.         This method is used to visually locate spots by displaying the array afterwards.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>listInd</strong> &#8211; list of coordinates of spots to display</li>
+<li><strong>listCoord</strong> &#8211; list of [x,y] coordinates of the spots of interest.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A 2D numpy array where value = 0 if this is not a spot of interest and  1&gt;= value  &gt;= 0.5 otherwise.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.nextSpotIndex">
+<tt class="descname">nextSpotIndex</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.nextSpotIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.nextSpotIndex" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body">The next spot positions index (frame, rows, column in the 3D matrices representing the scanning path) if &#8216;TypeScanning&#8217; (in &#8216;dictSettings&#8217;)         is not &#8216;random&#8217;. This method is called from __iter__()</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.repaintingMethodSlice">
+<tt class="descname">repaintingMethodSlice</tt><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.repaintingMethodSlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.repaintingMethodSlice" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The energy layer repainting method : &#8216;IsolayerRepaint&#8217;,&#8217;ScaledRepaint&#8217; or &#8216;FullWeightRepainting&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.repaintingMethodVolume">
+<tt class="descname">repaintingMethodVolume</tt><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.repaintingMethodVolume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.repaintingMethodVolume" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The volume repainting method : &#8216;Volumetric&#8217; or &#8216;NonVolumetric&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.repaintingNonVolOrder">
+<tt class="descname">repaintingNonVolOrder</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.repaintingNonVolOrder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.repaintingNonVolOrder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the non volumetric repainting order.        Order: slice by slice : repaint a slice before going to the next slice.         Higher energy to lowest energy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body">The next spot index (frame,row,column). This method is called by nextSpotIndex()</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.repaintingVolOrder">
+<tt class="descname">repaintingVolOrder</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.repaintingVolOrder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.repaintingVolOrder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator for the volumetric repainting order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Yields:</th><td class="field-body">The next spot index (frame,row,column). This method is called by nextSpotIndex()</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.setNextSpotIndex">
+<tt class="descname">setNextSpotIndex</tt><big>(</big><em>ind3D</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.setNextSpotIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.setNextSpotIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the next spot index : frame, rows, column in the 3D matrices representing the scanning path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ind3D</strong> &#8211; list of 3 elements : [frame,row,column]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.updateNbRepaintingsForMargins">
+<tt class="descname">updateNbRepaintingsForMargins</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.updateNbRepaintingsForMargins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.updateNbRepaintingsForMargins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update 3D matrix storing the number of repaintings. To be used if margins are added.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.updateSpot">
+<tt class="descname">updateSpot</tt><big>(</big><em>indices</em>, <em>weight</em>, <em>decrRepaint=True</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.updateSpot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.updateSpot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the weight of a spot located in the 3D array at &#8216;indices&#8217;:
+remove &#8216;weight&#8217; from the value contained in the matrix storing the updated spot weights.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>indices</strong> &#8211; 3D indices: (frame, row, column) defined in the 3D matrices representing the scanning path.</li>
+<li><strong>weight</strong> &#8211; weight to be removed from the weight matrix</li>
+<li><strong>decrRepaint</strong> &#8211; True / False : True if one wants to decrement the repainting factor of the current spot, False otherwise.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.dicomReader.scanningPath.ScanningPathSingleBeam.updateXYArrayForMargin">
+<tt class="descname">updateXYArrayForMargin</tt><big>(</big><em>shape</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#ScanningPathSingleBeam.updateXYArrayForMargin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.ScanningPathSingleBeam.updateXYArrayForMargin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update X, Y 3D matrices for margins added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>shape</strong> &#8211; tuple (number of frames, number of rows, number of columns). Shape of the 3D matrix.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.dicomReader.scanningPath.coordinatesToIndex">
+<tt class="descclassname">mspt.dicomReader.scanningPath.</tt><tt class="descname">coordinatesToIndex</tt><big>(</big><em>listX</em>, <em>listY</em>, <em>nRows</em>, <em>nCols</em>, <em>spacing</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#coordinatesToIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.coordinatesToIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find indices in 2D.    For a given list of X coordinates, return the column index for each of them and for a given list of Y coordinates, return the row index for each of them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>listX</strong> &#8211; list of x coordinates</li>
+<li><strong>listX</strong> &#8211; list of y coordinates</li>
+<li><strong>nRows</strong> &#8211; number of rows in a 2D matrix</li>
+<li><strong>nCols</strong> &#8211; number of columns in a 2D matrix</li>
+<li><strong>spacing</strong> &#8211; list :[xSpacing, y spacing]</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Computes lhe list of column indices and the list or rows indices. (x = 0 , y = 0) as being (f = (NumberOfFrames - 1)/2, r = (NumberOfRows - 1)/2, c = (NumberOfCols - 1)/2)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(round_j  , round_i ), where i are columns and j rows. X is associated to columns and y to rows.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.dicomReader.scanningPath.euclideanDistance">
+<tt class="descclassname">mspt.dicomReader.scanningPath.</tt><tt class="descname">euclideanDistance</tt><big>(</big><em>xy1</em>, <em>xy2</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#euclideanDistance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.euclideanDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the Euclidean distance between 2 points: 
+:param xy1: (x1, y1) 
+:param xy2: (x2,y2)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Euclidean distance</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.dicomReader.scanningPath.indexToCoordinates">
+<tt class="descclassname">mspt.dicomReader.scanningPath.</tt><tt class="descname">indexToCoordinates</tt><big>(</big><em>listRow</em>, <em>listCols</em>, <em>nRows</em>, <em>nCols</em>, <em>spacing</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#indexToCoordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.indexToCoordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find coordinates in 2D.    For a given list of Row indices, return the x coord for each of them and     for a given list of Column indices, return the y coord for each of them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>listRow</strong> &#8211; list of rows indices</li>
+<li><strong>listCols</strong> &#8211; list of columns indices</li>
+<li><strong>nRows</strong> &#8211; number of rows in a 2D matrix</li>
+<li><strong>nCols</strong> &#8211; number of columns in a 2D matrix</li>
+<li><strong>spacing</strong> &#8211; list :[xSpacing, y spacing]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The list of x coords and the list of y coords.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.dicomReader.scanningPath.isEnergyLayerEmpty">
+<tt class="descclassname">mspt.dicomReader.scanningPath.</tt><tt class="descname">isEnergyLayerEmpty</tt><big>(</big><em>energyLayer</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/scanningPath.html#isEnergyLayerEmpty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.scanningPath.isEnergyLayerEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check wether an energy layer in the dicom file is empty.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if empty, False otherwise.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.dicomReader.tools">
+<span id="mspt-dicomreader-tools-module"></span><h2>mspt.dicomReader.tools module<a class="headerlink" href="#module-mspt.dicomReader.tools" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mspt.dicomReader.tools.coordinatesToIndexFromImagePosition">
+<tt class="descclassname">mspt.dicomReader.tools.</tt><tt class="descname">coordinatesToIndexFromImagePosition</tt><big>(</big><em>point</em>, <em>imagePosition</em>, <em>imageOrientation</em>, <em>pixelSpacing</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/tools.html#coordinatesToIndexFromImagePosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.tools.coordinatesToIndexFromImagePosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the indices (frame, row, column) , i.e. voxel location, for a given point (x,y,z) provided in an image coordinate system (mm).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>point</strong> &#8211; (x,y,z) coordinates of a point</li>
+<li><strong>imagePosition</strong> &#8211; refers to coordinates (x0,y0,z0) of the top left corner in the image</li>
+<li><strong>imageOrientation</strong> &#8211; unit vectors in the 3 directions with respect to the patient coordinate system</li>
+<li><strong>pixelSpacing</strong> &#8211; pixel spacing in the 3 directions</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Formula: look at page 410 from Dicom Documentation: &#8220;PS 3.3-2011 Digital Imaging and Communications in Medicine (DICOM) Part 3: Information Object Definitions&#8221;    More information on dicom standards can be found at Dicom <a class="reference external" href="http://medical.nema.org/standard.html">NEMA</a> and <a class="reference external" href="http://medical.nema.org/Dicom/2011/11_03pu.pdf">here</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(frame, row, column) indices</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.dicomReader.tools.crossProduct">
+<tt class="descclassname">mspt.dicomReader.tools.</tt><tt class="descname">crossProduct</tt><big>(</big><em>vectU</em>, <em>vectV</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/tools.html#crossProduct"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.tools.crossProduct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the cross product U X V. U and V should be arrays, lists or tuples.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vectU</strong> &#8211; first vector</li>
+<li><strong>vectV</strong> &#8211; second vector</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>[w1,w2,w3] = [u1,u2,u3] x [v1,v2,v3] = [u2v3 - u3v2 , u3v1 - u1v3, u1v2 - u2v1]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The cross product</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.dicomReader.tools.getMaskForContour">
+<tt class="descclassname">mspt.dicomReader.tools.</tt><tt class="descname">getMaskForContour</tt><big>(</big><em>contour</em>, <em>size2D</em>, <em>outline=1</em>, <em>fill=1</em>, <em>background=0</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/tools.html#getMaskForContour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.tools.getMaskForContour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a  2D mask for a given contour:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>contour</strong> &#8211; should be a list of coordinates: either [ (x1,y1) , (x2,y2) ...] or [x1, y1, x2 , y2 ..] Note: xi, yj should be indices not real values</li>
+<li><strong>size2D</strong> &#8211; 2D-tuple representing the image size</li>
+<li><strong>outline</strong> &#8211; int value to use to represent the contour&#8217;s outline (1 by default)</li>
+<li><strong>fill</strong> &#8211; int value to use to fill the contour&#8217;s interior(1 by default)</li>
+<li><strong>background</strong> &#8211; value to represent the background (0 by default)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A 2D mask (numpy array) of size size2D is returned with &#8220;fill&#8221; value inside the polygon, &#8220;outline&#8221; on the edges, &#8220;background&#8221; in the background.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.dicomReader.tools.indexToCoordinatesFromImagePosition">
+<tt class="descclassname">mspt.dicomReader.tools.</tt><tt class="descname">indexToCoordinatesFromImagePosition</tt><big>(</big><em>index</em>, <em>imagePosition</em>, <em>imageOrientation</em>, <em>pixelSpacing</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/tools.html#indexToCoordinatesFromImagePosition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.tools.indexToCoordinatesFromImagePosition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the coordinates of a point (x, y, z)in an image coordinate system (mm) for a given point indices (pixel location) (frame, row,col).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> &#8211; (frame, row,col) indices of  a voxel.</li>
+<li><strong>imagePosition</strong> &#8211; refers to coordinates (x0,y0,z0) of the top left corner in the image</li>
+<li><strong>imageOrientation</strong> &#8211; unit vectors in the 3 directions with respect to the patient coordinate system</li>
+<li><strong>pixelSpacing</strong> &#8211; pixel spacing in the 3 directions</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Formula: look at page 410 from Dicom Documentation: &#8220;PS 3.3-2011 Digital Imaging and Communications in Medicine (DICOM) Part 3: Information Object Definitions&#8221;    More information on dicom standards can be found at Dicom <a class="reference external" href="http://medical.nema.org/standard.html">NEMA</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">(x, y, z) coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.dicomReader.tools.tripletwise">
+<tt class="descclassname">mspt.dicomReader.tools.</tt><tt class="descname">tripletwise</tt><big>(</big><em>iterable</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/tools.html#tripletwise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.tools.tripletwise" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an triplets from iterable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>iterable</strong> &#8211; An iterable</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An iterable able to provide triplets of the input iterable.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.dicomReader.tools.truncateVal">
+<tt class="descclassname">mspt.dicomReader.tools.</tt><tt class="descname">truncateVal</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="_modules/mspt/dicomReader/tools.html#truncateVal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.dicomReader.tools.truncateVal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Truncates decimal value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> &#8211; Value to truncate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.dicomReader">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mspt.dicomReader" title="Permalink to this headline">¶</a></h2>
+<p>Dicom Reader module is a useful toolkit to deal with dicom files in general but also more specifically for proton-therapy. 
+It relies on <a class="reference external" href="https://code.google.com/p/pydicom/">pydicom</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">dicomReader do not depends on other modules of MSPT. Therefore it can be used independently.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mspt.email.html" class="btn btn-neutral float-right" title="mspt.email package"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mspt.dataViewer.html" class="btn btn-neutral" title="mspt.dataViewer package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

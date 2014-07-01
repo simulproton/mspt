@@ -1,0 +1,30 @@
+mspt.physics package
+====================
+
+Submodules
+----------
+
+mspt.physics.ddCurvesManager module
+-----------------------------------
+
+.. automodule:: mspt.physics.ddCurvesManager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+mspt.physics.stoppingPower module
+---------------------------------
+
+.. automodule:: mspt.physics.stoppingPower
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: mspt.physics
+    :members:
+    :undoc-members:
+    :show-inheritance:

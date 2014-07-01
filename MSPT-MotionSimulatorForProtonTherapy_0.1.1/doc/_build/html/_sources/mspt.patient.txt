@@ -1,0 +1,30 @@
+mspt.patient package
+====================
+
+Submodules
+----------
+
+mspt.patient.patient module
+---------------------------
+
+.. automodule:: mspt.patient.patient
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+mspt.patient.tools module
+-------------------------
+
+.. automodule:: mspt.patient.tools
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: mspt.patient
+    :members:
+    :undoc-members:
+    :show-inheritance:

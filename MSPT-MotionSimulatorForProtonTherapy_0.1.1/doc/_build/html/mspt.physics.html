@@ -1,0 +1,745 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.physics package &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="index.html"/>
+        <link rel="up" title="mspt package" href="mspt.html"/>
+        <link rel="next" title="mspt.scanning package" href="mspt.scanning.html"/>
+        <link rel="prev" title="mspt.patient package" href="mspt.patient.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="mspt.html">mspt package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="mspt.html">mspt package</a> &raquo;</li>
+      
+    <li>mspt.physics package</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/mspt.physics.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="mspt-physics-package">
+<h1>mspt.physics package<a class="headerlink" href="#mspt-physics-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-mspt.physics.ddCurvesManager">
+<span id="mspt-physics-ddcurvesmanager-module"></span><h2>mspt.physics.ddCurvesManager module<a class="headerlink" href="#module-mspt.physics.ddCurvesManager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.physics.ddCurvesManager.DDCurves">
+<em class="property">class </em><tt class="descclassname">mspt.physics.ddCurvesManager.</tt><tt class="descname">DDCurves</tt><big>(</big><em>configData</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Class managing the depth dose curves used in MSPT.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>configData</strong> &#8211; <p>dictionary (globalVariables) storing the data configuring the simulator.     Mandatory keys for the depth dose curves are:</p>
+<ul class="simple">
+<li>&#8216;ddCurves&#8217; : The type of Depth-Dose curves to use. In MSPT only RayStation DD curves are available.</li>
+<li>&#8216;typeFloat&#8217;: type of numpy float to use: &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+<li>&#8216;nameDoseCorrecFactor&#8217;: name of the dose correction factor to use.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If one wants to add new depth-dose curves, please follow the procedure:</p>
+<blockquote class="last">
+<div><ol class="arabic">
+<li><p class="first">Create a new directory <em>&#8220;NAME_NEWFOLDER&#8221;</em> in the folder:</p>
+<blockquote>
+<div><p><em>MSPT-MotionSimulatorInProtonTherapy/src/trunk/RefData/DepthDoseData/</em></p>
+</div></blockquote>
+</li>
+<li><p class="first">Add the depth dose curves in this new directory. Please, note that the depth-dose curves must be stored in .csv files:</p>
+<ol class="arabic simple">
+<li>1 file per energy</li>
+<li>The name of each file must respect this pattern: &#8216;depthDoseData-xxx_xxMeV*.csv&#8217; where the x corresponds to digits of the                 energy and &#8216;*&#8217; can be any string. For example: depth-dose curve files for 10.20MeV: &#8220;depthDoseData-010_20MeV.csv&#8221;                 or  &#8220;depthDoseData-010_20MeV_SomeInformation.csv&#8221; or &#8220;depthDoseData-010_20MeV_NAME_NEWFOLDER.csv&#8221;</li>
+<li>Each file must be organized as follows: 1st row: the depths in cm, 2nd row the corresponding dose in Gy.cm2.</li>
+</ol>
+</li>
+<li><p class="first">To use these depth-dose curves set the variable <em>ddCurves</em>, of the configuration file, to &#8216;NAME_NEWFOLDER&#8217;.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If one wants to modify the dose corrections factors:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Create a table with 2 columns into a tab delimited &#8216;.txt&#8217; file:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Then fist line must contains the headers: 1st column: &#8216;Energy&#8217;, 2nd column: &#8216;Factor&#8217;</li>
+<li>Then, for each new line:  1st column: the energy in MeV , 2nd column: the corresponding correction factor unitless.</li>
+<li>The filename must respect this pattern: &#8216;doseCorrecFactor__NAMEDATA.txt&#8217; where &#8216;NAMEDATA&#8217; will be the name                 you want to give to this data. For example, by default the name for the correction factors used in MSPT is &#8216;MSPT&#8217;, so the file name is &#8216;doseCorrecFactor_MSPT.txt&#8217;</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Place the file in the folder <em>MSPT-MotionSimulatorInProtonTherapy/src/trunk/RefData/DoseCorrecFactor/</em></p>
+</li>
+<li><p class="first">Set the MSPT configuration variable <em>nameDoseCorrecFactor</em> to &#8216;NAMEDATA&#8217;</p>
+</li>
+</ol>
+</div></blockquote>
+<p class="last">And you&#8217;re done!</p>
+</div>
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.buildFuncBPvsEner">
+<tt class="descname">buildFuncBPvsEner</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.buildFuncBPvsEner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.buildFuncBPvsEner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an interpolation function to provide the BP for a given energy</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.buildFuncDoseAtBPVsEnergy">
+<tt class="descname">buildFuncDoseAtBPVsEnergy</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.buildFuncDoseAtBPVsEnergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.buildFuncDoseAtBPVsEnergy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the interpolation function providing the dose at BP for a specific energy</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.buildFuncEnervsBP">
+<tt class="descname">buildFuncEnervsBP</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.buildFuncEnervsBP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.buildFuncEnervsBP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an interpolation function to provide the energy for a given BP</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.dataForEnergy">
+<tt class="descname">dataForEnergy</tt><big>(</big><em>dataType</em>, <em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.dataForEnergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.dataForEnergy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the data for a given energy. Data types are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8216;DD_Curve&#8217;: the depth dose curve stored in an array (2 rows, n columns).</li>
+<li>&#8216;BraggPeak&#8217;: Depth of the Bragg Peak (BP) in cm.</li>
+<li>&#8216;MaxDose&#8217;: Maximum dose value (at Bragg Peak).</li>
+<li>&#8216;CumulDose&#8217;: Array of the cumulative dose (2 rows, n columns).</li>
+<li>&#8216;NbProtons&#8217;: Number of protons estimated from the depth dose curve.</li>
+<li>&#8216;Ratio-DoseEntrance-BP&#8217;: Ratio between the entrance dose and the dose at the BP.</li>
+<li>&#8216;DoseAtEntrance&#8217;: Dose at patient entrance</li>
+<li>&#8216;EnergyLoss&#8217;: Array of the energy loss along the depth (2 rows, n columns).</li>
+<li>&#8216;EnergyRemaining&#8217;: Array of the remaining energy along the depth (2 rows, n columns).</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dataType</strong> &#8211; string specifying the dataType</li>
+<li><strong>energy</strong> &#8211; energy</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The data.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.doseCorrectionFactor">
+<tt class="descname">doseCorrectionFactor</tt><big>(</big><em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.doseCorrectionFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.doseCorrectionFactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function created to match RayStation absolute dose. It uses a linear interpolation to obtain a multiplicative dose correction factor for an energy.</p>
+<p>The function has been obtained by measuring the ratio between the dose obtained in RayStation and in our simulator
+for single beamlets in water for energies ranging from 30MeV to 245MeV.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>energy</strong> &#8211; energy in MeV</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The correction factor</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.findDoseAtBPForEner">
+<tt class="descname">findDoseAtBPForEner</tt><big>(</big><em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.findDoseAtBPForEner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.findDoseAtBPForEner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the dose at BP for a given energy</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>energy</strong> &#8211; Desired energy in MeV</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Corresponding BP depth</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.findEnergyForBraggPeak">
+<tt class="descname">findEnergyForBraggPeak</tt><big>(</big><em>desiredBP</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.findEnergyForBraggPeak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.findEnergyForBraggPeak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find an energy for a given Bragg Peak</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>desiredBP</strong> &#8211; Desired BP depth</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Corresponding energy estimated using a linear interpolation.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.generateApproxDDCurveForEnergy">
+<tt class="descname">generateApproxDDCurveForEnergy</tt><big>(</big><em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.generateApproxDDCurveForEnergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.generateApproxDDCurveForEnergy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate Depth Dose Curve for a given energy if this energy is outside the lookup table energy range</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>energy</strong> &#8211; Energy for which to generate a depth-dose curve.</td>
+</tr>
+</tbody>
+</table>
+<p>The depth dose curves is generated using a linear interpolation between encompassing energies to obtain the Bragg Peak (BP) location        Then it uses the DD curves of the closest and higher energy available E2: the depths position are shifted by the difference         between the BP of the generated curve and the BP of E2. The part of the curve is kept where the depth is positive.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.generateTableMissingEnergy">
+<tt class="descname">generateTableMissingEnergy</tt><big>(</big><em>energy</em>, <em>newDDCurve</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.generateTableMissingEnergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.generateTableMissingEnergy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that generates the dictionary in which is stored all the information about the depth dose curve.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>energy</strong> &#8211; Energy in MeV</li>
+<li><strong>newDDCurve</strong> &#8211; depth-dose curve generated: 1st row depths in cm, second row dose.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The new dictionary created is added to the look-up table storing the missing energies. The keys of this dictionary are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>&#8216;DD_Curve&#8217;</em> : the depth dose curve</li>
+<li><em>&#8216;BraggPeak&#8217;</em> : Brag Peak depth in cm</li>
+<li><em>&#8216;MaxDose&#8217;</em> : Maximum dose in the DD curve.</li>
+<li><em>&#8216;CumulDose&#8217;</em> : Cumulative dose along the depth</li>
+<li><em>&#8216;NbProtons&#8217;</em> : Number of protons used in the beam corresponding to this DD Curve</li>
+<li><em>&#8216;Ratio-DoseEntrance-BP&#8217;</em> : Ratio between the dose at initial depth and at BP depth.</li>
+<li><em>&#8216;DoseAtEntrance&#8217;</em> : Dose at initial depth</li>
+<li><em>&#8216;EnergyLoss&#8217;</em> : Energy loss along the depth</li>
+<li><em>&#8216;EnergyRemaining&#8217;</em> : Remaining energy along the depth</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.loadDoseCorrectionFactor">
+<tt class="descname">loadDoseCorrectionFactor</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.loadDoseCorrectionFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.loadDoseCorrectionFactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to import dose correction factor data. It scans the folder <em>/RefData/DoseCorrecFactor/</em>.</p>
+<p>Each file matching the pattern &#8216;doseCorrecFactor_NAMEDATA.txt&#8217;.        NAMEDATA must also be provided by the mspt global variable : nameDoseCorrecFactor = &#8216;NAMEDATA&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.readCSVFilesInFolder">
+<tt class="descname">readCSVFilesInFolder</tt><big>(</big><em>dirPath</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.readCSVFilesInFolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.readCSVFilesInFolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that loads all the Depth-Dose curves contained in a directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dirPath</strong> &#8211; Path to the directory</td>
+</tr>
+</tbody>
+</table>
+<p>The function creates a lookup table (dictionary) whose keys are the energies of the depth dose curves and the value         is a dictionary storing the data computed by &#8216;readFile(filename)&#8217;. The keys for each energy:</p>
+<blockquote>
+<div><ul class="simple">
+<li><em>&#8216;DD_Curve&#8217;</em> : the depth dose curve</li>
+<li><em>&#8216;BraggPeak&#8217;</em> : Brag Peak depth in cm</li>
+<li><em>&#8216;MaxDose&#8217;</em> : Maximum dose in the DD curve.</li>
+<li><em>&#8216;CumulDose&#8217;</em> : Cumulative dose along the depth</li>
+<li><em>&#8216;NbProtons&#8217;</em> : Number of protons used in the beam corresponding to this DD Curve</li>
+<li><em>&#8216;Ratio-DoseEntrance-BP&#8217;</em> : Ratio between the dose at initial depth and at BP depth.</li>
+<li><em>&#8216;DoseAtEntrance&#8217;</em> : Dose at initial depth</li>
+<li><em>&#8216;EnergyLoss&#8217;</em> : Energy loss along the depth</li>
+<li><em>&#8216;EnergyRemaining&#8217;</em> : Remaining energy along the depth</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the look up table.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.ddCurvesManager.DDCurves.readFile">
+<tt class="descname">readFile</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#DDCurves.readFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.DDCurves.readFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load depth dose data and computes additional data (data at BP, cumulative dose,number of protons, ratio dose entrance/BP        , energy loss, energy remaining) and returns it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filename</strong> &#8211; Path to file to load</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A list with data:<ol class="arabic simple">
+<li>energy</li>
+<li>DD curve stored in a (2,n) array</li>
+<li>BP data : depth and dose at the BP</li>
+<li>Cumulative dose</li>
+<li>Number of protons</li>
+<li>Ratio dose</li>
+<li>Energy loss</li>
+<li>Remaining energy</li>
+</ol>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.physics.ddCurvesManager.computeEnergyLoss">
+<tt class="descclassname">mspt.physics.ddCurvesManager.</tt><tt class="descname">computeEnergyLoss</tt><big>(</big><em>cumDose</em>, <em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#computeEnergyLoss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.computeEnergyLoss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes energy loss along depth:</p>
+<blockquote>
+<div>energy loss(z) = dose(z) / cumul_dose * energy</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cumDose</strong> &#8211; array of the cumulative dose</li>
+<li><strong>energy</strong> &#8211; Energy in MeV</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Array of the energy loss along the depth</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.physics.ddCurvesManager.computeEnergyRemaining">
+<tt class="descclassname">mspt.physics.ddCurvesManager.</tt><tt class="descname">computeEnergyRemaining</tt><big>(</big><em>energyLoss</em>, <em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#computeEnergyRemaining"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.computeEnergyRemaining" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes remaining energy along depth:</p>
+<blockquote>
+<div>remainEnergy(z) = energy - energyLoss(z)</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>energyLoss</strong> &#8211; Energy loss array</li>
+<li><strong>energy</strong> &#8211; energy in MeV</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Array of the remaining energy along the depth</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.physics.ddCurvesManager.computeNbProtonsMCSimul">
+<tt class="descclassname">mspt.physics.ddCurvesManager.</tt><tt class="descname">computeNbProtonsMCSimul</tt><big>(</big><em>cumDoseVal</em>, <em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#computeNbProtonsMCSimul"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.computeNbProtonsMCSimul" title="Permalink to this definition">¶</a></dt>
+<dd><p>For given energy , estimate the number of protons used in the corresponding beam in water:</p>
+<blockquote>
+<div>nbProtons = sum_dose[Gy.cm^2] * z_spacing [cm] * rhoWater [kg.cm ^-3] / Energy_Joules</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Gy = J / Kg   and  1 MeV = 1.602e-13 Joules.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cumDoseVal</strong> &#8211; cumulative dose value at the end of the DD curve range (after the BP)</li>
+<li><strong>energy</strong> &#8211; energy in MeV</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The number of protons estimated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.physics.ddCurvesManager.cumulDose">
+<tt class="descclassname">mspt.physics.ddCurvesManager.</tt><tt class="descname">cumulDose</tt><big>(</big><em>dataDDCurve</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#cumulDose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.cumulDose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the cumulative dose along the depth:</p>
+<blockquote>
+<div>Cumul dose = sum ( dose * dz ), where dose in [Gy.cm^2] * [cm]</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dataDDCurve</strong> &#8211; stored in a (2,n) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Cumulative dose array</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="mspt.physics.ddCurvesManager.findBraggPeak">
+<tt class="descclassname">mspt.physics.ddCurvesManager.</tt><tt class="descname">findBraggPeak</tt><big>(</big><em>dataDDCurve</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/ddCurvesManager.html#findBraggPeak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.ddCurvesManager.findBraggPeak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the Bragg Peak (cm) and return the BP with the deposited dose associated in [Gy.cm^2]</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dataDDCurve</strong> &#8211; stored in a (2,n) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list [ BP depth (cm), dose at BP]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.physics.stoppingPower">
+<span id="mspt-physics-stoppingpower-module"></span><h2>mspt.physics.stoppingPower module<a class="headerlink" href="#module-mspt.physics.stoppingPower" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mspt.physics.stoppingPower.StoppingPower">
+<em class="property">class </em><tt class="descclassname">mspt.physics.stoppingPower.</tt><tt class="descname">StoppingPower</tt><big>(</big><em>configData</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>The stopping power data has been extracted from the <a class="reference external" href="http://physics.nist.gov/PhysRefData/Star/Text/PSTAR.html">PSTAR database</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>configData</strong> &#8211; <p>dictionary (globalVariables) storing the data configuring the simulator.     Mandatory key:</p>
+<ul class="simple">
+<li>&#8216;typeFloat&#8217;: type of numpy float to use: &#8216;float32&#8217; or &#8216;float64&#8217;.</li>
+<li>&#8216;nameStopPwrCorrecFactor&#8217; : name of the correction factor for the mass stopping power to use.</li>
+<li>&#8216;importNewMassStopPwr&#8217; : True to use new stopping power data, false otherwise. Default is False</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>MSPT is provided with Mass Stopping Power tables obtained from the PSTAR database for several media: air, adipose, water, muscle and bone.         However, if one wants to add mass stopping power data here is the procedure:</p>
+<blockquote class="last">
+<div><ol class="arabic">
+<li><p class="first">Create the table (Energy, Mass stopping power) into a tab delimited &#8216;.txt&#8217; file (1 file per medium):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The 1st line must contain the headers: 1st column: &#8216;Kinetic Energy MeV&#8217; , 2nd column: &#8216;Total Stp. Pow. MeV cm2/g&#8217;</li>
+<li>Then, for each new line:  1st column: the energy in MeV , 2nd column: the corresponding mass stopping power in MeV.cm2/g.                 Please note that the energies must be stored in increasing order.</li>
+<li>Once all the energies and mass stopping powers have been entered, add a new line where: 1st column: medium density in g/cm3 and 2nd column: -1.0.</li>
+<li>The name of each file must respect the pattern: &#8216;MassStopPwrData-MediumName.txt&#8217;</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Once all the files have been created (1 per medium!), add these files into the folder <em>MSPT-MotionSimulatorInProtonTherapy/src/trunk/RefData/MassStoppingPower_NewData/</em></p>
+</li>
+<li><p class="first">Set the configuration variable <em>importNewMassStopPwr</em> to True to be able to use this new mass stopping power data.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>To use another correction factor for the stopping power:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Create a table with 2 columns into a tab delimited &#8216;.txt&#8217; file:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The fist line must contains the headers: 1st column: &#8216;Density&#8217;, 2nd column: Correction factor</li>
+<li>Then, for each new line:  1st column: the density in g/cm3 , 2nd column: the corresponding correction factor unitless.</li>
+<li>The filename must respect this pattern: &#8216;dataCorrecFactorStopPwr_NAMEDATA.txt&#8217; where &#8216;NAMEDATA&#8217; will be the name                 you want to give to this data. For example, by default the name for the correction factors used in MSPT is &#8216;MSPT&#8217;, so the file name is &#8216;dataCorrecFactorStopPwr_MSPT.txt&#8217;</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Place the file in the folder <em>MSPT-MotionSimulatorInProtonTherapy/src/trunk/RefData/CorrecFactor_StopPwr/</em></p>
+</li>
+<li><p class="first">Set the MSPT configuration variable <em>nameStopPwrCorrecFactor</em> to &#8216;NAMEDATA&#8217;</p>
+</li>
+</ol>
+</div></blockquote>
+<p class="last">And you&#8217;re done!</p>
+</div>
+<dl class="method">
+<dt id="mspt.physics.stoppingPower.StoppingPower.buildMediumToTable">
+<tt class="descname">buildMediumToTable</tt><big>(</big><em>key</em>, <em>low</em>, <em>high</em>, <em>energy</em>, <em>idxEnergy</em>, <em>idxMaxEnergy</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower.buildMediumToTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower.buildMediumToTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that builds the table to add to the conversion table for a given medium</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> &#8211; Name of the medium</li>
+<li><strong>low</strong> &#8211; low bound of the density range</li>
+<li><strong>high</strong> &#8211; high bound of the density range</li>
+<li><strong>energy</strong> &#8211; energy in MeV</li>
+<li><strong>idxEnergy</strong> &#8211; index of the energy in the mass stopping power table (PSTAR data).</li>
+<li><strong>idxMaxEnergy</strong> &#8211; index of the maximum energy used in the mass stopping power table (PSTAR data).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><p>A table (3,1) :</p>
+<ul class="simple">
+<li>row 0 : low bound of density range ,             * row 1: high bound of density range,             * row 2: rel mass stop pwr associated to the medium for the given energy.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.stoppingPower.StoppingPower.getConversionTableStpPwrForEnergy">
+<tt class="descname">getConversionTableStpPwrForEnergy</tt><big>(</big><em>energy</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower.getConversionTableStpPwrForEnergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower.getConversionTableStpPwrForEnergy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a 3 x n array (n being the number of media):</p>
+<blockquote>
+<div><ul class="simple">
+<li>row 0 : low bound of density range ,</li>
+<li>row 1: high bound of density range,</li>
+<li>row 2: rel mass stop pwr associated. Medium: Air,Adipose,Muscle,Bone</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>energy</strong> &#8211; Energy in MeV</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">COnversion table Density to Rel.ative Mass Stopping power:</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Mass stopping power [MeV.cm^-1 / (g.cm^-3)] = [MeV.cm^2.g^-1]</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.stoppingPower.StoppingPower.getStopPwrCorrecFactor">
+<tt class="descname">getStopPwrCorrecFactor</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower.getStopPwrCorrecFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower.getStopPwrCorrecFactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the stopping power correction factor table</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.stoppingPower.StoppingPower.importCorrecStopPwrData">
+<tt class="descname">importCorrecStopPwrData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower.importCorrecStopPwrData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower.importCorrecStopPwrData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to import stopping power correction factor data. It scans the folder <em>/RefData/CorrecFactor_StopPwr/</em>.</p>
+<p>Each file matching the pattern &#8216;dataCorrecFactorStopPwr_NAMEDATA.txt&#8217;.        NAMEDATA must also be provided by the mspt global variable : nameStopPwrCorrecFactor = &#8216;NAMEDATA&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.stoppingPower.StoppingPower.importNewStopPwrData">
+<tt class="descname">importNewStopPwrData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower.importNewStopPwrData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower.importNewStopPwrData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function used to import new mass stopping power data. It scans the folder <em>/RefData/MassStoppingPower_NewData/</em>        for mass stopping power files.</p>
+<p>Each file matching the pattern &#8216;MassStopPwrData-MediumName.txt&#8217; is imported and is assigned to the medium &#8220;MediumName&#8221;.        The imported data is added to the dictionary storing the stopping power data for each medium.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.stoppingPower.StoppingPower.loadMassStoppingPowerFromNewData">
+<tt class="descname">loadMassStoppingPowerFromNewData</tt><big>(</big><em>filename</em>, <em>medium</em><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower.loadMassStoppingPowerFromNewData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower.loadMassStoppingPowerFromNewData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads Mass Stopping Power data from new data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filename</strong> &#8211; File where the data is stored. The file should be using &#8220;tab delimited&#8221; format.         The first row should be the headers : &#8216;Kinetic Energy MeV&#8217; and &#8216;Total Stp. Pow. MeV cm2/g&#8217;. The         last row should be: 1st column: the density value in g/cm3 , 2nd column: -1.</li>
+<li><strong>medium</strong> &#8211; Name of the medium</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.stoppingPower.StoppingPower.loadMassStoppingPowerFromPSTARData">
+<tt class="descname">loadMassStoppingPowerFromPSTARData</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower.loadMassStoppingPowerFromPSTARData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower.loadMassStoppingPowerFromPSTARData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads Mass Stopping Power data from the PSTAR data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mspt.physics.stoppingPower.StoppingPower.precomputeMassStopPowerRatios">
+<tt class="descname">precomputeMassStopPowerRatios</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mspt/physics/stoppingPower.html#StoppingPower.precomputeMassStopPowerRatios"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.physics.stoppingPower.StoppingPower.precomputeMassStopPowerRatios" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute relative mass stopping power (relative to water). For each medium divide the mass stopping power         by the mass stopping power of water.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mspt.physics">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mspt.physics" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mspt.scanning.html" class="btn btn-neutral float-right" title="mspt.scanning package"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mspt.patient.html" class="btn btn-neutral" title="mspt.patient package"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

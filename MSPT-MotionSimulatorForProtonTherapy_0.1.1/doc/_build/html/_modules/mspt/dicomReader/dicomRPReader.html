@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mspt.dicomReader.dicomRPReader &mdash; mspt  documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="mspt  documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../../../index.html" class="fa fa-home"> mspt</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../mspt.html">mspt package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../mspt.html#module-mspt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">mspt</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>mspt.dicomReader.dicomRPReader</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <h1>Source code for mspt.dicomReader.dicomRPReader</h1><div class="highlight"><pre>
+<span class="c">########################################################################</span>
+<span class="c">#</span>
+<span class="c"># dicomRPReader.py</span>
+<span class="c"># Dicom Reader Project</span>
+<span class="c"># Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee</span>
+<span class="c"># On Oct, 17 2012</span>
+<span class="c"># Copyright 2012, LIGM, Universite Paris-Est Marne La Vallee. All rights reserved</span>
+<span class="c">#</span>
+<span class="c"># Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France</span>
+<span class="c">#</span>
+<span class="c"># This file is part of MSPT- Motion Simulator for Proton Therapy.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator for Proton Therapy is free software: you can redistribute it and/or modify</span>
+<span class="c">#    it under the terms of the GNU General Public License as published by</span>
+<span class="c">#    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c">#    (at your option) any later version.</span>
+<span class="c">#</span>
+<span class="c">#    MSPT- Motion Simulator for Proton Therapy is distributed in the hope that it will be useful,</span>
+<span class="c">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c">#    GNU General Public License for more details.</span>
+<span class="c">#</span>
+<span class="c">#    You should have received a copy of the GNU General Public License</span>
+<span class="c">#    along with MSPT- Motion Simulator for Proton Therapy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+<span class="c">#</span>
+<span class="c">########################################################################</span>
+
+<span class="kn">import</span> <span class="nn">dicom</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">scanningPath</span> <span class="kn">import</span> <span class="n">ScanningPathMultipleBeams</span>
+
+<span class="kn">import</span> <span class="nn">dicomReader</span>
+<span class="kn">from</span> <span class="nn">dicomReader</span> <span class="kn">import</span> <span class="n">DicomReader</span>
+
+<div class="viewcode-block" id="DicomRPReader"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRPReader.DicomRPReader">[docs]</a><span class="k">class</span> <span class="nc">DicomRPReader</span><span class="p">(</span><span class="n">DicomReader</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Dicom reader for dicom RT plans (RP dicom file). </span>
+
+<span class="sd">    :param path: Path to the RP dicom file.</span>
+<span class="sd">    :param typeFloat: The type of numpy float to use. It should  be either &#39;float32&#39; or &#39;float64&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">typeFloat</span> <span class="o">=</span> <span class="s">&#39;float32&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_RTPlan</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loadRTPlanFile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_RTPlanPath</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span> <span class="o">=</span> <span class="n">typeFloat</span>
+    
+    
+<div class="viewcode-block" id="DicomRPReader.loadRTPlanFile"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRPReader.DicomRPReader.loadRTPlanFile">[docs]</a>    <span class="k">def</span> <span class="nf">loadRTPlanFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Load a RT Plan from a Dicom file located at &quot;path&quot;.</span>
+<span class="sd">        </span>
+<span class="sd">        :param path: Path where is located the dicom RP file.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">fileName</span><span class="p">,</span> <span class="n">fileExtension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fileExtension</span> <span class="o">==</span> <span class="s">&quot;.dcm&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_RTPlan</span> <span class="o">=</span> <span class="n">dicom</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">_RTPlan</span><span class="o">.</span><span class="n">SOPClassUID</span><span class="p">)</span> <span class="o">!=</span> <span class="s">&#39;RT Ion Plan Storage&#39;</span><span class="p">:</span>
+                <span class="n">strErr</span> <span class="o">=</span> <span class="s">&quot;RP file is not &#39;RT Ion Plan Storage&#39; , but </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_dosePlan</span><span class="o">.</span><span class="n">SOPClassUID</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_FractionGroupSeq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_RTPlan</span><span class="o">.</span><span class="n">FractionGroupSequence</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ScanningPath</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_NbFractions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_RTPlan</span><span class="o">.</span><span class="n">FractionGroupSequence</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">NumberOfFractionsPlanned</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;Warning: FractionGroupSequence[0].NumberOfFractionsPlanned not found in RP plan&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_NbFractions</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dcmType</span> <span class="o">=</span> <span class="s">&#39;RT Ion Plan Storage&#39;</span>
+            <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> loaded&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">_dcmType</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;File extension : </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="n">fileName</span>
+            <span class="n">strErr</span> <span class="o">=</span> <span class="s">&quot;Error : </span><span class="si">%s</span><span class="s"> files are not supported by DicomRPReader&quot;</span><span class="o">%</span><span class="n">fileExtension</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">strErr</span><span class="p">)</span>
+        
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DicomRPReader.fractionGroupSequence"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRPReader.DicomRPReader.fractionGroupSequence">[docs]</a>    <span class="k">def</span> <span class="nf">fractionGroupSequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get access to the Fraction Group Sequence of the RP dicom file.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: Fraction Group Sequence dicom data from pydicom.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>    
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_FractionGroupSeq</span>
+        </div>
+<div class="viewcode-block" id="DicomRPReader.dataForAttribute"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRPReader.DicomRPReader.dataForAttribute">[docs]</a>    <span class="k">def</span> <span class="nf">dataForAttribute</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the value of a given attribute  for the RT plan and</span>
+<span class="sd">        returns the value. </span>
+<span class="sd">        </span>
+<span class="sd">        :param  attribute: The attribute is a string defined in the dicom documentation (data loaded with pydicom) or specific strings:</span>
+<span class="sd">            </span>
+<span class="sd">            * **FractionGroupSequence**: Fraction Group Sequence dicom data from pydicom.</span>
+<span class="sd">            * **NumberOfFractionsPlanned**: Number of fractions used in the plan.</span>
+<span class="sd">             </span>
+<span class="sd">        :returns: Attribute value.</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>        
+        <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s">&#39;FractionGroupSequence&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fractionGroupSequence</span>
+        <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s">&#39;NumberOfFractionsPlanned&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_NbFractions</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_RTPlan</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+    
+        </div>
+<div class="viewcode-block" id="DicomRPReader.getScanningPath"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRPReader.DicomRPReader.getScanningPath">[docs]</a>    <span class="k">def</span> <span class="nf">getScanningPath</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">dictSettings</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Get the ScanningPathMultipleBeams instance created with the RP file.</span>
+<span class="sd">        </span>
+<span class="sd">        :param dictSettings: Dictionary of settings for the scanning path</span>
+<span class="sd">        </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+    
+        <span class="n">plan</span> <span class="o">=</span> <span class="n">ScanningPathMultipleBeams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_RTPlan</span><span class="p">,</span> <span class="n">dictSettings</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_typeFloat</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">plan</span>    
+    </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DicomRPReader.dcmType"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRPReader.DicomRPReader.dcmType">[docs]</a>    <span class="k">def</span> <span class="nf">dcmType</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">         :returns: The type of dicom reader: &#39;RT Ion Plan Storage&#39;.</span>
+<span class="sd">    </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dcmType</span>  
+        
+        </div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="DicomRPReader.rtPlanPath"><a class="viewcode-back" href="../../../mspt.dicomReader.html#mspt.dicomReader.dicomRPReader.DicomRPReader.rtPlanPath">[docs]</a>    <span class="k">def</span> <span class="nf">rtPlanPath</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">         :returns: The RP dicom file loaded with pydicom</span>
+<span class="sd">    </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_RTPlanPath</span>
+ </div></div>
+</pre></div>
+
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2014, Paul Morel, LIGM, Univ. Paris-Est MLV, France.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

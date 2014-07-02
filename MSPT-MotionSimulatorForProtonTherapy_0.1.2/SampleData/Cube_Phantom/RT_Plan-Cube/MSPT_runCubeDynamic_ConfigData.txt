@@ -2,8 +2,8 @@
 ## Configuration file for simulation runCubeDynamic 
 #############################
 MeV = 1.602e-13 
-arrayAmpl = [1.0, 0, 1.0] 
-arrayPeriod = [4.0, 0.0, 4.0] 
+arrayAmpl = [1.0, 1.0, 0] 
+arrayPeriod = [4.0, 4.0, 0.0] 
 arrayPhase = [0, 0, 0] 
 beamIntensity = 68000000000.0 
 compensationDynamic = False 

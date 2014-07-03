@@ -7,7 +7,6 @@
 # June 2013
 #
 #
-#
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
 # This file is part of MSPT- Motion Simulator for Proton Therapy.
@@ -24,7 +23,6 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with MSPT- Motion Simulator for Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
-#
 #   
 ########################################################################
 
@@ -76,12 +74,13 @@ class Email(object):
             msg.attach(MIMEText(text))
         if attach is not None:
             for path in attach:
-                part = MIMEBase('application', 'octet-stream')
-                part.set_payload(open(path, 'rb').read())
-                Encoders.encode_base64(part)
-                part.add_header('Content-Disposition',
-                    'attachment; filename="%s"' % os.path.basename(path))
-                msg.attach(part)
+                if path is not None:
+                    part = MIMEBase('application', 'octet-stream')
+                    part.set_payload(open(path, 'rb').read())
+                    Encoders.encode_base64(part)
+                    part.add_header('Content-Disposition',
+                        'attachment; filename="%s"' % os.path.basename(path))
+                    msg.attach(part)
         try:
             mailServer = smtplib.SMTP(self._smtp, self._port)
             mailServer.ehlo()

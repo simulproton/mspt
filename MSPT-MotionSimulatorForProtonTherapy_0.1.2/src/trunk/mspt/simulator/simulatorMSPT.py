@@ -691,8 +691,26 @@ if __name__ == '__main__':
                 os.system("%s %s %s"%(cpCmd,globalVar.mainPath+"output"+globalVar.nameSimulation[3:-1], globalVar.mainPath+"output"+globalVar.nameSimulation[3:-1]+".txt"))
             
             textEmail = "<p>Simulation %s started on %s (server: %s), ended properly on %s in %s.</p><p>Good job!</p>"%( Email.htmlTextBoldRed(globalVar.nameSimulation),Email.htmlTextBoldRed(simulStartDate.ctime()),Email.htmlTextBoldRed(str(socket.gethostname())),simulEndDate.ctime(),str(timeSimul))
-            attachment = [globalVar.mainPath + globalVar.nameSimulation + "DVH_Data/"+"DVH_SimulatedDose.png",\
-            globalVar.mainPath + globalVar.nameSimulation + "DVH_Data/"+"DVH_ReferenceDose.png"]
+            
+            #Find DVH dose of simulated distribution
+            if os.path.exists(pathToTest + "DVH_Data/"+"DVH_SimulatedDose.png"):
+                pathImageSimulDVH = pathToTest + "DVH_Data/"+"DVH_SimulatedDose.png"
+            elif os.path.exists(pathToTest + "DVH_Data/"+"DVH_SimulatedDose.pdf"):
+                pathImageSimulDVH = pathToTest + "DVH_Data/"+"DVH_SimulatedDose.pdf"
+            else: 
+                pathImageSimulDVH = None
+
+            #Find DVH dose of reference
+            if os.path.exists(pathToTest + "DVH_Data/"+"DVH_ReferenceDose.png"):
+                pathImageRefDVH = pathToTest + "DVH_Data/"+"DVH_ReferenceDose.png"
+            elif os.path.exists(pathToTest + "DVH_Data/"+"DVH_ReferenceDose.pdf"):
+                pathImageRefDVH = pathToTest + "DVH_Data/"+"DVH_ReferenceDose.pdf"
+            else: 
+                pathImageRefDVH = None
+                
+            # Get E-mail attachment
+            attachment = [pathImageSimulDVH, pathImageRefDVH]
+            
             dataToZip = [globalVar.mainPath + globalVar.nameSimulation]
             if os.path.exists(globalVar.mainPath+"output"+globalVar.nameSimulation[3:-1]+".txt"):
                 time.sleep(40) # Allow to finish writting in the file
@@ -710,8 +728,7 @@ if __name__ == '__main__':
                 myEmail = emailManager( globalVar.emailUser,globalVar.emailPwd,globalVar.emailSMTP,globalVar.emailSMTPPort)
                 myEmail.mail(globalVar.emailRecipient,"Simulation done",textEmail,attach=attachment)
             except:
-                attachment = [globalVar.mainPath + globalVar.nameSimulation + "DVH_Data/"+"DVH_SimulatedDose.png",\
-            globalVar.mainPath + globalVar.nameSimulation + "DVH_Data/"+"DVH_ReferenceDose.png"]
+                attachment = [pathImageSimulDVH, pathImageRefDVH]
                 textEmail = textEmail + "<p>Only DVHs attached.</p>"
                 try:
                     myEmail = emailManager( globalVar.emailUser,globalVar.emailPwd,globalVar.emailSMTP,globalVar.emailSMTPPort)
@@ -719,6 +736,9 @@ if __name__ == '__main__':
                 except:
                     print "Sorry ... something went wrong. The final email has not been sent. Check emailUser, emailPwd, emailSMTP,emailSMTPPort or emailRecipient in the configuration file"
                     emailSent = False
+                    print "Error info:\n"
+                    print str(traceback.format_exc())
+                    print "End Error info.....................\n"
             if emailSent:
                 print "Email sent to %s"%globalVar.emailRecipient
             if os.path.exists(globalVar.mainPath+"output"+globalVar.nameSimulation[3:-1]+".txt"):
@@ -740,6 +760,10 @@ if __name__ == '__main__':
                 print "Crash report sent to %s"%globalVar.emailRecipient
             except:
                 print "Sorry ... something went wrong. The crash report email has not been sent. Check emailUser, emailPwd, emailSMTP,emailSMTPPort or emailRecipient in the configuration file"
+                print "Error info:\n"
+                print str(traceback.format_exc())
+                print "End Error info.....................\n"
+
             raise
         
         finally:

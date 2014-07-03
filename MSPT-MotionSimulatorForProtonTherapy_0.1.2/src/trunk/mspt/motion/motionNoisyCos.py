@@ -4,8 +4,6 @@
 # Proton Therapy Simulator Project
 # Created by Paul Morel, LIGM, Universite Paris-Est Marne La Vallee
 # October 2013
-# 
-#
 #
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
@@ -120,6 +118,7 @@ class MotionNoisyCos(object):
         self._phase = argsDict['initialPhase']
         self._stdevMag = argsDict['variationsMag']
         self._stdevPeriod = argsDict['variationsPeriod']
+
 #         for key, var, typ in zip( ['distributionMag','distributionPeriod'] ,['self._distrMag','self._distrPeriod'],['self._distrTypMag','self._distrTypPeriod'] ):
 #             if  argsDict[key] in typeDistr:
 #                 if argsDict[key] == 'normal':
@@ -141,6 +140,8 @@ class MotionNoisyCos(object):
 #                 raise ValueError(strErr)
         self._distrMag = buildNormDistrFunction
         self._distrPeriod = buildNormDistrFunction
+        self._distrTypMag = 'normal'
+        self._distrTypPeriod = 'normal'
         
         self._magFunc = []
         self._periodFunc = []

@@ -9,20 +9,20 @@
 #
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
-# This file is part of MSPT- Motion Simulator for Proton Therapy.
+# This file is part of MSPT- Motion Simulator in Proton Therapy.
 #
-#    MSPT- Motion Simulator for Proton Therapy is free software: you can redistribute it and/or modify
+#    MSPT- Motion Simulator in Proton Therapy is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    MSPT- Motion Simulator for Proton Therapy is distributed in the hope that it will be useful,
+#    MSPT- Motion Simulator in Proton Therapy is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with MSPT- Motion Simulator for Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
+#    along with MSPT- Motion Simulator in Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
 #   
 ########################################################################
 
@@ -44,7 +44,7 @@ from ..extensionsC.PythonExtensionAllPlatforms.PythonExtensionBeamletCalc import
 from ..extensionsC.PythonExtensionAllPlatforms.PythonExtensionBeamletCalcDouble import _beamletSimulation_PythonExtDouble as _beamletSimulationDouble 
 
 limitSmallWeights = 1e-4
-useFastRadiolDepth_DynaDeliv = True 
+useFastRadiolDepth_DynaDeliv = False 
 
 class simulatorDelivery(object):
     '''Class simulatorDelivery is the core of the simulation. This where the delivery is actually simulated.

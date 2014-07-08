@@ -640,6 +640,8 @@ if __name__ == '__main__':
             globalVar = GlobalVariables(None)
         
         pathToTest = globalVar.mainPath + globalVar.nameSimulation
+        if pathToTest[-1] != '/':
+            pathToTest = pathToTest + '/'
         print pathToTest
         if not os.path.exists(pathToTest):
                 os.makedirs(pathToTest)

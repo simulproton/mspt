@@ -335,6 +335,8 @@ class GlobalVariables(dict):
         else:
             if self.nameSimulation[-1] != "/":
                 self.nameSimulation = self.nameSimulation + '/'
+            if self.nameSimulation[0:3] != 'run':
+                self.nameSimulation = 'run'+self.nameSimulation
 
         if 'nameProfilage' not in self:
             self['nameProfilage'] = 'profilagerunSimulStatic.profile'
@@ -352,7 +354,12 @@ class GlobalVariables(dict):
         if 'nameSimulation' not in self:
             self['nameSimulation'] = 'runSimulDynamic/'
             print "'nameSimulation' set to default:  'runSimulDynamic/'"
-            print "\t\t-------------------"              
+            print "\t\t-------------------"     
+        else:
+            if self.nameSimulation[-1] != "/":
+                self.nameSimulation = self.nameSimulation + '/'
+            if self.nameSimulation[0:3] != 'run':
+                self.nameSimulation = 'run'+self.nameSimulation
 
         if 'nameProfilage' not in self:
             self['nameProfilage'] = 'profilagerunSimulDynamic.profile'

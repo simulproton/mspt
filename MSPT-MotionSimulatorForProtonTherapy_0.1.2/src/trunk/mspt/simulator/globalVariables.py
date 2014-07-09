@@ -35,7 +35,7 @@ listAuthorizedKeys = ['MeV', 'typeFloat', 'removeProfilageData', 'stdOutErrToFil
 'exportSliceOrderingInfo', 'saveCompDoseAsDcm', 'nameCompDose', 'saveRefDoseAsDcm', 'nameRefDose', 'storeMasksAsCPKL' , 'emailUser', \
 'emailPwd', 'emailSMTP', 'emailSMTPPort', 'emailRecipient', 'protPerMU', 'dvhRelativeVolume', 'importNewMassStopPwr','nameStopPwrCorrecFactor', 'nameSimulation',\
 'nameDoseCorrecFactor','nameCTToDensTable','nameProfilage', 'sliceRepaint', 'volumeRepaint', 'ctPadding', 'padValueFRC', 'paddedCTValue', 'storeInterDoseDens', 'motionDuringBeam', \
-'compensationDynamic', 'unlimitedRescanning', 'repaintingFactor', 'sliceRepaint', 'volumeRepaint', 'findStartPos', 'NameNewRPFile', \
+'compensationDynamic', 'unlimitedRescanning', 'repaintingFactor', 'sliceRepaint', 'volumeRepaint', 'findStartPos', 'nameNewRPFile', \
 'measurementStdev', 'measurementAvg', 'addMargins', 'marginsParam', 'updateMargins', 'evaluateDiffStatDyna', 'arrayPeriod', \
 'arrayAmpl', 'arrayPhase', 'typeMotion','fileRecordedMotion', 'breathingPeriod', 'magnitude', 'initialPhase', 'arrayStDevPeriod', 'arrayStDevAmpl', \
 'distributionMag', 'distributionPeriod', 'variationsMag', 'variationsPeriod', 'motion3D', 'spotSettlingTime', 'synchrotron' ,\
@@ -432,9 +432,9 @@ class GlobalVariables(dict):
         
         
         if self.compensationDynamic:
-            if 'NameNewRPFile' not in self:
-                self['NameNewRPFile'] = 'RPFile_Compensation.dcm'
-                print "'NameNewRPFile' set to default:  'RPFile_Compensation.dcm'"
+            if 'nameNewRPFile' not in self:
+                self['nameNewRPFile'] = 'RPFile_Compensation.dcm'
+                print "'nameNewRPFile' set to default:  'RPFile_Compensation.dcm'"
                 print "\t\t-------------------"              
 
             if 'measurementStdev' not in self:

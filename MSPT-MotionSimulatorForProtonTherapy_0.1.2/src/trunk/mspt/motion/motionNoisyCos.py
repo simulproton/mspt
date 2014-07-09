@@ -179,7 +179,7 @@ class MotionNoisyCos(object):
         if timer < 0 :
             raise ValueError("Time < 0 in get displacement vector")
         vec = np.zeros((3),dtype=self._typeFloat,order='C')
-        currCycle = np.round(timer/(2*np.pi))
+        currCycle = np.floor(timer/(2*np.pi))
         if currCycle!=  self._currCycle:
             self._currCycle = currCycle
             for idx in range( len(self._tabDirection)):

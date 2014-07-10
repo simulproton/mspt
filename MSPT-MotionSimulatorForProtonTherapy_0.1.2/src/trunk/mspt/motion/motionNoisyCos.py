@@ -50,9 +50,9 @@ class MotionNoisyCos(object):
         
     Lujan and Seco also added a phase phi that can be added in the cosine. We add a Gaussian noise on each coordinate to introduce uncertainties.
         
-    We represent the noisy cosine function as: f(t) = z0 + b(t) cos( (2*Pi*t / tau(Cylcle))  + phi) where b(t) is a value of a normal distribution\
+    We represent the noisy cosine function as: f(t) = z0 + b(Cycle) cos( (2*Pi*t / tau(Cylcle))  + phi) where b(Cycle) is a value of a normal distribution\
     whose mean is 'magnitude' and whose standard deviation is 'distributionMag'. tau(Cylcle) is the period which depends on the number of cylce, i.e.\
-    every new cycle (Cycle = round(timer/(2*Pi)) ) the period tau is changed following the normal distribution. The mean is 'breathingPeriod' and the \
+    every new cycle (Cycle = round(timer/average_period) ) the period tau is changed following the normal distribution. The mean is 'breathingPeriod' and the \
     standard deviation is 'distributionPeriod'.
         
     :param argsDict: Dictionary configuring the motion. Keys that must be in this dictionary are:
@@ -158,7 +158,7 @@ class MotionNoisyCos(object):
             funcPeriod = self._distrPeriod(meanPeriod,stdPeriod)
             self._periodFunc.append(funcPeriod)
         
-        self._currCycle = None 
+        self._currCycle = [None, None, None] 
         self._currPeriodNoise = [None,None,None]
         self._currMagnitudeNoise = [None,None,None]
 
@@ -170,7 +170,7 @@ class MotionNoisyCos(object):
    
     
     def getDisplacementVectorAtTime(self,timer):
-        '''Computes the displacement vector according to the equation f(t) = z0 + b(t) cos( (2*Pi*t / tau(Cylcle))  + phi) 
+        '''Computes the displacement vector according to the equation f(t) = z0 + b(Cycle) cos( (2*Pi*t / tau(Cylcle))  + phi) 
         
         :param  timer: Time in sec. 
         
@@ -179,14 +179,16 @@ class MotionNoisyCos(object):
         if timer < 0 :
             raise ValueError("Time < 0 in get displacement vector")
         vec = np.zeros((3),dtype=self._typeFloat,order='C')
-        currCycle = np.floor(timer/(2*np.pi))
-        if currCycle!=  self._currCycle:
-            self._currCycle = currCycle
-            for idx in range( len(self._tabDirection)):
+        for idx in range( len(self._tabDirection)):
+            currCycle = np.floor(timer/self._breathingPeriod[idx])
+            if currCycle!=  self._currCycle[idx]:
+                self._currCycle[idx] = currCycle
                 period = self._periodFunc[idx]()
                 magnitude = self._magFunc[idx]()
                 self._currPeriodNoise[idx] = period
                 self._currMagnitudeNoise[idx] = magnitude
+#             magnitude = self._magFunc[idx]()
+#             self._currMagnitudeNoise[idx] = magnitude
         for idx in range( len(self._tabDirection)):
             period = self._currPeriodNoise[idx]
             magnitude = self._currMagnitudeNoise[idx]

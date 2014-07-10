@@ -496,7 +496,7 @@ f(t) = z0 + b cos( 2*Pi*t / tau  + phi) <table class="docutils field-list" frame
 <div>f(t) = z0 + b cos( (2*Pi*t / tau)  - phi)</div></blockquote>
 <p>where z0 is the average position (it is set to 0),t the time, b the amplitude, and tau the motion period.</p>
 <p>Lujan and Seco also added a phase phi that can be added in the cosine. We add a Gaussian noise on each coordinate to introduce uncertainties.</p>
-<p>We represent the noisy cosine function as: f(t) = z0 + b(t) cos( (2*Pi*t / tau(Cylcle))  + phi) where b(t) is a value of a normal distribution    whose mean is &#8216;magnitude&#8217; and whose standard deviation is &#8216;distributionMag&#8217;. tau(Cylcle) is the period which depends on the number of cylce, i.e.    every new cycle (Cycle = round(timer/(2*Pi)) ) the period tau is changed following the normal distribution. The mean is &#8216;breathingPeriod&#8217; and the     standard deviation is &#8216;distributionPeriod&#8217;.</p>
+<p>We represent the noisy cosine function as: f(t) = z0 + b(Cycle) cos( (2*Pi*t / tau(Cylcle))  + phi) where b(Cycle) is a value of a normal distribution    whose mean is &#8216;magnitude&#8217; and whose standard deviation is &#8216;distributionMag&#8217;. tau(Cylcle) is the period which depends on the number of cylce, i.e.    every new cycle (Cycle = round(timer/average_period) ) the period tau is changed following the normal distribution. The mean is &#8216;breathingPeriod&#8217; and the     standard deviation is &#8216;distributionPeriod&#8217;.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -520,7 +520,7 @@ f(t) = z0 + b cos( 2*Pi*t / tau  + phi) <table class="docutils field-list" frame
 <dl class="method">
 <dt id="mspt.motion.motionNoisyCos.MotionNoisyCos.getDisplacementVectorAtTime">
 <tt class="descname">getDisplacementVectorAtTime</tt><big>(</big><em>timer</em><big>)</big><a class="reference internal" href="_modules/mspt/motion/motionNoisyCos.html#MotionNoisyCos.getDisplacementVectorAtTime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mspt.motion.motionNoisyCos.MotionNoisyCos.getDisplacementVectorAtTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes the displacement vector according to the equation f(t) = z0 + b(t) cos( (2*Pi*t / tau(Cylcle))  + phi)</p>
+<dd><p>Computes the displacement vector according to the equation f(t) = z0 + b(Cycle) cos( (2*Pi*t / tau(Cylcle))  + phi)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

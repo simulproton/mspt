@@ -409,7 +409,7 @@ class MSPT(object):
                     maxCold = np.max(diffDose[indCold])
                     matColdSpots[indCold] = 1 - (diffDose[indCold]/ maxCold)
                     for axis in self._globalVar.listSaveCompDoseAlong:    
-                        viewer2D.storeMatrixAsImage(pathToSave,matColdSpots,"ColdSpots-FinalVolume",alongAxis = axis)
+                        viewer2D.storeMatrixAsImage(pathToSave,matColdSpots,"ColdSpots-FinalVolume",alongAxis = axis,bw=False)
                 else:
                     print "No differences found between expected dose and computed dose, therefore cold spot will not be plotted" 
                 #Save Hot Spots
@@ -419,7 +419,7 @@ class MSPT(object):
                     maxHot = np.max(diffDose[indHot])
                     matHotSpots[indHot] = (diffDose[indHot]/ maxHot)
                     for axis in self._globalVar.listSaveCompDoseAlong:    
-                        viewer2D.storeMatrixAsImage(pathToSave,matHotSpots,"HotSpots-FinalVolume",alongAxis = axis)
+                        viewer2D.storeMatrixAsImage(pathToSave,matHotSpots,"HotSpots-FinalVolume",alongAxis = axis,bw=False)
                 else:
                     print "No differences found between expected dose and computed dose, therefore hot spots will not be plotted" 
                         

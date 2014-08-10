@@ -1109,9 +1109,9 @@ class Patient(object):
             p =  (5/100)*np.max(volRef) #5% of the maximum reference dose distribution
             diff = simTools(self._globalVar).getMatrixHotAndColdSpot(volRef, volTest)
             
-            same = False
+            same = True
             if np.max(diff) > 0:
-                same = True
+                same = False
             if unpadded:
                 maskVOIs = self.getUnpaddedPatientDataForAttr('maskVOIs')
             else:

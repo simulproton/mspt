@@ -7,7 +7,6 @@
 # June 2013
 # 
 #
-#
 # Copyright 2011-2014 Paul Morel, LIGM, Universite Paris-Est Marne La Vallee, France
 #
 # This file is part of MSPT- Motion Simulator for Proton Therapy.
@@ -24,8 +23,7 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with MSPT- Motion Simulator for Proton Therapy.  If not, see <http://www.gnu.org/licenses/>.
-#
-#   
+#  
 ########################################################################
 import numpy as np
 from scipy import ndimage
@@ -481,7 +479,19 @@ class ScanningPathSingleBeam(object):
                     repaintIndex = self._repaintingIndex[ind[0]]
                 else:
                     repaintIndex = 0
-                yield (self._arraySpots[ind] ,ind , self._arrayX[ind],self._arrayY[ind],self._listEnergies[ind[0]],self._listSpotSize[ind[0]] ,strEnergy,typeSpot , repaintIndex)
+                dataSpot = (self._arraySpots[ind] ,ind , self._arrayX[ind],self._arrayY[ind],self._listEnergies[ind[0]],self._listSpotSize[ind[0]] ,strEnergy,typeSpot , repaintIndex)
+                if dataSpot is None:
+                    print "Dataspot is None:"
+                    print "self._arraySpots[ind]: %s"%str( self._arraySpots[ind] )
+                    print "ind: %s"%str( ind )
+                    print "self._arrayX[ind],self._arrayY[ind]: %s , %s"%(str( self._arrayX[ind]  ), str(self._arrayY[ind]))
+                    print "self._listEnergies[ind[0]]: %s"%str( self._listEnergies[ind[0]] )
+                    print "self._listSpotSize[ind[0]]: %s"%str( self._listSpotSize[ind[0]] )
+                    print "strEnergy: %s"%str( strEnergy )
+                    print "typeSpot : %s"%str( typeSpot )
+                    print "repaintIndex: %s"%str( repaintIndex )
+                    raise ValueError ("Data spot is None for random scanning path")
+                yield dataSpot
                 
                 
         
@@ -502,6 +512,17 @@ class ScanningPathSingleBeam(object):
                 else:
                     strEnergy = 'SameEnergy'
                 dataSpot = self.buildDataSpotToReturn(ind , strEnergy)
+                if dataSpot is None:
+                    print "Dataspot is None:"
+                    print "self._arraySpots[ind]: %s"%str( self._arraySpots[ind] )
+                    print "ind: %s"%str( ind )
+                    print "self._arrayX[ind],self._arrayY[ind]: %s , %s"%(str( self._arrayX[ind]  ), str(self._arrayY[ind]))
+                    print "self._listEnergies[ind[0]]: %s"%str( self._listEnergies[ind[0]] )
+                    print "self._listSpotSize[ind[0]]: %s"%str( self._listSpotSize[ind[0]] )
+                    print "strEnergy: %s"%str( strEnergy )
+                    print "typeSpot : %s"%str( typeSpot )
+                    print "repaintIndex: %s"%str( repaintIndex )
+                    raise ValueError ("Data spot is None for regular scanning path")
                 yield dataSpot
 
                         

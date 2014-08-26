@@ -180,13 +180,19 @@ class MotionNoisyCos(object):
             raise ValueError("Time < 0 in get displacement vector")
         vec = np.zeros((3),dtype=self._typeFloat,order='C')
         for idx in range( len(self._tabDirection)):
-            currCycle = np.floor(timer/self._breathingPeriod[idx])
-            if currCycle!=  self._currCycle[idx]:
-                self._currCycle[idx] = currCycle
-                period = self._periodFunc[idx]()
-                magnitude = self._magFunc[idx]()
-                self._currPeriodNoise[idx] = period
-                self._currMagnitudeNoise[idx] = magnitude
+            if self._breathingPeriod[idx] != 0:
+                currCycle = np.floor(timer/self._breathingPeriod[idx])
+                if currCycle!=  self._currCycle[idx]:
+                    self._currCycle[idx] = currCycle
+                    period = self._periodFunc[idx]()
+                    magnitude = self._magFunc[idx]()
+                    self._currPeriodNoise[idx] = period
+                    self._currMagnitudeNoise[idx] = magnitude
+            else:
+                    self._currCycle[idx] = 0 
+                    self._currPeriodNoise[idx] = 0
+                    self._currMagnitudeNoise[idx] = 0
+                
 #             magnitude = self._magFunc[idx]()
 #             self._currMagnitudeNoise[idx] = magnitude
         for idx in range( len(self._tabDirection)):

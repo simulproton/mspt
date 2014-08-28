@@ -802,7 +802,8 @@ class ScanningPathSingleBeam(object):
             x = self._arrayX[f, ro ,co]
             y = self._arrayY[f, ro ,co]
             dist = euclideanDistance( (xShift, yShift) , (x,y))            
-            if dist < minDist and np.abs(x-xShift) < self._spacing[0] and np.abs(y-yShift) < self._spacing[1]:
+            if dist < minDist and np.abs(x-xShift) < (self._spacing[0]/2.0) and np.abs(y-yShift) < (self._spacing[1]/2.0):
+#             if dist < minDist and np.abs(x-xShift) < (self._spacing[0]) and np.abs(y-yShift) < (self._spacing[1]):
                 minDist = dist
                 xyClosest = (x,y)
                 closestInd = (ro , co)

@@ -1,5 +1,6 @@
-# mspt
-Automatically exported from code.google.com/p/mspt
+# MSPT
+
+Code previously hosted on: code.google.com/p/mspt
 
 
 MSPT- Motion Simulator for Proton Therapy is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.

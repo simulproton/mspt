@@ -21,6 +21,7 @@ MSPT have been developed with the advice of:
 Dongxu Wang, PhD
 Ryan T Flynn, PhD
 Edgar Gelover, PhD
+Daniel Hyer, PhD
 Guillaume Blin, PhD
 Stephane Vialette, PhD
 Xiaodong Wu, PhD
